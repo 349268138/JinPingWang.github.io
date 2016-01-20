@@ -87,7 +87,7 @@ return new Za.prototype.init(a,b,c,d,e)}m.Tween=Za,Za.prototype={constructor:Za,
 <meta property="og:url" content="http://jinpingwang.github.io/2015/11/01/javaSourceCode/java.util/ListIterator/index.html">
 <meta property="og:site_name" content="WangJinPing's blog">
 <meta property="og:description" content="本文介绍了有关于ListIterator接口的一些方法。">
-<meta property="og:updated_time" content="2016-01-04T12:11:28.626Z">
+<meta property="og:updated_time" content="2016-01-20T06:46:04.306Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="java源码之ListIterator">
 <meta name="twitter:description" content="本文介绍了有关于ListIterator接口的一些方法。">
@@ -330,6 +330,8 @@ return new Za.prototype.init(a,b,c,d,e)}m.Tween=Za,Za.prototype={constructor:Za,
 <ol>
 <li>cursor与元素位置index的关系</li>
 <li>set(E e)与remove()方法的操作，需根据上一次访问的是next()还是previous()。具体详见上面的解析。</li>
+<li>hasNext(),next(),hasPrevious(),previous(),nextIndex(),previousIndex()这六个是用于查询操作。</li>
+<li>remove(),set(E e),add(E e)这三个是Modification操作。</li>
 </ol>
 </span>
       
@@ -432,7 +434,7 @@ return new Za.prototype.init(a,b,c,d,e)}m.Tween=Za,Za.prototype={constructor:Za,
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">27</span>
+              <span class="site-state-item-count">31</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
