@@ -87,7 +87,7 @@ return new Za.prototype.init(a,b,c,d,e)}m.Tween=Za,Za.prototype={constructor:Za,
 <meta property="og:url" content="http://jinpingwang.github.io/2015/11/01/javaSourceCode/java.util/ListIterator/index.html">
 <meta property="og:site_name" content="WangJinPing's blog">
 <meta property="og:description" content="本文介绍了有关于ListIterator接口的一些方法。">
-<meta property="og:updated_time" content="2016-01-20T06:46:04.306Z">
+<meta property="og:updated_time" content="2016-02-25T06:44:37.244Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="java源码之ListIterator">
 <meta name="twitter:description" content="本文介绍了有关于ListIterator接口的一些方法。">
@@ -331,7 +331,7 @@ return new Za.prototype.init(a,b,c,d,e)}m.Tween=Za,Za.prototype={constructor:Za,
 <li>cursor与元素位置index的关系</li>
 <li>set(E e)与remove()方法的操作，需根据上一次访问的是next()还是previous()。具体详见上面的解析。</li>
 <li>hasNext(),next(),hasPrevious(),previous(),nextIndex(),previousIndex()这六个是用于查询操作。</li>
-<li>remove(),set(E e),add(E e)这三个是Modification操作。</li>
+<li>remove(),set(E e),add(E e)这三个是Modification操作。注意这里有一点，Collection中的add方法是有返回值boolean，而ListIterator中的add是没有返回值的，它假定添加的操作总会改变链表。</li>
 </ol>
 </span>
       
