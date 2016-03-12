@@ -81,16 +81,16 @@ return new Za.prototype.init(a,b,c,d,e)}m.Tween=Za,Za.prototype={constructor:Za,
 
 
 
-<meta name="description" content="介绍了最基本的一种机械分词方法–正向最长匹配。以及使用java来实现分词功能。">
+<meta name="description" content="介绍了最基本的一种机械分词方法–正向最长匹配（另一种是下一篇讲的反向最长匹配）。以及使用java来实现分词功能。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="正向最长匹配中文分词">
-<meta property="og:url" content="http://jinpingwang.github.io/2016/01/02/nlp/1.正向最长匹配中分词/index.html">
+<meta property="og:url" content="http://jinpingwang.github.io/2016/01/02/nlp/1:正向最长匹配中分词/index.html">
 <meta property="og:site_name" content="WangJinPing's blog">
-<meta property="og:description" content="介绍了最基本的一种机械分词方法–正向最长匹配。以及使用java来实现分词功能。">
-<meta property="og:updated_time" content="2016-03-07T13:22:26.987Z">
+<meta property="og:description" content="介绍了最基本的一种机械分词方法–正向最长匹配（另一种是下一篇讲的反向最长匹配）。以及使用java来实现分词功能。">
+<meta property="og:updated_time" content="2016-03-12T01:18:47.318Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="正向最长匹配中文分词">
-<meta name="twitter:description" content="介绍了最基本的一种机械分词方法–正向最长匹配。以及使用java来实现分词功能。">
+<meta name="twitter:description" content="介绍了最基本的一种机械分词方法–正向最长匹配（另一种是下一篇讲的反向最长匹配）。以及使用java来实现分词功能。">
 
 
 
@@ -304,8 +304,8 @@ return new Za.prototype.init(a,b,c,d,e)}m.Tween=Za,Za.prototype={constructor:Za,
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/01/02/nlp/1.正向最长匹配中分词/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/01/02/nlp/1.正向最长匹配中分词/" itemprop="commentsCount"></span>
+                <a href="/2016/01/02/nlp/1:正向最长匹配中分词/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/01/02/nlp/1:正向最长匹配中分词/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -324,7 +324,7 @@ return new Za.prototype.init(a,b,c,d,e)}m.Tween=Za,Za.prototype={constructor:Za,
       
 
       
-        <span itemprop="articleBody"><p>介绍了最基本的一种机械分词方法–正向最长匹配。以及使用java来实现分词功能。<br><a id="more"></a></p>
+        <span itemprop="articleBody"><p>介绍了最基本的一种机械分词方法–正向最长匹配（另一种是下一篇讲的<a href="http://blog.wangjinping.top/2016/01/02/nlp/2.%E5%8F%8D%E5%90%91%E6%9C%80%E9%95%BF%E5%8C%B9%E9%85%8D%E4%B8%AD%E5%88%86%E8%AF%8D/" target="_blank" rel="external">反向最长匹配</a>）。以及使用java来实现分词功能。<br><a id="more"></a></p>
 <h3 id="u95EE_u9898"><a href="#u95EE_u9898" class="headerlink" title="问题"></a>问题</h3><p>1：语料库为Corput：{“上网”，”网站”，”联盟”，”网站联盟”，”加入”，”我们”}<br>2：输入”上网站联盟加入我们”<br>3：输出分词结果</p>
 <h3 id="u89E3_u51B3_u63CF_u8FF0"><a href="#u89E3_u51B3_u63CF_u8FF0" class="headerlink" title="解决描述"></a>解决描述</h3><p>1：查找”上网站联盟加入我们”是否在语料库Corput；<br>2：因为不在。所以取前n-1个字符：”上网站联盟加入我”，看是否在语料库Corput中；<br>3：依次执行这个过程，直到取到：”上网”，这两个字符在Corput语料库中；<br>4：取下”上网”，剩余未分词字符为：”站联盟加入我们”；<br>5：依次按1-4的流程得到剩余的分词为：”站”，”联盟”，”加入”，”我们”。</p>
 <h3 id="u7A0B_u5E8F_u5B9E_u73B0"><a href="#u7A0B_u5E8F_u5B9E_u73B0" class="headerlink" title="程序实现"></a>程序实现</h3><figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Test</span> </span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span>(<span class="params"> String[] args </span>)</span><br><span class="line">    </span>&#123;</span><br><span class="line">        PositiveLongestMatch plm=<span class="keyword">new</span> PositiveLongestMatch();</span><br><span class="line">        System.<span class="keyword">out</span>.println(plm.getSeperateString(<span class="string">"上网站联盟加入我们"</span>));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -357,6 +357,10 @@ return new Za.prototype.init(a,b,c,d,e)}m.Tween=Za,Za.prototype={constructor:Za,
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/2016/01/02/nlp/2:反向最长匹配中分词/" rel="prev" title="反向最长匹配中文分词">
+                反向最长匹配中文分词 <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -382,8 +386,8 @@ return new Za.prototype.init(a,b,c,d,e)}m.Tween=Za,Za.prototype={constructor:Za,
         
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/01/02/nlp/1.正向最长匹配中分词/"
-           data-title="正向最长匹配中文分词" data-url="http://jinpingwang.github.io/2016/01/02/nlp/1.正向最长匹配中分词/">
+      <div class="ds-thread" data-thread-key="2016/01/02/nlp/1:正向最长匹配中分词/"
+           data-title="正向最长匹配中文分词" data-url="http://jinpingwang.github.io/2016/01/02/nlp/1:正向最长匹配中分词/">
       </div>
     
   </div>
@@ -427,7 +431,7 @@ return new Za.prototype.init(a,b,c,d,e)}m.Tween=Za,Za.prototype={constructor:Za,
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">32</span>
+              <span class="site-state-item-count">33</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
