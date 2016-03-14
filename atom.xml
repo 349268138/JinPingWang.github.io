@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://jinpingwang.github.io/"/>
-  <updated>2016-03-14T02:40:45.220Z</updated>
+  <updated>2016-03-14T02:50:42.733Z</updated>
   <id>http://jinpingwang.github.io/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://jinpingwang.github.io/2016/01/03/nlp/3:%E5%9F%BA%E4%BA%8E%E8%B4%9D%E5%8F%B6%E6%96%AF%E7%9A%842-Gram%E4%B8%AD%E6%96%87%E5%88%86%E8%AF%8D/"/>
     <id>http://jinpingwang.github.io/2016/01/03/nlp/3:基于贝叶斯的2-Gram中文分词/</id>
     <published>2016-01-03T02:41:56.000Z</published>
-    <updated>2016-03-14T02:40:45.220Z</updated>
+    <updated>2016-03-14T02:50:42.733Z</updated>
     <content type="html"><![CDATA[<p>介绍了基于贝叶斯的2-Gram分词方法（可以与另外两篇机械分词器相比对：<a href="http://blog.wangjinping.top/2016/01/02/nlp/1:%E6%AD%A3%E5%90%91%E6%9C%80%E9%95%BF%E5%8C%B9%E9%85%8D%E4%B8%AD%E5%88%86%E8%AF%8D/" target="_blank" rel="external">正向最长匹配</a> 和 <a href="http://blog.wangjinping.top/2016/01/02/nlp/2:%E5%8F%8D%E5%90%91%E6%9C%80%E9%95%BF%E5%8C%B9%E9%85%8D%E4%B8%AD%E5%88%86%E8%AF%8D/" target="_blank" rel="external">反向最长匹配</a>）。<br><a id="more"></a></p>
 <h3 id="u95EE_u9898"><a href="#u95EE_u9898" class="headerlink" title="问题"></a>问题</h3><p>1：输入语料库词频<br>2：输入”上网站联盟”<br>3：输出分词结果</p>
 <h3 id="u89E3_u51B3_u63CF_u8FF0"><a href="#u89E3_u51B3_u63CF_u8FF0" class="headerlink" title="解决描述"></a>解决描述</h3><p>1：一个n+1个字的句子，它的分词方法有：$$2^n$$比如：”上网站”，可以分词为：上/网/站，上/网站，上网/站，上网站。<br>2：按照每一种分词，根据语料库中的词频统计，利用贝叶斯计算出这种分词下的概率；比如，上，网，站这三个字独自出现的概率为100，上出现在网站前的词频为1000，词表中有10000个词，那么按照贝叶斯公式可计算出”上/网站”这种分词的概率为：p(上网站)=p(上)*p(网站/上)=(100/10000)*(1000/10000)=0.001；同理按贝叶斯公式可计算出”上/网/站”这种分词的概率为：p(上网站)=p(上)*p(网)*p(站)=(100/10000)*(100/10000)*(100/10000)=0.000001。因为0.001&gt;0.000001，所以，分词”上/网站”要优于”上/网/站”。<br>3：对所有分词的情况都计算出它的概率，取概率最大的那个分词方式，即为该句子的分词方式。</p>
@@ -61,6 +61,7 @@
 <td></td>
 <td></td>
 <td>1400</td>
+<td></td>
 </tr>
 <tr>
 <td>网</td>
@@ -76,6 +77,9 @@
 <td></td>
 <td></td>
 <td>4</td>
+<td></td>
+<td></td>
+<td></td>
 </tr>
 <tr>
 <td>站</td>
@@ -88,6 +92,12 @@
 <td></td>
 <td></td>
 <td>6</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
 </tr>
 <tr>
 <td>联</td>
@@ -96,6 +106,16 @@
 <td></td>
 <td>100</td>
 <td>1900</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
 </tr>
 <tr>
 <td>盟</td>
@@ -104,6 +124,14 @@
 <td></td>
 <td></td>
 <td>100</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
 <td></td>
 <td></td>
 </tr>
@@ -121,6 +149,9 @@
 <td></td>
 <td></td>
 <td>7</td>
+<td></td>
+<td></td>
+<td></td>
 </tr>
 <tr>
 <td>网站</td>
@@ -133,6 +164,12 @@
 <td>600</td>
 <td></td>
 <td>800</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
 </tr>
 <tr>
 <td>站联</td>
@@ -144,6 +181,13 @@
 <td></td>
 <td></td>
 <td>2</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
 </tr>
 <tr>
 <td>联盟</td>
@@ -156,6 +200,12 @@
 <td></td>
 <td></td>
 <td>1100</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
 </tr>
 <tr>
 <td>上网站</td>
@@ -169,6 +219,11 @@
 <td></td>
 <td></td>
 <td>50</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
 </tr>
 <tr>
 <td>网站联</td>
@@ -183,6 +238,10 @@
 <td></td>
 <td></td>
 <td>2</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
 </tr>
 <tr>
 <td>站联盟</td>
@@ -196,8 +255,10 @@
 <td></td>
 <td></td>
 <td></td>
-<td></td>
 <td>3</td>
+<td></td>
+<td></td>
+<td></td>
 </tr>
 <tr>
 <td>上网站联</td>
@@ -214,6 +275,8 @@
 <td></td>
 <td></td>
 <td>1</td>
+<td></td>
+<td></td>
 </tr>
 <tr>
 <td>网站联盟</td>
@@ -231,6 +294,7 @@
 <td></td>
 <td></td>
 <td>1200</td>
+<td></td>
 </tr>
 <tr>
 <td>上网站联盟</td>
