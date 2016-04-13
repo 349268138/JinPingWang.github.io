@@ -282,6 +282,212 @@ return new Za.prototype.init(a,b,c,d,e)}m.Tween=Za,Za.prototype={constructor:Za,
             
               
                 
+                <a class="post-title-link" href="/2015/06/15/javaSourceCode/javax.servlet/ServletContextEvent/" itemprop="url">
+                  Servlet源码之ServletContextEvent
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2015-06-15T09:21:36+08:00" content="2015-06-15">
+              2015-06-15
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Servlet/" itemprop="url" rel="index">
+                    <span itemprop="name">Servlet</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/06/15/javaSourceCode/javax.servlet/ServletContextEvent/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/06/15/javaSourceCode/javax.servlet/ServletContextEvent/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p>介绍了Servlet-api中的ServletContextEvent类，这个类是关于ServletContext上下文的一个事件类，继承于EventObject。<br>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/06/15/javaSourceCode/javax.servlet/ServletContextEvent/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/06/13/javaSourceCode/javax.servlet/GenericServlet/" itemprop="url">
+                  Servlet源码之GenericServlet
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2015-06-13T11:13:21+08:00" content="2015-06-13">
+              2015-06-13
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Servlet/" itemprop="url" rel="index">
+                    <span itemprop="name">Servlet</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/06/13/javaSourceCode/javax.servlet/GenericServlet/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/06/13/javaSourceCode/javax.servlet/GenericServlet/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p>介绍了Servlet-api中的GenericServlet抽象类，GenericServlet实现了Servlet及ServletConfig接口。GenericServlet的作用就是为了写servlet更方便。<br>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/06/13/javaSourceCode/javax.servlet/GenericServlet/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2015/06/12/javaSourceCode/javax.servlet/Servlet/" itemprop="url">
                   Servlet源码之Servlet
                 </a>
@@ -340,7 +546,7 @@ return new Za.prototype.init(a,b,c,d,e)}m.Tween=Za,Za.prototype={constructor:Za,
 
       
         
-          <p>Servlet接口中的方法即是一个Servlet的生命周期。servlet被创建时，使用init方法来进行初始化，任何来自客户端会调用service的方法，当servlet被从service移除时调用destroy方法。此外还定义了getServletConfig方法以及getServletInfo方法用于获取该servlet相关的信息。<br>
+          <p>Servlet接口中的方法即是一个Servlet的生命周期。servlet被创建时，使用init方法来进行初始化，任何来自客户端会调用service的方法，当servlet被从service移除时调用destroy方法。此外还定义了getServletConfig方法以及getServletInfo方法用于获取该servlet相关的信息。对servlet的每个请求都在一个单独的线程中运行，任何特定servlet类都只有一个实例。<br>
           <div class="post-more-link text-center">
             <a class="btn" href="/2015/06/12/javaSourceCode/javax.servlet/Servlet/#more" rel="contents">
               阅读全文 &raquo;
@@ -1085,212 +1291,6 @@ return new Za.prototype.init(a,b,c,d,e)}m.Tween=Za,Za.prototype={constructor:Za,
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/01/12/bootstrap/10:bootstrap源码之Buttons/" itemprop="url">
-                  bootstrap源码之Buttons
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            发表于
-            <time itemprop="dateCreated" datetime="2015-01-12T17:03:24+08:00" content="2015-01-12">
-              2015-01-12
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp; 分类于
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/bootstrap/" itemprop="url" rel="index">
-                    <span itemprop="name">bootstrap</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/01/12/bootstrap/10:bootstrap源码之Buttons/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/01/12/bootstrap/10:bootstrap源码之Buttons/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <p>介绍了bootstrap中Buttons。简单介绍有关Button tags，Options，Sizes，Active state，Disabled state。<br>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/01/12/bootstrap/10:bootstrap源码之Buttons/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/01/12/bootstrap/9:bootstrap源码之Forms/" itemprop="url">
-                  bootstrap源码之Forms
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            发表于
-            <time itemprop="dateCreated" datetime="2015-01-12T09:24:11+08:00" content="2015-01-12">
-              2015-01-12
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp; 分类于
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/bootstrap/" itemprop="url" rel="index">
-                    <span itemprop="name">bootstrap</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/01/12/bootstrap/9:bootstrap源码之Forms/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/01/12/bootstrap/9:bootstrap源码之Forms/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <p>介绍了bootstrap中Form。简单介绍有关表单的样式。包含了Basic example，Inline form，Horizontal form，Supported controls，Static control，Disabled state，Readonly state，Help text，Validation states，Control sizing。<br>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/01/12/bootstrap/9:bootstrap源码之Forms/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
 
   </section>
 
@@ -1337,7 +1337,7 @@ return new Za.prototype.init(a,b,c,d,e)}m.Tween=Za,Za.prototype={constructor:Za,
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">38</span>
+              <span class="site-state-item-count">40</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

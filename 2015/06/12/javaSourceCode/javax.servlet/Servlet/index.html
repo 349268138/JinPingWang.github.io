@@ -81,16 +81,16 @@ return new Za.prototype.init(a,b,c,d,e)}m.Tween=Za,Za.prototype={constructor:Za,
 
 
 
-<meta name="description" content="Servlet接口中的方法即是一个Servlet的生命周期。servlet被创建时，使用init方法来进行初始化，任何来自客户端会调用service的方法，当servlet被从service移除时调用destroy方法。此外还定义了getServletConfig方法以及getServletInfo方法用于获取该servlet相关的信息。">
+<meta name="description" content="Servlet接口中的方法即是一个Servlet的生命周期。servlet被创建时，使用init方法来进行初始化，任何来自客户端会调用service的方法，当servlet被从service移除时调用destroy方法。此外还定义了getServletConfig方法以及getServletInfo方法用于获取该servlet相关的信息。对servlet的每个请求都在一个单独的线程中运行，任何特定">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Servlet源码之Servlet">
 <meta property="og:url" content="http://jinpingwang.github.io/2015/06/12/javaSourceCode/javax.servlet/Servlet/index.html">
 <meta property="og:site_name" content="WangJinPing's blog">
-<meta property="og:description" content="Servlet接口中的方法即是一个Servlet的生命周期。servlet被创建时，使用init方法来进行初始化，任何来自客户端会调用service的方法，当servlet被从service移除时调用destroy方法。此外还定义了getServletConfig方法以及getServletInfo方法用于获取该servlet相关的信息。">
-<meta property="og:updated_time" content="2016-04-01T07:16:10.470Z">
+<meta property="og:description" content="Servlet接口中的方法即是一个Servlet的生命周期。servlet被创建时，使用init方法来进行初始化，任何来自客户端会调用service的方法，当servlet被从service移除时调用destroy方法。此外还定义了getServletConfig方法以及getServletInfo方法用于获取该servlet相关的信息。对servlet的每个请求都在一个单独的线程中运行，任何特定">
+<meta property="og:updated_time" content="2016-04-06T14:05:18.888Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Servlet源码之Servlet">
-<meta name="twitter:description" content="Servlet接口中的方法即是一个Servlet的生命周期。servlet被创建时，使用init方法来进行初始化，任何来自客户端会调用service的方法，当servlet被从service移除时调用destroy方法。此外还定义了getServletConfig方法以及getServletInfo方法用于获取该servlet相关的信息。">
+<meta name="twitter:description" content="Servlet接口中的方法即是一个Servlet的生命周期。servlet被创建时，使用init方法来进行初始化，任何来自客户端会调用service的方法，当servlet被从service移除时调用destroy方法。此外还定义了getServletConfig方法以及getServletInfo方法用于获取该servlet相关的信息。对servlet的每个请求都在一个单独的线程中运行，任何特定">
 
 
 
@@ -324,15 +324,15 @@ return new Za.prototype.init(a,b,c,d,e)}m.Tween=Za,Za.prototype={constructor:Za,
       
 
       
-        <span itemprop="articleBody"><p>Servlet接口中的方法即是一个Servlet的生命周期。servlet被创建时，使用init方法来进行初始化，任何来自客户端会调用service的方法，当servlet被从service移除时调用destroy方法。此外还定义了getServletConfig方法以及getServletInfo方法用于获取该servlet相关的信息。<br><a id="more"></a><br>介绍了Servlet-api中的Servlet接口，对接口作用以及里面的方法描述和需要注意的地方。</p>
+        <span itemprop="articleBody"><p>Servlet接口中的方法即是一个Servlet的生命周期。servlet被创建时，使用init方法来进行初始化，任何来自客户端会调用service的方法，当servlet被从service移除时调用destroy方法。此外还定义了getServletConfig方法以及getServletInfo方法用于获取该servlet相关的信息。对servlet的每个请求都在一个单独的线程中运行，任何特定servlet类都只有一个实例。<br><a id="more"></a><br>介绍了Servlet-api中的Servlet接口，对接口作用以及里面的方法描述和需要注意的地方。</p>
 <h3 id="u6E90_u7801"><a href="#u6E90_u7801" class="headerlink" title="源码"></a>源码</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Servlet</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">(ServletConfig config)</span> <span class="keyword">throws</span> ServletException</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> ServletConfig <span class="title">getServletConfig</span><span class="params">()</span></span>;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">service</span><span class="params">(ServletRequest req, ServletResponse res)</span> <span class="keyword">throws</span> ServletException, IOException</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getServletInfo</span><span class="params">()</span></span>;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">destroy</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="u5256_u6790"><a href="#u5256_u6790" class="headerlink" title="剖析"></a>剖析</h3><p><code>public void init(ServletConfig config) throws ServletException;</code>：<br>servlet容器创建一个servlet时调用，并且只调用一次。必需在init执行成功后，才能接收到请求。</p>
+<h3 id="u5256_u6790"><a href="#u5256_u6790" class="headerlink" title="剖析"></a>剖析</h3><p><code>public void init(ServletConfig config) throws ServletException;</code>：<br>servlet容器创建一个servlet时调用，并且只调用一次。必需在init执行成功后，才能接收到请求。init()方法使servlet可以访问ServletConfig和ServletContext对象。</p>
 <p><code>public ServletConfig getServletConfig();</code>：<br>获取ServletConfig对象。</p>
 <p><code>public void service(ServletRequest req, ServletResponse res) throws ServletException, IOException;</code>：<br>由servlet容器调用。需要注意的一个点是要注意并发，因为每个servlet只被创建一次，即只有一个实例。</p>
 <p><code>public String getServletInfo();</code>：<br>获取有关这个ServletConfig的信息如作者，版本等。</p>
 <p><code>public void destroy();</code>：<br>这个方法也是由servlet容器调用的，当servlet被从service移出时调用。</p>
 <hr>
-<p>servlet的生命周期：<br>（1）装载Servlet。该操作一般是动态执行。然而，Server通常会提供一个管理的选项，用于在Server启动时强制装载和初始化特定的Servlet。<br>（2）Server创建一个Servlet的实例<br>（3）Server调用Servlet的init（）方法<br>（4）一个客户端的请求到达Server<br>（5）Server创建一个请求对象<br>（6）Server创建一个响应对象<br>（7）Server激活Servlet的Service（）方法，传递请求、响应对象作为参数<br>（8）service（）方法获得关于请求对象的信息，处理请求，访问其他资源，获得需要的信息<br>（9）service（）方法使用响应对象的方法，将响应传回Server，最终到达客户端。Service（）方法可以激活其他方法以处理请求，如doGet（）或doPost（）或程序员自己开发的新的方法。<br>（10）对于更多的客户端请求，Server创建新的请求和响应对象，仍然激活此Servlet的service（）方法，将这两个对象作为参数传递给该方法。如此重复以上的循环，但无需再调用init（）方法。因为，一般Servlet只初始化一次（只有一个实例），而当Server不再需要Servlet时（如异常或Server关闭），Server将调用Servlet的destroy（）方法。</p>
+<p>servlet的生命周期：<br>容器运行多个线程来处理对一个servlet的多个请求。<br>servlet类加载-&gt;servlet实例化-&gt;调用init()方法-&gt;调用service()方法-&gt;调用destroy()方法。<br>具体如下：<br>（1）装载Servlet。该操作一般是动态执行。然而，Server通常会提供一个管理的选项，用于在Server启动时强制装载和初始化特定的Servlet。<br>（2）Server创建一个Servlet的实例<br>（3）Server调用Servlet的init（）方法<br>（4）一个客户端的请求到达Server<br>（5）Server创建一个请求对象<br>（6）Server创建一个响应对象<br>（7）Server激活Servlet的Service（）方法，传递请求、响应对象作为参数<br>（8）service（）方法获得关于请求对象的信息，处理请求，访问其他资源，获得需要的信息<br>（9）service（）方法使用响应对象的方法，将响应传回Server，最终到达客户端。Service（）方法可以激活其他方法以处理请求，如doGet（）或doPost（）或程序员自己开发的新的方法。<br>（10）对于更多的客户端请求，Server创建新的请求和响应对象，仍然激活此Servlet的service（）方法，将这两个对象作为参数传递给该方法。如此重复以上的循环，但无需再调用init（）方法。因为，一般Servlet只初始化一次（只有一个实例），而当Server不再需要Servlet时（如异常或Server关闭），Server将调用Servlet的destroy（）方法。</p>
 </span>
       
     </div>
@@ -358,8 +358,8 @@ return new Za.prototype.init(a,b,c,d,e)}m.Tween=Za,Za.prototype={constructor:Za,
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/10/30/javaSourceCode/java.util/Iterator/" rel="prev" title="java源码之Iterator">
-                java源码之Iterator <i class="fa fa-chevron-right"></i>
+              <a href="/2015/06/13/javaSourceCode/javax.servlet/GenericServlet/" rel="prev" title="Servlet源码之GenericServlet">
+                Servlet源码之GenericServlet <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -432,7 +432,7 @@ return new Za.prototype.init(a,b,c,d,e)}m.Tween=Za,Za.prototype={constructor:Za,
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">38</span>
+              <span class="site-state-item-count">40</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

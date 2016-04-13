@@ -87,7 +87,7 @@ return new Za.prototype.init(a,b,c,d,e)}m.Tween=Za,Za.prototype={constructor:Za,
 <meta property="og:url" content="http://jinpingwang.github.io/2015/06/11/javaSourceCode/javax.servlet/ServletContext/index.html">
 <meta property="og:site_name" content="WangJinPing's blog">
 <meta property="og:description" content="介绍了Servlet-api中的ServletContext接口，对接口作用以及里面的方法描述和需要注意的地方。">
-<meta property="og:updated_time" content="2016-04-01T06:09:51.557Z">
+<meta property="og:updated_time" content="2016-04-12T08:45:26.876Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Servlet源码之ServletContext">
 <meta name="twitter:description" content="介绍了Servlet-api中的ServletContext接口，对接口作用以及里面的方法描述和需要注意的地方。">
@@ -338,7 +338,7 @@ return new Za.prototype.init(a,b,c,d,e)}m.Tween=Za,Za.prototype={constructor:Za,
 <p><code>public URL getResource(String path) throws MalformedURLException;</code>：<br>用于获取path路径在存储上的全路径，当然也可是数据库等的路径。如/webapp下有一个文件index.html。则调用getResource(“/index.html”)则会返回：<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/<span class="constant">F</span><span class="symbol">:/eclipse64WorkPlace/servletcode/</span>.metadata/.plugins/org.eclipse.wst.server.core/tmp<span class="number">0</span>/wtpwebapps/baseweb/index.html</span><br></pre></td></tr></table></figure></p>
 <p><code>public InputStream getResourceAsStream(String path);</code>：<br>将path的文件当作一个InputStream。比如/webapp下有一个test.txt文档，文档内容为：<br><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">hello</span></span><br><span class="line">world</span><br></pre></td></tr></table></figure></p>
 <p>则调用以下语句就可以读取test.txt文件中的内容了。<br><figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Scanner scanner = <span class="literal">new</span> Scanner(getResourceAsStream(<span class="string">"/test.txt"</span>));</span><br><span class="line"><span class="keyword">while</span>(scanner<span class="built_in">.</span>hasNextLine())&#123;</span><br><span class="line"><span class="attribute">...</span><span class="built_in">.</span><br><span class="line"></span>&#125;</span><br></pre></td></tr></table></figure></p>
-<p><code>public RequestDispatcher getRequestDispatcher(String path);</code>：<br>根据提供的path返回一个RequestDispatcher对象。</p>
+<p><code>public RequestDispatcher getRequestDispatcher(String path);</code>：<br>根据提供的path返回一个RequestDispatcher对象。path必须是以”/“开头，表示要从这个Web应用的根开始查找。不同于ServletRequest可以不以”/“开头，表示从原来请求路的相对路径径查找。</p>
 <p><code>public RequestDispatcher getNamedDispatcher(String name);</code>：<br>根据提供的name返回一个RequestDispatcher对象。这个name指的是在web.xml中配置servlet-name。<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">servlet</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="title">servlet-name</span>&gt;</span>test3<span class="tag">&lt;/<span class="title">servlet-name</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="title">servlet-class</span>&gt;</span>test.test02<span class="tag">&lt;/<span class="title">servlet-class</span>&gt;</span>		</span><br><span class="line"><span class="tag">&lt;/<span class="title">servlet</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
 <p><code>public void log(String msg);</code>:<br>用于记录日志文件，在用eclipse开发时，会直接输出</p>
 <p><code>public void log(String message, Throwable throwable);</code>：<br>作用同上</p>
@@ -450,7 +450,7 @@ return new Za.prototype.init(a,b,c,d,e)}m.Tween=Za,Za.prototype={constructor:Za,
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">38</span>
+              <span class="site-state-item-count">40</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
