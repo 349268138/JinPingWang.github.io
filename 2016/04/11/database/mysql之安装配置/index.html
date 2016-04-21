@@ -82,16 +82,22 @@
 
 
 
-<meta name="description" content="介绍了linux下mysql-server的安装与卸载；登陆；编码配置；启动与关闭；root用户无法登陆解决。">
+<meta name="description" content="介绍了linux下mysql-server的安装与卸载；登陆；编码配置；启动与关闭；root用户无法登陆解决。
+安装与卸载安装mysql-server, mysql-client, libmysqlclient-dev。一般安装mysql-server就可以了。1apt-get install mysql-server
+将/etc/mysql/my.cnf中的这一行1bind-address">
 <meta property="og:type" content="article">
 <meta property="og:title" content="mysql之安装配置">
 <meta property="og:url" content="http://jinpingwang.github.io/2016/04/11/database/mysql之安装配置/index.html">
 <meta property="og:site_name" content="WangJinPing">
-<meta property="og:description" content="介绍了linux下mysql-server的安装与卸载；登陆；编码配置；启动与关闭；root用户无法登陆解决。">
-<meta property="og:updated_time" content="2016-04-21T10:55:27.336Z">
+<meta property="og:description" content="介绍了linux下mysql-server的安装与卸载；登陆；编码配置；启动与关闭；root用户无法登陆解决。
+安装与卸载安装mysql-server, mysql-client, libmysqlclient-dev。一般安装mysql-server就可以了。1apt-get install mysql-server
+将/etc/mysql/my.cnf中的这一行1bind-address">
+<meta property="og:updated_time" content="2016-04-21T12:17:42.458Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="mysql之安装配置">
-<meta name="twitter:description" content="介绍了linux下mysql-server的安装与卸载；登陆；编码配置；启动与关闭；root用户无法登陆解决。">
+<meta name="twitter:description" content="介绍了linux下mysql-server的安装与卸载；登陆；编码配置；启动与关闭；root用户无法登陆解决。
+安装与卸载安装mysql-server, mysql-client, libmysqlclient-dev。一般安装mysql-server就可以了。1apt-get install mysql-server
+将/etc/mysql/my.cnf中的这一行1bind-address">
 
 
 
@@ -144,7 +150,7 @@
       <span class="logo-line-after"><i></i></span>
     </a>
   </div>
-  <p class="site-subtitle">My Notes</p>
+  <p class="site-subtitle">Quick notes</p>
 </div>
 
 <div class="site-nav-toggle">
@@ -345,9 +351,10 @@
       
 
       
-        <p>介绍了linux下mysql-server的安装与卸载；登陆；编码配置；启动与关闭；root用户无法登陆解决。<br><a id="more"></a></p>
+        <p>介绍了linux下mysql-server的安装与卸载；登陆；编码配置；启动与关闭；root用户无法登陆解决。</p>
 <h3 id="u5B89_u88C5_u4E0E_u5378_u8F7D"><a href="#u5B89_u88C5_u4E0E_u5378_u8F7D" class="headerlink" title="安装与卸载"></a>安装与卸载</h3><h4 id="u5B89_u88C5"><a href="#u5B89_u88C5" class="headerlink" title="安装"></a>安装</h4><p>mysql-server, mysql-client, libmysqlclient-dev。一般安装mysql-server就可以了。<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt-get <span class="operator"><span class="keyword">install</span> mysql-<span class="keyword">server</span></span></span><br></pre></td></tr></table></figure></p>
 <p>将/etc/mysql/my.cnf中的这一行<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bind-address           = <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span></span><br></pre></td></tr></table></figure></p>
+<a id="more"></a>
 <p>注释掉，修改为<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#bind-address           = <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span></span></span><br></pre></td></tr></table></figure></p>
 <p>然后重启<br><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="regexp">/etc/i</span>nit.d<span class="regexp">/mysql restart</span></span><br></pre></td></tr></table></figure></p>
 <h4 id="u5378_u8F7D"><a href="#u5378_u8F7D" class="headerlink" title="卸载"></a>卸载</h4><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">//如果不知道版本号就直接用*来代替</span><br><span class="line">apt-<span class="built_in">get</span> autoremove --purge mysql-server-*</span><br><span class="line">apt-<span class="built_in">get</span> <span class="built_in">remove</span> mysql-server</span><br><span class="line">apt-<span class="built_in">get</span> autoremove mysql-server</span><br><span class="line">apt-<span class="built_in">get</span> <span class="built_in">remove</span> mysql-common</span><br></pre></td></tr></table></figure>

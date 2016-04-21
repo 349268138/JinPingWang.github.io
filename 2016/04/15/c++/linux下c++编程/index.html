@@ -82,16 +82,22 @@
 
 
 
-<meta name="description" content="介绍了gcc与g++的区别；linux下c++编程环境的搭建；编译链接c++程序；gdb调试c++程序四个部分内容。">
+<meta name="description" content="介绍了gcc与g++的区别；linux下c++编程环境的搭建；编译链接c++程序；gdb调试c++程序四个部分内容。
+gcc与g++的区别相同点gcc与g++都能编译c++程序（其实g++也是调用gcc)。
+不同点链接阶段，gcc命令不能自动和c++程序使用的库相联接，而g++可以自动相联。但gcc通过添加一些参数命令后，也可以与库相联接，如有一个test01.cpp的c++程序，则使用gcc完成">
 <meta property="og:type" content="article">
 <meta property="og:title" content="linux下c++编程">
 <meta property="og:url" content="http://jinpingwang.github.io/2016/04/15/c++/linux下c++编程/index.html">
 <meta property="og:site_name" content="WangJinPing">
-<meta property="og:description" content="介绍了gcc与g++的区别；linux下c++编程环境的搭建；编译链接c++程序；gdb调试c++程序四个部分内容。">
-<meta property="og:updated_time" content="2016-04-21T10:53:10.477Z">
+<meta property="og:description" content="介绍了gcc与g++的区别；linux下c++编程环境的搭建；编译链接c++程序；gdb调试c++程序四个部分内容。
+gcc与g++的区别相同点gcc与g++都能编译c++程序（其实g++也是调用gcc)。
+不同点链接阶段，gcc命令不能自动和c++程序使用的库相联接，而g++可以自动相联。但gcc通过添加一些参数命令后，也可以与库相联接，如有一个test01.cpp的c++程序，则使用gcc完成">
+<meta property="og:updated_time" content="2016-04-21T12:15:42.988Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="linux下c++编程">
-<meta name="twitter:description" content="介绍了gcc与g++的区别；linux下c++编程环境的搭建；编译链接c++程序；gdb调试c++程序四个部分内容。">
+<meta name="twitter:description" content="介绍了gcc与g++的区别；linux下c++编程环境的搭建；编译链接c++程序；gdb调试c++程序四个部分内容。
+gcc与g++的区别相同点gcc与g++都能编译c++程序（其实g++也是调用gcc)。
+不同点链接阶段，gcc命令不能自动和c++程序使用的库相联接，而g++可以自动相联。但gcc通过添加一些参数命令后，也可以与库相联接，如有一个test01.cpp的c++程序，则使用gcc完成">
 
 
 
@@ -144,7 +150,7 @@
       <span class="logo-line-after"><i></i></span>
     </a>
   </div>
-  <p class="site-subtitle">My Notes</p>
+  <p class="site-subtitle">Quick notes</p>
 </div>
 
 <div class="site-nav-toggle">
@@ -345,9 +351,9 @@
       
 
       
-        <p>介绍了gcc与g++的区别；linux下c++编程环境的搭建；编译链接c++程序；gdb调试c++程序四个部分内容。<br><a id="more"></a></p>
+        <p>介绍了gcc与g++的区别；linux下c++编程环境的搭建；编译链接c++程序；gdb调试c++程序四个部分内容。</p>
 <h3 id="gcc_u4E0Eg++_u7684_u533A_u522B"><a href="#gcc_u4E0Eg++_u7684_u533A_u522B" class="headerlink" title="gcc与g++的区别"></a>gcc与g++的区别</h3><h4 id="u76F8_u540C_u70B9"><a href="#u76F8_u540C_u70B9" class="headerlink" title="相同点"></a>相同点</h4><p>gcc与g++都能编译c++程序（其实g++也是调用gcc)。</p>
-<h4 id="u4E0D_u540C_u70B9"><a href="#u4E0D_u540C_u70B9" class="headerlink" title="不同点"></a>不同点</h4><p>链接阶段，gcc命令不能自动和c++程序使用的库相联接，而g++可以自动相联。但gcc通过添加一些参数命令后，也可以与库相联接，如有一个test01.cpp的c++程序，则使用gcc完成编译如下：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc <span class="built_in">test</span>01.cpp -o <span class="built_in">test</span> -lstdc++</span><br></pre></td></tr></table></figure></p>
+<h4 id="u4E0D_u540C_u70B9"><a href="#u4E0D_u540C_u70B9" class="headerlink" title="不同点"></a>不同点</h4><p>链接阶段，gcc命令不能自动和c++程序使用的库相联接，而g++可以自动相联。但gcc通过添加一些参数命令后，也可以与库相联接，如有一个test01.cpp的c++程序，则使用gcc完成编译如下：<br><a id="more"></a><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc <span class="built_in">test</span>01.cpp -o <span class="built_in">test</span> -lstdc++</span><br></pre></td></tr></table></figure></p>
 <h3 id="linux_u4E0Bc++_u7F16_u7A0B_u73AF_u5883_u642D_u5EFA"><a href="#linux_u4E0Bc++_u7F16_u7A0B_u73AF_u5883_u642D_u5EFA" class="headerlink" title="linux下c++编程环境搭建"></a>linux下c++编程环境搭建</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">apt-get <span class="operator"><span class="keyword">install</span> gcc</span><br><span class="line">apt-<span class="keyword">get</span> <span class="keyword">install</span> <span class="keyword">g</span>++</span><br><span class="line">apt-<span class="keyword">get</span> <span class="keyword">install</span> gdb</span></span><br></pre></td></tr></table></figure>
 <h3 id="u7F16_u8BD1c++_u7A0B_u5E8F"><a href="#u7F16_u8BD1c++_u7A0B_u5E8F" class="headerlink" title="编译c++程序"></a>编译c++程序</h3><h4 id="vim_u7F16_u5199_u4E00_u4E2Ac++_u7A0B_u5E8F_uFF1Atest01-cpp"><a href="#vim_u7F16_u5199_u4E00_u4E2Ac++_u7A0B_u5E8F_uFF1Atest01-cpp" class="headerlink" title="vim编写一个c++程序：test01.cpp"></a>vim编写一个c++程序：test01.cpp</h4><p>···<br>vim test01.cpp<br>···</p>
 <h4 id="test01-cpp_u5185_u5BB9"><a href="#test01-cpp_u5185_u5BB9" class="headerlink" title="test01.cpp内容"></a>test01.cpp内容</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> loop=<span class="number">0</span>; loop&lt;<span class="number">10</span>; loop++)&#123;</span><br><span class="line">                <span class="built_in">cout</span>&lt;&lt;loop&lt;&lt;endl;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>

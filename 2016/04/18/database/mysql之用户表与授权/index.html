@@ -82,16 +82,22 @@
 
 
 
-<meta name="description" content="介绍了mysql数据库下系统自带user表；mysql授权与撤销授权；ip远程登陆设置。">
+<meta name="description" content="介绍了mysql数据库下系统自带user表；mysql授权与撤销授权；ip远程登陆设置。
+user表使用mysql数据库1use mysql
+查询当前所有用户相关信息（可以通过该表来删除某个用户）。1select host ,user ,password from user;">
 <meta property="og:type" content="article">
 <meta property="og:title" content="mysql之用户表与授权">
 <meta property="og:url" content="http://jinpingwang.github.io/2016/04/18/database/mysql之用户表与授权/index.html">
 <meta property="og:site_name" content="WangJinPing">
-<meta property="og:description" content="介绍了mysql数据库下系统自带user表；mysql授权与撤销授权；ip远程登陆设置。">
-<meta property="og:updated_time" content="2016-04-21T10:54:02.250Z">
+<meta property="og:description" content="介绍了mysql数据库下系统自带user表；mysql授权与撤销授权；ip远程登陆设置。
+user表使用mysql数据库1use mysql
+查询当前所有用户相关信息（可以通过该表来删除某个用户）。1select host ,user ,password from user;">
+<meta property="og:updated_time" content="2016-04-21T12:17:06.586Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="mysql之用户表与授权">
-<meta name="twitter:description" content="介绍了mysql数据库下系统自带user表；mysql授权与撤销授权；ip远程登陆设置。">
+<meta name="twitter:description" content="介绍了mysql数据库下系统自带user表；mysql授权与撤销授权；ip远程登陆设置。
+user表使用mysql数据库1use mysql
+查询当前所有用户相关信息（可以通过该表来删除某个用户）。1select host ,user ,password from user;">
 
 
 
@@ -144,7 +150,7 @@
       <span class="logo-line-after"><i></i></span>
     </a>
   </div>
-  <p class="site-subtitle">My Notes</p>
+  <p class="site-subtitle">Quick notes</p>
 </div>
 
 <div class="site-nav-toggle">
@@ -345,9 +351,10 @@
       
 
       
-        <p>介绍了mysql数据库下系统自带user表；mysql授权与撤销授权；ip远程登陆设置。<br><a id="more"></a></p>
+        <p>介绍了mysql数据库下系统自带user表；mysql授权与撤销授权；ip远程登陆设置。</p>
 <h3 id="user_u8868"><a href="#user_u8868" class="headerlink" title="user表"></a>user表</h3><p>使用mysql数据库<br><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> mysql</span><br></pre></td></tr></table></figure></p>
 <p>查询当前所有用户相关信息（可以通过该表来删除某个用户）。<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">select</span> host ,<span class="keyword">user</span> ,<span class="keyword">password</span> <span class="keyword">from</span> <span class="keyword">user</span>;</span></span><br></pre></td></tr></table></figure></p>
+<a id="more"></a>
 <h3 id="u6388_u6743_u4E0E_u64A4_u9500_u6388_u6743"><a href="#u6388_u6743_u4E0E_u64A4_u9500_u6388_u6743" class="headerlink" title="授权与撤销授权"></a>授权与撤销授权</h3><h4 id="u6388_u6743"><a href="#u6388_u6743" class="headerlink" title="授权"></a>授权</h4><h5 id="u6388_u6743_u5E76_u521B_u5EFA"><a href="#u6388_u6743_u5E76_u521B_u5EFA" class="headerlink" title="授权并创建"></a>授权并创建</h5><figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">/<span class="keyword">*</span><span class="keyword">*</span></span><br><span class="line">  <span class="keyword">*</span> 创建一个用户，并且为他授权。</span><br><span class="line">  <span class="keyword">*</span> all privileges代表所有权限</span><br><span class="line">  <span class="keyword">*</span> 当然也可以改为select,delete,update,create,drop组合</span><br><span class="line">  <span class="keyword">*</span> 如：select,delete。</span><br><span class="line">  <span class="keyword">*</span> <span class="keyword">*</span>.<span class="keyword">*</span>代表所有数据库的所有表，test.<span class="keyword">*</span>代表test数据库的所有表</span><br><span class="line">  <span class="keyword">*</span> %表示登陆的ip，可以为具体ip，也可以为localhost，</span><br><span class="line">  <span class="keyword">*</span> 如果为%则表示可以从任何ip登陆。</span><br><span class="line">  <span class="keyword">*</span>/</span><br><span class="line">grant all privileges on <span class="keyword">*</span>.<span class="keyword">*</span> to '用户名'<span class="comment">@'%' identified by '这个用户的密码'</span></span><br><span class="line">//刷新权限</span><br><span class="line">flush privileges;</span><br></pre></td></tr></table></figure>
 <h5 id="u6388_u6743-1"><a href="#u6388_u6743-1" class="headerlink" title="授权"></a>授权</h5><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">grant</span> all <span class="keyword">privileges</span> <span class="keyword">on</span> *.* <span class="keyword">to</span> <span class="string">'用户名'</span>@<span class="string">'%'</span></span><br><span class="line">//刷新权限</span><br><span class="line"><span class="keyword">flush</span> <span class="keyword">privileges</span>;</span></span><br></pre></td></tr></table></figure>
 <h4 id="u64A4_u9500_u6388_u6743"><a href="#u64A4_u9500_u6388_u6743" class="headerlink" title="撤销授权"></a>撤销授权</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">grant</span> all <span class="keyword">privileges</span> <span class="keyword">on</span> *.* <span class="keyword">from</span> <span class="string">'root'</span>@<span class="string">'%'</span></span></span><br></pre></td></tr></table></figure>
