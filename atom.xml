@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title><![CDATA[WangJinPing's blog]]></title>
-  
+  <title><![CDATA[WangJinPing's Notes]]></title>
+  <subtitle><![CDATA[等风来]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://jinpingwang.github.io/"/>
   <updated>2016-04-21T10:57:44.083Z</updated>
