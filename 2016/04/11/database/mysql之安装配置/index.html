@@ -1,0 +1,736 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="mysql,数据库," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="WangJinPing's blog" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="介绍了linux下mysql-server的安装与卸载；登陆；编码配置；启动与关闭；root用户无法登陆解决。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="mysql之安装配置">
+<meta property="og:url" content="http://jinpingwang.github.io/2016/04/11/database/mysql之安装配置/index.html">
+<meta property="og:site_name" content="WangJinPing's blog">
+<meta property="og:description" content="介绍了linux下mysql-server的安装与卸载；登陆；编码配置；启动与关闭；root用户无法登陆解决。">
+<meta property="og:updated_time" content="2016-04-21T10:55:27.336Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="mysql之安装配置">
+<meta name="twitter:description" content="介绍了linux下mysql-server的安装与卸载；登陆；编码配置；启动与关闭；root用户无法登陆解决。">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> mysql之安装配置 | WangJinPing's blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">WangJinPing's blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-th fa-fw"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-user fa-fw"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="st-search-show-outputs">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'Aq7px34mBsH6UhwK43yW','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                mysql之安装配置
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-04-11T21:47:34+08:00" content="2016-04-11">
+              2016-04-11
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/数据库/" itemprop="url" rel="index">
+                    <span itemprop="name">数据库</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/04/11/database/mysql之安装配置/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/11/database/mysql之安装配置/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>介绍了linux下mysql-server的安装与卸载；登陆；编码配置；启动与关闭；root用户无法登陆解决。<br><a id="more"></a></p>
+<h3 id="u5B89_u88C5_u4E0E_u5378_u8F7D"><a href="#u5B89_u88C5_u4E0E_u5378_u8F7D" class="headerlink" title="安装与卸载"></a>安装与卸载</h3><h4 id="u5B89_u88C5"><a href="#u5B89_u88C5" class="headerlink" title="安装"></a>安装</h4><p>mysql-server, mysql-client, libmysqlclient-dev。一般安装mysql-server就可以了。<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt-get <span class="operator"><span class="keyword">install</span> mysql-<span class="keyword">server</span></span></span><br></pre></td></tr></table></figure></p>
+<p>将/etc/mysql/my.cnf中的这一行<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bind-address           = <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span></span><br></pre></td></tr></table></figure></p>
+<p>注释掉，修改为<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#bind-address           = <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span></span></span><br></pre></td></tr></table></figure></p>
+<p>然后重启<br><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="regexp">/etc/i</span>nit.d<span class="regexp">/mysql restart</span></span><br></pre></td></tr></table></figure></p>
+<h4 id="u5378_u8F7D"><a href="#u5378_u8F7D" class="headerlink" title="卸载"></a>卸载</h4><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">//如果不知道版本号就直接用*来代替</span><br><span class="line">apt-<span class="built_in">get</span> autoremove --purge mysql-server-*</span><br><span class="line">apt-<span class="built_in">get</span> <span class="built_in">remove</span> mysql-server</span><br><span class="line">apt-<span class="built_in">get</span> autoremove mysql-server</span><br><span class="line">apt-<span class="built_in">get</span> <span class="built_in">remove</span> mysql-common</span><br></pre></td></tr></table></figure>
+<h3 id="u767B_u9646"><a href="#u767B_u9646" class="headerlink" title="登陆"></a>登陆</h3><h4 id="u767B_u9646_u672C_u673A_u6570_u636E_u5E93"><a href="#u767B_u9646_u672C_u673A_u6570_u636E_u5E93" class="headerlink" title="登陆本机数据库"></a>登陆本机数据库</h4><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql -u username -<span class="tag">p</span></span><br><span class="line">mysql -u username -<span class="tag">p</span> dbname</span><br></pre></td></tr></table></figure>
+<h4 id="u767B_u9646_u8FDC_u7A0B_u6570_u636E_u5E93"><a href="#u767B_u9646_u8FDC_u7A0B_u6570_u636E_u5E93" class="headerlink" title="登陆远程数据库"></a>登陆远程数据库</h4><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//默认下root用户不支持远程登陆</span></span><br><span class="line">mysql -<span class="keyword">h</span> ip -<span class="keyword">u</span> username</span><br></pre></td></tr></table></figure>
+<h3 id="u7F16_u7801_u914D_u7F6E"><a href="#u7F16_u7801_u914D_u7F6E" class="headerlink" title="编码配置"></a>编码配置</h3><h4 id="u67E5_u770B_u5F53_u524D_u6570_u636E_u5E93_u7684_u5B57_u7B26_u96C6"><a href="#u67E5_u770B_u5F53_u524D_u6570_u636E_u5E93_u7684_u5B57_u7B26_u96C6" class="headerlink" title="查看当前数据库的字符集"></a>查看当前数据库的字符集</h4><p>登入mysql后输入<br><figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">status<span class="comment">;</span></span><br></pre></td></tr></table></figure></p>
+<p>然后可以看到<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">Server <span class="string">characterset:</span>	latin1</span><br><span class="line">Db     <span class="string">characterset:</span>	latin1</span><br><span class="line">Client <span class="string">characterset:</span>	latin1</span><br><span class="line">Conn.  <span class="string">characterset:</span>	latin1</span><br><span class="line">...</span><br></pre></td></tr></table></figure></p>
+<h4 id="u5C06_u5B57_u7B26_u96C6_u4FEE_u6539_u6210utf-8"><a href="#u5C06_u5B57_u7B26_u96C6_u4FEE_u6539_u6210utf-8" class="headerlink" title="将字符集修改成utf-8"></a>将字符集修改成utf-8</h4><p>编辑/etc/mysql/my.cnf，修改以下两个地方<br>其一：<br><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">[client]</span></span><br><span class="line"><span class="setting">port        =<span class="value"><span class="number">3306</span></span></span></span><br><span class="line"><span class="setting">socket     =<span class="value">/var/run/mysqld/mysqld.sock</span></span></span><br></pre></td></tr></table></figure></p>
+<p>在port前添加一行，修改成<br><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">[client]</span></span><br><span class="line"><span class="setting">default-character-set=<span class="value">utf8</span></span></span><br><span class="line"><span class="setting">port        =<span class="value"><span class="number">3306</span></span></span></span><br><span class="line"><span class="setting">socket     =<span class="value">/var/run/mysqld/mysqld.sock</span></span></span><br></pre></td></tr></table></figure></p>
+<p>其二：<br><figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[mysqld]</span><br><span class="line"><span class="keyword">user</span>        <span class="title">=mysql</span></span><br><span class="line">pid-file     =/var/run/mysqld/mysqld.pid</span><br></pre></td></tr></table></figure></p>
+<p>在user前添加一行，修改成<br><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">[mysqld]</span></span><br><span class="line"><span class="setting">character_set_server=<span class="value">utf8</span></span></span><br><span class="line"><span class="setting">user        =<span class="value">mysql</span></span></span><br><span class="line"><span class="setting">pid-file     =<span class="value">/var/run/mysqld/mysqld.pid</span></span></span><br></pre></td></tr></table></figure></p>
+<h4 id="u91CD_u542F_u6570_u636E_u5E93"><a href="#u91CD_u542F_u6570_u636E_u5E93" class="headerlink" title="重启数据库"></a>重启数据库</h4><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="regexp">/etc/i</span>nit.d<span class="regexp">/mysql restart</span></span><br></pre></td></tr></table></figure>
+<h4 id="u5220_u9664_u539F_u5148_u6570_u636E_u5E93"><a href="#u5220_u9664_u539F_u5148_u6570_u636E_u5E93" class="headerlink" title="删除原先数据库"></a>删除原先数据库</h4><p>修改编码后，原先的数据库还是乱码。但新建的数据库中创建的数据就不会乱码了。注意，在原先数据库中创建的新表还是乱码，必需在新创建的数据库中创建的表才不会乱码。</p>
+<h3 id="u542F_u52A8_u4E0E_u5173_u95ED"><a href="#u542F_u52A8_u4E0E_u5173_u95ED" class="headerlink" title="启动与关闭"></a>启动与关闭</h3><h4 id="u542F_u52A8"><a href="#u542F_u52A8" class="headerlink" title="启动"></a>启动</h4><figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/etc/init.d/mysql <span class="literal">start</span></span><br></pre></td></tr></table></figure>
+<h4 id="u5173_u95ED"><a href="#u5173_u95ED" class="headerlink" title="关闭"></a>关闭</h4><figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/etc/init.d/mysql <span class="literal">stop</span></span><br></pre></td></tr></table></figure>
+<h3 id="root_u7528_u6237_u65E0_u6CD5_u767B_u9646_u89E3_u51B3"><a href="#root_u7528_u6237_u65E0_u6CD5_u767B_u9646_u89E3_u51B3" class="headerlink" title="root用户无法登陆解决"></a>root用户无法登陆解决</h3><p>直接使用/etc/mysql/debian.cnf文件中[client]节提供的用户名和密码，进入数据库后删除root，然后重新创建并授权root用户。</p>
+
+      
+    </div>
+    
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block； padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/wechat-qcode.jpg" alt="王谨平 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎您扫一扫上面的微信公众号，订阅我的博客！</div>
+</div>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/mysql/" rel="tag">#mysql</a>
+          
+            <a href="/tags/数据库/" rel="tag">#数据库</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/04/07/bootstrap/11:bootstrap源码之Images/" rel="next" title="bootstrap源码之Images">
+                <i class="fa fa-chevron-left"></i> bootstrap源码之Images
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/04/12/algorithm/1/" rel="prev" title="二维数组中的查找">
+                二维数组中的查找 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/04/11/database/mysql之安装配置/"
+           data-title="mysql之安装配置" data-url="http://jinpingwang.github.io/2016/04/11/database/mysql之安装配置/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/headImage.jpg"
+               alt="王谨平" />
+          <p class="site-author-name" itemprop="name">王谨平</p>
+          <p class="site-description motion-element" itemprop="description">Waiting for the wind</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">43</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/jinpingwang" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/@349268138Jin" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/1848729614" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element">
+            <div class="links-of-blogroll-title">
+              <i class="fa fa-globe fa-fw"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://jinpingwang.github.io/404.html" title="Lost Chidlren" target="_blank">Lost Chidlren</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#u5B89_u88C5_u4E0E_u5378_u8F7D"><span class="nav-number">1.</span> <span class="nav-text">安装与卸载</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#u5B89_u88C5"><span class="nav-number">1.1.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#u5378_u8F7D"><span class="nav-number">1.2.</span> <span class="nav-text">卸载</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#u767B_u9646"><span class="nav-number">2.</span> <span class="nav-text">登陆</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#u767B_u9646_u672C_u673A_u6570_u636E_u5E93"><span class="nav-number">2.1.</span> <span class="nav-text">登陆本机数据库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#u767B_u9646_u8FDC_u7A0B_u6570_u636E_u5E93"><span class="nav-number">2.2.</span> <span class="nav-text">登陆远程数据库</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#u7F16_u7801_u914D_u7F6E"><span class="nav-number">3.</span> <span class="nav-text">编码配置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#u67E5_u770B_u5F53_u524D_u6570_u636E_u5E93_u7684_u5B57_u7B26_u96C6"><span class="nav-number">3.1.</span> <span class="nav-text">查看当前数据库的字符集</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#u5C06_u5B57_u7B26_u96C6_u4FEE_u6539_u6210utf-8"><span class="nav-number">3.2.</span> <span class="nav-text">将字符集修改成utf-8</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#u91CD_u542F_u6570_u636E_u5E93"><span class="nav-number">3.3.</span> <span class="nav-text">重启数据库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#u5220_u9664_u539F_u5148_u6570_u636E_u5E93"><span class="nav-number">3.4.</span> <span class="nav-text">删除原先数据库</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#u542F_u52A8_u4E0E_u5173_u95ED"><span class="nav-number">4.</span> <span class="nav-text">启动与关闭</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#u542F_u52A8"><span class="nav-number">4.1.</span> <span class="nav-text">启动</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#u5173_u95ED"><span class="nav-number">4.2.</span> <span class="nav-text">关闭</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#root_u7528_u6237_u65E0_u6CD5_u767B_u9646_u89E3_u51B3"><span class="nav-number">5.</span> <span class="nav-text">root用户无法登陆解决</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2014 - 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">王谨平</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"wangjinping"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+  
+
+
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>

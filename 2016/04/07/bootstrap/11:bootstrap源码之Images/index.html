@@ -1,0 +1,724 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="bootstrap,前端," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="WangJinPing's blog" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="介绍了bootstrap中Images。简单介绍有关Responsive images，Image shapes。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="bootstrap源码之Images">
+<meta property="og:url" content="http://jinpingwang.github.io/2016/04/07/bootstrap/11:bootstrap源码之Images/index.html">
+<meta property="og:site_name" content="WangJinPing's blog">
+<meta property="og:description" content="介绍了bootstrap中Images。简单介绍有关Responsive images，Image shapes。">
+<meta property="og:updated_time" content="2016-04-21T10:58:42.876Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="bootstrap源码之Images">
+<meta name="twitter:description" content="介绍了bootstrap中Images。简单介绍有关Responsive images，Image shapes。">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> bootstrap源码之Images | WangJinPing's blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">WangJinPing's blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-th fa-fw"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-user fa-fw"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="st-search-show-outputs">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'Aq7px34mBsH6UhwK43yW','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                bootstrap源码之Images
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-04-07T09:08:54+08:00" content="2016-04-07">
+              2016-04-07
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/bootstrap/" itemprop="url" rel="index">
+                    <span itemprop="name">bootstrap</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/04/07/bootstrap/11:bootstrap源码之Images/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/07/bootstrap/11:bootstrap源码之Images/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>介绍了bootstrap中Images。简单介绍有关Responsive images，Image shapes。<br><a id="more"></a></p>
+<h3 id="u6E90_u7801"><a href="#u6E90_u7801" class="headerlink" title="源码"></a>源码</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="class">.img-responsive</span> <span class="rules">&#123;</span><br><span class="line">  <span class="rule"><span class="attribute">display</span>:<span class="value"> block</span></span>;</span><br><span class="line">  <span class="rule"><span class="attribute">max-width</span>:<span class="value"> <span class="number">100%</span></span></span>;</span><br><span class="line">  <span class="rule"><span class="attribute">height</span>:<span class="value"> auto</span></span>;</span><br><span class="line">&#125;</span></span><br><span class="line"><span class="class">.center-block</span> <span class="rules">&#123;</span><br><span class="line">  <span class="rule"><span class="attribute">display</span>:<span class="value"> block</span></span>;</span><br><span class="line">  <span class="rule"><span class="attribute">margin-right</span>:<span class="value"> auto</span></span>;</span><br><span class="line">  <span class="rule"><span class="attribute">margin-left</span>:<span class="value"> auto</span></span>;</span><br><span class="line">&#125;</span></span><br><span class="line"><span class="class">.img-rounded</span> <span class="rules">&#123;</span><br><span class="line">  <span class="rule"><span class="attribute">border-radius</span>:<span class="value"> <span class="number">6px</span></span></span>;</span><br><span class="line">&#125;</span></span><br><span class="line"><span class="class">.img-thumbnail</span> <span class="rules">&#123;</span><br><span class="line">  <span class="rule"><span class="attribute">display</span>:<span class="value"> inline-block</span></span>;</span><br><span class="line">  <span class="rule"><span class="attribute">max-width</span>:<span class="value"> <span class="number">100%</span></span></span>;</span><br><span class="line">  <span class="rule"><span class="attribute">height</span>:<span class="value"> auto</span></span>;</span><br><span class="line">  <span class="rule"><span class="attribute">padding</span>:<span class="value"> <span class="number">4px</span></span></span>;</span><br><span class="line">  <span class="rule"><span class="attribute">line-height</span>:<span class="value"> <span class="number">1.42857143</span></span></span>;</span><br><span class="line">  <span class="rule"><span class="attribute">background-color</span>:<span class="value"> <span class="hexcolor">#fff</span></span></span>;</span><br><span class="line">  <span class="rule"><span class="attribute">border</span>:<span class="value"> <span class="number">1px</span> solid <span class="hexcolor">#ddd</span></span></span>;</span><br><span class="line">  <span class="rule"><span class="attribute">border-radius</span>:<span class="value"> <span class="number">4px</span></span></span>;</span><br><span class="line">  <span class="rule"><span class="attribute">-webkit-transition</span>:<span class="value"> all .<span class="number">2s</span> ease-in-out</span></span>;</span><br><span class="line">       <span class="rule"><span class="attribute">-o-transition</span>:<span class="value"> all .<span class="number">2s</span> ease-in-out</span></span>;</span><br><span class="line">          <span class="rule"><span class="attribute">transition</span>:<span class="value"> all .<span class="number">2s</span> ease-in-out</span></span>;</span><br><span class="line">&#125;</span></span><br><span class="line"><span class="class">.img-circle</span> <span class="rules">&#123;</span><br><span class="line">  <span class="rule"><span class="attribute">border-radius</span>:<span class="value"> <span class="number">50%</span></span></span>;</span><br><span class="line">&#125;</span></span><br></pre></td></tr></table></figure>
+<h3 id="u5256_u6790"><a href="#u5256_u6790" class="headerlink" title="剖析"></a>剖析</h3><h4 id="Responsive_images"><a href="#Responsive_images" class="headerlink" title="Responsive images"></a>Responsive images</h4><p><code>display: block</code>：将元素设置为块元素；<br><code>max-width: 100%;</code>：将元素的max-width设置为父元素的宽度。如果父元素的宽度大于元素本身的宽度，则使用元素的本身宽度。如果使用的是width: 100%，则不论元素的宽度是否大于父元素，则元素的的宽度都为父元素的宽度。<br><code>height: auto;</code>：将元素的height设置为auto。</p>
+<h4 id="Image_shapes"><a href="#Image_shapes" class="headerlink" title="Image shapes"></a>Image shapes</h4><h5 id="image-rounded"><a href="#image-rounded" class="headerlink" title="image-rounded"></a>image-rounded</h5><p>边角是圆弧形。如果圆弧不明显，可以重新设置border-radius的值。</p>
+<h5 id="image-thumbnail"><a href="#image-thumbnail" class="headerlink" title="image-thumbnail"></a>image-thumbnail</h5><p><code>display: inline-block;</code>：把元素设置为块元素，但可以在同一行。<br><code>max-width: 100%;</code>：宽度设置为父元素的宽度，超过了父元素的宽度则使用元素自己的宽度。<br>其它的就是设置边框与边界。</p>
+<h5 id="img-circle"><a href="#img-circle" class="headerlink" title="img-circle"></a>img-circle</h5><p>与image-rounded类似，通过设置border-radius来实现。</p>
+<h4 id="center-block_u4E0Etext-center"><a href="#center-block_u4E0Etext-center" class="headerlink" title="center-block与text-center"></a>center-block与text-center</h4><p>为了使img元素能居中，则通过为img元素添加center-block样式即可。<br>如果是为了使块元素中的文字居中，则通过为块元素添加text-center样式即可。但如果是非块元素，因为无法设置长宽，所以没办法通过text-center来使非块元素居中。<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="class">.text-center</span> <span class="rules">&#123;</span><br><span class="line">  <span class="rule"><span class="attribute">text-align</span>:<span class="value"> center</span></span>;</span><br><span class="line">&#125;</span></span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block； padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/wechat-qcode.jpg" alt="王谨平 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎您扫一扫上面的微信公众号，订阅我的博客！</div>
+</div>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/bootstrap/" rel="tag">#bootstrap</a>
+          
+            <a href="/tags/前端/" rel="tag">#前端</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/04/02/javaSourceCode/javax.servlet/RequestDispatcher/" rel="next" title="Servlet源码之RequestDispatcher">
+                <i class="fa fa-chevron-left"></i> Servlet源码之RequestDispatcher
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/04/11/database/mysql之安装配置/" rel="prev" title="mysql之安装配置">
+                mysql之安装配置 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/04/07/bootstrap/11:bootstrap源码之Images/"
+           data-title="bootstrap源码之Images" data-url="http://jinpingwang.github.io/2016/04/07/bootstrap/11:bootstrap源码之Images/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/headImage.jpg"
+               alt="王谨平" />
+          <p class="site-author-name" itemprop="name">王谨平</p>
+          <p class="site-description motion-element" itemprop="description">Waiting for the wind</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">43</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/jinpingwang" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/@349268138Jin" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/1848729614" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element">
+            <div class="links-of-blogroll-title">
+              <i class="fa fa-globe fa-fw"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://jinpingwang.github.io/404.html" title="Lost Chidlren" target="_blank">Lost Chidlren</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#u6E90_u7801"><span class="nav-number">1.</span> <span class="nav-text">源码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#u5256_u6790"><span class="nav-number">2.</span> <span class="nav-text">剖析</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Responsive_images"><span class="nav-number">2.1.</span> <span class="nav-text">Responsive images</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Image_shapes"><span class="nav-number">2.2.</span> <span class="nav-text">Image shapes</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#image-rounded"><span class="nav-number">2.2.1.</span> <span class="nav-text">image-rounded</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#image-thumbnail"><span class="nav-number">2.2.2.</span> <span class="nav-text">image-thumbnail</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#img-circle"><span class="nav-number">2.2.3.</span> <span class="nav-text">img-circle</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#center-block_u4E0Etext-center"><span class="nav-number">2.3.</span> <span class="nav-text">center-block与text-center</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2014 - 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">王谨平</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"wangjinping"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+  
+
+
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>

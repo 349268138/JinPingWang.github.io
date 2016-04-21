@@ -1,0 +1,742 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Servlet," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="WangJinPing's blog" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="介绍了Servlet-api中的ServletContext接口，对接口作用以及里面的方法描述和需要注意的地方。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Servlet源码之ServletContext">
+<meta property="og:url" content="http://jinpingwang.github.io/2016/04/14/javaSourceCode/javax.servlet/ServletContext/index.html">
+<meta property="og:site_name" content="WangJinPing's blog">
+<meta property="og:description" content="介绍了Servlet-api中的ServletContext接口，对接口作用以及里面的方法描述和需要注意的地方。">
+<meta property="og:updated_time" content="2016-04-21T10:56:10.425Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Servlet源码之ServletContext">
+<meta name="twitter:description" content="介绍了Servlet-api中的ServletContext接口，对接口作用以及里面的方法描述和需要注意的地方。">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> Servlet源码之ServletContext | WangJinPing's blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">WangJinPing's blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-th fa-fw"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-user fa-fw"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="st-search-show-outputs">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'Aq7px34mBsH6UhwK43yW','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Servlet源码之ServletContext
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-04-14T22:22:14+08:00" content="2016-04-14">
+              2016-04-14
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Servlet/" itemprop="url" rel="index">
+                    <span itemprop="name">Servlet</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/04/14/javaSourceCode/javax.servlet/ServletContext/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/14/javaSourceCode/javax.servlet/ServletContext/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>介绍了Servlet-api中的ServletContext接口，对接口作用以及里面的方法描述和需要注意的地方。<br><a id="more"></a></p>
+<h3 id="u6E90_u7801"><a href="#u6E90_u7801" class="headerlink" title="源码"></a>源码</h3><p>ServletContext接口定义了一组方法用于servlet与servlet窗口进行通信，例如：得到一个文件的MIME类型，requests的转发，向文件中写日志。ServletContext不同于ServletConfig，ServletContext是针对一个web工程，而ServletConfig只针对单个Servlet。<br><figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> interface ServletContext &#123;</span><br><span class="line">    <span class="keyword">public</span> ServletContext getContext(<span class="keyword">String</span> uripath);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">int</span> getMajorVersion();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">int</span> getMinorVersion();</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">String</span> getMimeType(<span class="keyword">String</span> file);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">public</span> Set getResourcePaths(<span class="keyword">String</span> path);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">public</span> URL getResource(<span class="keyword">String</span> path) <span class="keyword">throws</span> MalformedURLException;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">public</span> InputStream getResourceAsStream(<span class="keyword">String</span> path);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">public</span> RequestDispatcher getRequestDispatcher(<span class="keyword">String</span> path);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">public</span> RequestDispatcher getNamedDispatcher(<span class="keyword">String</span> name);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="built_in">log</span>(<span class="keyword">String</span> msg);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="built_in">log</span>(<span class="keyword">String</span> message, Throwable throwable);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">String</span> getRealPath(<span class="keyword">String</span> path);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">String</span> getServerInfo();</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">String</span> getInitParameter(<span class="keyword">String</span> name);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">public</span> Enumeration getInitParameterNames();</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">Object</span> getAttribute(<span class="keyword">String</span> name);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">public</span> Enumeration getAttributeNames();</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> setAttribute(<span class="keyword">String</span> name, <span class="keyword">Object</span> object);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> removeAttribute(<span class="keyword">String</span> name);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">String</span> getServletContextName();    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="web-xml"><a href="#web-xml" class="headerlink" title="web.xml"></a>web.xml</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">servlet</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">servlet-name</span>&gt;</span>test<span class="tag">&lt;/<span class="title">servlet-name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">servlet-class</span>&gt;</span>test.test01<span class="tag">&lt;/<span class="title">servlte-class</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">init-param</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">param-name</span>&gt;</span>test01Name<span class="tag">&lt;/<span class="title">param-name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">para-value</span>&gt;</span>test01Value<span class="tag">&lt;/<span class="title">param-value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="title">init-param</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">servlet</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="title">context-param</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">param-name</span>&gt;</span>test01<span class="tag">&lt;/<span class="title">param-name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">param-value</span>&gt;</span>test02<span class="tag">&lt;/<span class="title">param-value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">context-para</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="u5256_u6790"><a href="#u5256_u6790" class="headerlink" title="剖析"></a>剖析</h3><p><code>public ServletContext getContext(String uripath);</code>：<br>可以通这个方法获取其它web上下文的配置文件，前提是保证相应的<context>配置中设置crossContext=”true”。例如，tomcat下有两个web应用：baseweb，test。则在/tomcat/conf/Catalina/localhost下配置baseweb.xml与test.xml：<br>baseweb.xml<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="pi">&lt;?xml version='1.0' encoding='utf-8'?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">Context</span> <span class="attribute">docBase</span>=<span class="value">"F:\eclipse64WorkPlace\servletcode\baseweb\target\baseweb"</span> <span class="attribute">crossContext</span>=<span class="value">"true"</span>/&gt;</span></span><br></pre></td></tr></table></figure></context></p>
+<p>test.xml<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="pi">&lt;?xml version='1.0' encoding='utf-8'?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">Context</span> <span class="attribute">docBase</span>=<span class="value">"F:\eclipse64WorkPlace\servletcode\test\target\test"</span> <span class="attribute">crossContext</span>=<span class="value">"true"</span>/&gt;</span>。</span><br></pre></td></tr></table></figure></p>
+<p>则在baseweb应用中通过getContext(“/test”)来获取test应用下的web.xml配置。</p>
+<p><code>public int getMajorVersion();</code>：<br>用于获取servlet容器支持的servlet api的主版本号</p>
+<p><code>public int getMinorVersion();</code>：<br>用于获取servlet容器支持的servlet api的次版本号</p>
+<p><code>public String getMimeType(String file);</code>：<br>获取某个文件的Mime类型。如getMimeType(“index.html”)则返回text/html，getMimeType(“46.gim”)则返回image/jpeg。这个函数只是根据file后缀进行判断，和你工程里面是否有这个文件并无关系。</p>
+<p><code>public Set getResourcePaths(String path);</code>：<br>用于返回path目录下的文件。如根目录下的文件为：<br><figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">*</span> /welcome.html<span class="variable">&lt;br&gt;</span></span><br><span class="line"><span class="keyword">*</span> /catalog/index.html<span class="variable">&lt;br&gt;</span></span><br><span class="line"><span class="keyword">*</span> /catalog/products.html<span class="variable">&lt;br&gt;</span></span><br><span class="line"><span class="keyword">*</span> /catalog/offers/books.html<span class="variable">&lt;br&gt;</span></span><br><span class="line"><span class="keyword">*</span> /catalog/offers/music.html<span class="variable">&lt;br&gt;</span></span><br><span class="line"><span class="keyword">*</span> /customer/login.jsp<span class="variable">&lt;br&gt;</span></span><br><span class="line"><span class="keyword">*</span> /WEB-INF/web.xml<span class="variable">&lt;br&gt;</span></span><br><span class="line"><span class="keyword">*</span> /WEB-INF/classes/com.acme.OrderServlet.class,<span class="variable">&lt;br&gt;</span><span class="variable">&lt;br&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>则getResourcePaths(“/“)返回的是：/welcome.html /catalog/ /customer/ /WEB-INF/（只到/的下一层，并不会递归）</p>
+<p><code>public URL getResource(String path) throws MalformedURLException;</code>：<br>用于获取path路径在存储上的全路径，当然也可是数据库等的路径。如/webapp下有一个文件index.html。则调用getResource(“/index.html”)则会返回：<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/<span class="constant">F</span><span class="symbol">:/eclipse64WorkPlace/servletcode/</span>.metadata/.plugins/org.eclipse.wst.server.core/tmp<span class="number">0</span>/wtpwebapps/baseweb/index.html</span><br></pre></td></tr></table></figure></p>
+<p><code>public InputStream getResourceAsStream(String path);</code>：<br>将path的文件当作一个InputStream。比如/webapp下有一个test.txt文档，文档内容为：<br><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">hello</span></span><br><span class="line">world</span><br></pre></td></tr></table></figure></p>
+<p>则调用以下语句就可以读取test.txt文件中的内容了。<br><figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Scanner scanner = <span class="literal">new</span> Scanner(getResourceAsStream(<span class="string">"/test.txt"</span>));</span><br><span class="line"><span class="keyword">while</span>(scanner<span class="built_in">.</span>hasNextLine())&#123;</span><br><span class="line"><span class="attribute">...</span><span class="built_in">.</span><br><span class="line"></span>&#125;</span><br></pre></td></tr></table></figure></p>
+<p><code>public RequestDispatcher getRequestDispatcher(String path);</code>：<br>根据提供的path返回一个RequestDispatcher对象。path必须是以”/“开头，表示要从这个Web应用的根开始查找。不同于ServletRequest可以不以”/“开头，表示从原来请求路的相对路径径查找。</p>
+<p><code>public RequestDispatcher getNamedDispatcher(String name);</code>：<br>根据提供的name返回一个RequestDispatcher对象。这个name指的是在web.xml中配置servlet-name。<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">servlet</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="title">servlet-name</span>&gt;</span>test3<span class="tag">&lt;/<span class="title">servlet-name</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="title">servlet-class</span>&gt;</span>test.test02<span class="tag">&lt;/<span class="title">servlet-class</span>&gt;</span>		</span><br><span class="line"><span class="tag">&lt;/<span class="title">servlet</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p><code>public void log(String msg);</code>:<br>用于记录日志文件，在用eclipse开发时，会直接输出</p>
+<p><code>public void log(String message, Throwable throwable);</code>：<br>作用同上</p>
+<p><code>public String getRealPath(String path);</code>：<br>获取某个文件的绝对路径，即在硬盘中存储的路径。与getResource(String path)有点类似。</p>
+<p><code>public String getServerInfo();</code>：<br>用于返回Servlet容器的信息。信息的形式为：servername/versionnumber<br>如：Apache Tomcat/8.0.14</p>
+<p><code>public String getInitParameter(String name);</code>：<br>获取web.xml下<context-param>中<param-name>里与name对应<param-value>的值。</param-value></param-name></context-param></p>
+<p><code>public Enumeration getInitParameterNames();</code>：<br>获取web.xml下<context-param>中<param-name>的集合。</param-name></context-param></p>
+<p><code>public Object getAttribute(String name);</code>：<br>name是指servlet容器中相关的属性，根据这个属性返回相应的值。<br>比如<br>name=”org.apache.tomcat.InstanceManager”时，<br>返回的是<br>org.apache.catalina.core.DefaultInstanceManager@140103bd</p>
+<p><code>public Enumeration getAttributeNames();</code>：<br>获取servlet容器相关的所有属性集合。</p>
+<p><code>public void setAttribute(String name, Object object);</code>：<br>将sevlet容器中的某个属性值设置为object。</p>
+<p><code>public void removeAttribute(String name);</code>：<br>移除servlet容器中的某个属性。</p>
+<p><code>public String getServletContextName();</code>：<br>返回的是这个web application的名字，即web.xml下<display-name>标签的内容。</display-name></p>
+
+      
+    </div>
+    
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block； padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/wechat-qcode.jpg" alt="王谨平 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎您扫一扫上面的微信公众号，订阅我的博客！</div>
+</div>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Servlet/" rel="tag">#Servlet</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/04/12/algorithm/1/" rel="next" title="二维数组中的查找">
+                <i class="fa fa-chevron-left"></i> 二维数组中的查找
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/04/15/c++/linux下c++编程/" rel="prev" title="linux下c++编程">
+                linux下c++编程 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/04/14/javaSourceCode/javax.servlet/ServletContext/"
+           data-title="Servlet源码之ServletContext" data-url="http://jinpingwang.github.io/2016/04/14/javaSourceCode/javax.servlet/ServletContext/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/headImage.jpg"
+               alt="王谨平" />
+          <p class="site-author-name" itemprop="name">王谨平</p>
+          <p class="site-description motion-element" itemprop="description">Waiting for the wind</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">43</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/jinpingwang" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/@349268138Jin" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/1848729614" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element">
+            <div class="links-of-blogroll-title">
+              <i class="fa fa-globe fa-fw"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://jinpingwang.github.io/404.html" title="Lost Chidlren" target="_blank">Lost Chidlren</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#u6E90_u7801"><span class="nav-number">1.</span> <span class="nav-text">源码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#web-xml"><span class="nav-number">2.</span> <span class="nav-text">web.xml</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#u5256_u6790"><span class="nav-number">3.</span> <span class="nav-text">剖析</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2014 - 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">王谨平</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"wangjinping"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+  
+
+
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>
