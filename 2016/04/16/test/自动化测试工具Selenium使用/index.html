@@ -82,16 +82,19 @@
 
 
 
-<meta name="description" content="Selenium也是一个用于Web应用程序测试的工具。Selenium测试直接运行在浏览器中，就像真正的用户在操作一样。支持的浏览器包括IE、Mozilla Firefox、Mozilla Suite等。本文通过简单的介绍如何安装与使用Selenium。">
+<meta name="description" content="Selenium也是一个用于Web应用程序测试的工具。Selenium测试直接运行在浏览器中，就像真正的用户在操作一样。支持的浏览器包括IE、Mozilla Firefox、Mozilla Suite等。本文通过简单的介绍如何安装与使用Selenium。
+在Maven工程的pom.xml添加依赖12345   &amp;lt;dependency&amp;gt;   	&amp;lt;groupId&amp;gt;org.sel">
 <meta property="og:type" content="article">
 <meta property="og:title" content="自动化测试工具Selenium使用">
 <meta property="og:url" content="http://jinpingwang.github.io/2016/04/16/test/自动化测试工具Selenium使用/index.html">
 <meta property="og:site_name" content="WangJinPing">
-<meta property="og:description" content="Selenium也是一个用于Web应用程序测试的工具。Selenium测试直接运行在浏览器中，就像真正的用户在操作一样。支持的浏览器包括IE、Mozilla Firefox、Mozilla Suite等。本文通过简单的介绍如何安装与使用Selenium。">
-<meta property="og:updated_time" content="2016-04-23T08:04:43.351Z">
+<meta property="og:description" content="Selenium也是一个用于Web应用程序测试的工具。Selenium测试直接运行在浏览器中，就像真正的用户在操作一样。支持的浏览器包括IE、Mozilla Firefox、Mozilla Suite等。本文通过简单的介绍如何安装与使用Selenium。
+在Maven工程的pom.xml添加依赖12345   &amp;lt;dependency&amp;gt;   	&amp;lt;groupId&amp;gt;org.sel">
+<meta property="og:updated_time" content="2016-04-23T08:18:55.946Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="自动化测试工具Selenium使用">
-<meta name="twitter:description" content="Selenium也是一个用于Web应用程序测试的工具。Selenium测试直接运行在浏览器中，就像真正的用户在操作一样。支持的浏览器包括IE、Mozilla Firefox、Mozilla Suite等。本文通过简单的介绍如何安装与使用Selenium。">
+<meta name="twitter:description" content="Selenium也是一个用于Web应用程序测试的工具。Selenium测试直接运行在浏览器中，就像真正的用户在操作一样。支持的浏览器包括IE、Mozilla Firefox、Mozilla Suite等。本文通过简单的介绍如何安装与使用Selenium。
+在Maven工程的pom.xml添加依赖12345   &amp;lt;dependency&amp;gt;   	&amp;lt;groupId&amp;gt;org.sel">
 
 
 
@@ -345,8 +348,9 @@
       
 
       
-        <p>Selenium也是一个用于Web应用程序测试的工具。Selenium测试直接运行在浏览器中，就像真正的用户在操作一样。支持的浏览器包括IE、Mozilla Firefox、Mozilla Suite等。本文通过简单的介绍如何安装与使用Selenium。<br><a id="more"></a></p>
+        <p>Selenium也是一个用于Web应用程序测试的工具。Selenium测试直接运行在浏览器中，就像真正的用户在操作一样。支持的浏览器包括IE、Mozilla Firefox、Mozilla Suite等。本文通过简单的介绍如何安装与使用Selenium。</p>
 <h4 id="u5728Maven_u5DE5_u7A0B_u7684pom-xml_u6DFB_u52A0_u4F9D_u8D56"><a href="#u5728Maven_u5DE5_u7A0B_u7684pom-xml_u6DFB_u52A0_u4F9D_u8D56" class="headerlink" title="在Maven工程的pom.xml添加依赖"></a>在Maven工程的pom.xml添加依赖</h4><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">   <span class="tag">&lt;<span class="title">dependency</span>&gt;</span></span><br><span class="line">   	<span class="tag">&lt;<span class="title">groupId</span>&gt;</span>org.seleniumhq.selenium<span class="tag">&lt;/<span class="title">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">artifactId</span>&gt;</span>selenium-java<span class="tag">&lt;/<span class="title">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">version</span>&gt;</span>2.53.0<span class="tag">&lt;/<span class="title">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<a id="more"></a>
 <h4 id="u521B_u5EFA_u4E00_u4E2Aoppo_u767B_u9646_u6D4B_u8BD5_u7C7B"><a href="#u521B_u5EFA_u4E00_u4E2Aoppo_u767B_u9646_u6D4B_u8BD5_u7C7B" class="headerlink" title="创建一个oppo登陆测试类"></a>创建一个oppo登陆测试类</h4><figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">GoogleTest</span>&#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> WebDriver driver;  </span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span>(<span class="params">String[] args</span>)  </span>&#123;</span><br><span class="line">		System.<span class="keyword">out</span>.print(<span class="string">"开始web自动化!!"</span>);</span><br><span class="line">		</span><br><span class="line">		<span class="comment">//如果fireFox则不需要这个操作</span></span><br><span class="line">		System.setProperty(<span class="string">"webdriver.chrome.driver"</span>,<span class="string">"C:/Program Files (x86)/Google/Chrome/Application/chromedriver.exe"</span>);</span><br><span class="line">		driver =<span class="keyword">new</span> ChromeDriver();</span><br><span class="line">		driver.<span class="keyword">get</span>(<span class="string">"http://www.oppo.com/cn/"</span>);</span><br><span class="line">		driver.findElement(By.linkText(<span class="string">"注册"</span>)).click();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h4 id="u8FD0_u884C"><a href="#u8FD0_u884C" class="headerlink" title="运行"></a>运行</h4><p>点击eclipse运行后，就会自动打开chrome，然后点击了oppo首页中的注册按钮，跳转到注册页面。</p>
 
