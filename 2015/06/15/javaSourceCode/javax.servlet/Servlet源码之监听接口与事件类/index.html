@@ -1,0 +1,731 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Servlet," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Quick notes" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="介绍了Servlet-api中的八个监听接口分别为：ServletContextListener，ServletContextAttributeListener，ServletRequestListener，ServletRequestAttributeListener，HttpSessionListener，HttpSessionAttributeListener，HttpSessionBind">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Servlet源码之监听接口与事件类">
+<meta property="og:url" content="http://jinpingwang.github.io/2015/06/15/javaSourceCode/javax.servlet/Servlet源码之监听接口与事件类/index.html">
+<meta property="og:site_name" content="Quick notes">
+<meta property="og:description" content="介绍了Servlet-api中的八个监听接口分别为：ServletContextListener，ServletContextAttributeListener，ServletRequestListener，ServletRequestAttributeListener，HttpSessionListener，HttpSessionAttributeListener，HttpSessionBind">
+<meta property="og:updated_time" content="2016-04-25T02:55:28.496Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Servlet源码之监听接口与事件类">
+<meta name="twitter:description" content="介绍了Servlet-api中的八个监听接口分别为：ServletContextListener，ServletContextAttributeListener，ServletRequestListener，ServletRequestAttributeListener，HttpSessionListener，HttpSessionAttributeListener，HttpSessionBind">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> Servlet源码之监听接口与事件类 | Quick notes </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Quick notes</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">王谨平</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-th fa-fw"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-user fa-fw"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="st-search-show-outputs">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'Aq7px34mBsH6UhwK43yW','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Servlet源码之监听接口与事件类
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-06-15T09:55:12+08:00" content="2015-06-15">
+              2015-06-15
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Servlet/" itemprop="url" rel="index">
+                    <span itemprop="name">Servlet</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/06/15/javaSourceCode/javax.servlet/Servlet源码之监听接口与事件类/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/06/15/javaSourceCode/javax.servlet/Servlet源码之监听接口与事件类/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>介绍了Servlet-api中的八个监听接口分别为：ServletContextListener，ServletContextAttributeListener，ServletRequestListener，ServletRequestAttributeListener，HttpSessionListener，HttpSessionAttributeListener，HttpSessionBindingListener，HtpSessionActivationListener。以及事件类为：ServletContextEvent，ServletContextAttributeEvent，ServletRequestEvent，ServletRequestAttributeEvent，HttpSessionEvent，HttpSessionBindingEvent。实现这些接口的监听类（除了HttpSessionBindingListener），都需要在web.xml进行配置后才会起作用，对于不同的事件，相应的监听类便能进行相应的处理。<br><a id="more"></a></p>
+<h3 id="u6E90_u7801"><a href="#u6E90_u7801" class="headerlink" title="源码"></a>源码</h3><h4 id="ServletContextListener"><a href="#ServletContextListener" class="headerlink" title="ServletContextListener"></a>ServletContextListener</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">ServletContextListener</span> <span class="keyword">extends</span> <span class="title">EventListener</span> </span>&#123;</span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">contextInitialized</span> <span class="params">( ServletContextEvent sce )</span></span>;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">contextDestroyed</span> <span class="params">( ServletContextEvent sce )</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="ServletContextAttributeListener"><a href="#ServletContextAttributeListener" class="headerlink" title="ServletContextAttributeListener"></a>ServletContextAttributeListener</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">ServletContextAttributeListener</span> <span class="keyword">extends</span> <span class="title">EventListener</span> </span>&#123;</span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">attributeAdded</span><span class="params">(ServletContextAttributeEvent scab)</span></span>;</span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">attributeRemoved</span><span class="params">(ServletContextAttributeEvent scab)</span></span>;</span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">attributeReplaced</span><span class="params">(ServletContextAttributeEvent scab)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="ServletRequestListener"><a href="#ServletRequestListener" class="headerlink" title="ServletRequestListener"></a>ServletRequestListener</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">ServletRequestListener</span> <span class="keyword">extends</span> <span class="title">EventListener</span> </span>&#123;</span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">requestDestroyed</span> <span class="params">( ServletRequestEvent sre )</span></span>;</span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">requestInitialized</span> <span class="params">( ServletRequestEvent sre )</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="ServletRequestAttributeListener"><a href="#ServletRequestAttributeListener" class="headerlink" title="ServletRequestAttributeListener"></a>ServletRequestAttributeListener</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">ServletRequestAttributeListener</span> <span class="keyword">extends</span> <span class="title">EventListener</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">attributeAdded</span><span class="params">(ServletRequestAttributeEvent srae)</span></span>;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">attributeRemoved</span><span class="params">(ServletRequestAttributeEvent srae)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">attributeReplaced</span><span class="params">(ServletRequestAttributeEvent srae)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="HttpSessionListener"><a href="#HttpSessionListener" class="headerlink" title="HttpSessionListener"></a>HttpSessionListener</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">HttpSessionListener</span> <span class="keyword">extends</span> <span class="title">EventListener</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sessionCreated</span> <span class="params">( HttpSessionEvent se )</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sessionDestroyed</span> <span class="params">( HttpSessionEvent se )</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="HttpSessionAttributeListener"><a href="#HttpSessionAttributeListener" class="headerlink" title="HttpSessionAttributeListener"></a>HttpSessionAttributeListener</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">HttpSessionAttributeListener</span> <span class="keyword">extends</span> <span class="title">EventListener</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">attributeAdded</span> <span class="params">( HttpSessionBindingEvent se )</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">attributeRemoved</span> <span class="params">( HttpSessionBindingEvent se )</span></span>;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">attributeReplaced</span> <span class="params">( HttpSessionBindingEvent se )</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="HttpSessionBindingListener"><a href="#HttpSessionBindingListener" class="headerlink" title="HttpSessionBindingListener"></a>HttpSessionBindingListener</h4><figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">HttpSessionBindingListener</span> <span class="title">extends</span> <span class="title">EventListener</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">valueBound</span>(<span class="params">HttpSessionBindingEvent <span class="keyword">event</span></span>)</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">valueUnbound</span>(<span class="params">HttpSessionBindingEvent <span class="keyword">event</span></span>)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="HttpSessionActivationListener"><a href="#HttpSessionActivationListener" class="headerlink" title="HttpSessionActivationListener"></a>HttpSessionActivationListener</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">HttpSessionActivationListener</span> <span class="keyword">extends</span> <span class="title">EventListener</span> </span>&#123; </span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sessionWillPassivate</span><span class="params">(HttpSessionEvent se)</span></span>;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sessionDidActivate</span><span class="params">(HttpSessionEvent se)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="ServletContextEvent"><a href="#ServletContextEvent" class="headerlink" title="ServletContextEvent"></a>ServletContextEvent</h4><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">ServletContextEvent</span> <span class="keyword"><span class="keyword">extends</span></span> <span class="title">java</span>.<span class="title">util</span>.<span class="title">EventObject</span> &#123;</span> </span><br><span class="line">     </span><br><span class="line">    public <span class="type">ServletContextEvent</span>(<span class="type">ServletContext</span> source) &#123;</span><br><span class="line">	    <span class="keyword">super</span>(source);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    public <span class="type">ServletContext</span> getServletContext () &#123; </span><br><span class="line">	    <span class="keyword">return</span> (<span class="type">ServletContext</span>) <span class="keyword">super</span>.getSource();</span><br><span class="line">    &#125;   </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="ServletContextAttributeEvent"><a href="#ServletContextAttributeEvent" class="headerlink" title="ServletContextAttributeEvent"></a>ServletContextAttributeEvent</h4><figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">ServletContextAttributeEvent</span> <span class="title">extends</span> <span class="title">ServletContextEvent</span> &#123; </span><br><span class="line">	<span class="keyword">private</span> String name;</span><br><span class="line">	<span class="keyword">private</span> Object <span class="keyword">value</span>;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">ServletContextAttributeEvent</span>(<span class="params">ServletContext source, String name, Object <span class="keyword">value</span></span>) </span>&#123;</span><br><span class="line">	    super(source);</span><br><span class="line">	    <span class="keyword">this</span>.name = name;</span><br><span class="line">	    <span class="keyword">this</span>.<span class="keyword">value</span> = <span class="keyword">value</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">getName</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">this</span>.name;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> Object <span class="title">getValue</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	    <span class="keyword">return</span> <span class="keyword">this</span>.<span class="keyword">value</span>;   </span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="ServletRequestEvent"><a href="#ServletRequestEvent" class="headerlink" title="ServletRequestEvent"></a>ServletRequestEvent</h4><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">ServletContextEvent</span> <span class="keyword"><span class="keyword">extends</span></span> <span class="title">java</span>.<span class="title">util</span>.<span class="title">EventObject</span> &#123;</span> </span><br><span class="line">    </span><br><span class="line">    public <span class="type">ServletContextEvent</span>(<span class="type">ServletContext</span> source) &#123;</span><br><span class="line">	    <span class="keyword">super</span>(source);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public <span class="type">ServletContext</span> getServletContext () &#123; </span><br><span class="line">	    <span class="keyword">return</span> (<span class="type">ServletContext</span>) <span class="keyword">super</span>.getSource();</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<h4 id="ServletRequestAttributeEvent"><a href="#ServletRequestAttributeEvent" class="headerlink" title="ServletRequestAttributeEvent"></a>ServletRequestAttributeEvent</h4><figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">ServletRequestAttributeEvent</span> <span class="title">extends</span> <span class="title">ServletRequestEvent</span> &#123; </span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> Object <span class="keyword">value</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ServletRequestAttributeEvent</span>(<span class="params">ServletContext sc, ServletRequest request, String name, Object <span class="keyword">value</span></span>) </span>&#123;</span><br><span class="line">        super(sc, request);</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">        <span class="keyword">this</span>.<span class="keyword">value</span> = <span class="keyword">value</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.name;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">getValue</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.<span class="keyword">value</span>;   </span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<h4 id="HttpSessionEvent"><a href="#HttpSessionEvent" class="headerlink" title="HttpSessionEvent"></a>HttpSessionEvent</h4><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">HttpSessionEvent</span> <span class="keyword"><span class="keyword">extends</span></span> <span class="title">java</span>.<span class="title">util</span>.<span class="title">EventObject</span> &#123;</span></span><br><span class="line">	 </span><br><span class="line">    public <span class="type">HttpSessionEvent</span>(<span class="type">HttpSession</span> source) &#123;</span><br><span class="line">	    <span class="keyword">super</span>(source);</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    public <span class="type">HttpSession</span> getSession () &#123; </span><br><span class="line">	    <span class="keyword">return</span> (<span class="type">HttpSession</span>) <span class="keyword">super</span>.getSource();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="HttpSessionBindingEvent"><a href="#HttpSessionBindingEvent" class="headerlink" title="HttpSessionBindingEvent"></a>HttpSessionBindingEvent</h4><figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HttpSessionBindingEvent</span> <span class="keyword">extends</span> <span class="title">HttpSessionEvent</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> Object value;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">HttpSessionBindingEvent</span><span class="params">(HttpSession session, String name)</span> </span>&#123;</span><br><span class="line">    	<span class="keyword">super</span>(session);</span><br><span class="line">    	<span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;    </span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">HttpSessionBindingEvent</span><span class="params">(HttpSession session, String name, Object value)</span> </span>&#123;</span><br><span class="line">    	<span class="keyword">super</span>(session);</span><br><span class="line">    	<span class="keyword">this</span>.name = name;</span><br><span class="line">    	<span class="keyword">this</span>.value = value;</span><br><span class="line">    &#125; </span><br><span class="line">    </span><br><span class="line">    <span class="keyword">public</span> <span class="function">HttpSession <span class="title">getSession</span> <span class="params">()</span> </span>&#123; </span><br><span class="line">	    <span class="function"><span class="keyword">return</span> <span class="keyword">super</span>.<span class="title">getSession</span><span class="params">()</span></span>;</span><br><span class="line">    &#125;   </span><br><span class="line">    </span><br><span class="line">    <span class="keyword">public</span> <span class="function">String <span class="title">getName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	    <span class="keyword">return</span> name;</span><br><span class="line">    &#125;   </span><br><span class="line">    </span><br><span class="line">	<span class="keyword">public</span> <span class="function">Object <span class="title">getValue</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	    <span class="keyword">return</span> <span class="keyword">this</span>.value;   </span><br><span class="line">	&#125;   </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="u5256_u6790"><a href="#u5256_u6790" class="headerlink" title="剖析"></a>剖析</h3><h4 id="ServletContextListener-1"><a href="#ServletContextListener-1" class="headerlink" title="ServletContextListener"></a>ServletContextListener</h4><p>监听创建或撤销了一个上下文<br><code>public void contextInitialized ( ServletContextEvent sce )</code>：<br>当ServletContext上下文创建初始化时，监听到后就会调用这个方法。</p>
+<p><code>public void contextDestroyed ( ServletContextEvent sce )</code>：<br>当ServletContext上下文销毁时，监听到后调用这个方法。</p>
+<h4 id="ServletContextAttributeListener-1"><a href="#ServletContextAttributeListener-1" class="headerlink" title="ServletContextAttributeListener"></a>ServletContextAttributeListener</h4><p>监听一个Web应用上下文是否增加，删除或替换了一个属性</p>
+<h4 id="ServletRequestListener-1"><a href="#ServletRequestListener-1" class="headerlink" title="ServletRequestListener"></a>ServletRequestListener</h4><p>监听每次请求到来</p>
+<h4 id="ServletRequestAttributeListener-1"><a href="#ServletRequestAttributeListener-1" class="headerlink" title="ServletRequestAttributeListener"></a>ServletRequestAttributeListener</h4><p>监听增加，删除或替换一个请求属性</p>
+<h4 id="HttpSessionListener-1"><a href="#HttpSessionListener-1" class="headerlink" title="HttpSessionListener"></a>HttpSessionListener</h4><p>监听有多少个并发用户，跟踪活动的会话</p>
+<h4 id="HttpSessionAttributeListener-1"><a href="#HttpSessionAttributeListener-1" class="headerlink" title="HttpSessionAttributeListener"></a>HttpSessionAttributeListener</h4><p>监听增加，删除或替换一个会话属性</p>
+<h4 id="HttpSessionBindingListener-1"><a href="#HttpSessionBindingListener-1" class="headerlink" title="HttpSessionBindingListener"></a>HttpSessionBindingListener</h4><p>监听属性类对象被绑定到一个会话或删除。可用于保持数据库记录与属性类对象信息同步。</p>
+<h4 id="HttpSessionActivationListener-1"><a href="#HttpSessionActivationListener-1" class="headerlink" title="HttpSessionActivationListener"></a>HttpSessionActivationListener</h4><p>监听属性类型对象在其绑定的会话迁移到另一个JVM</p>
+<h4 id="ServletContextEvent-1"><a href="#ServletContextEvent-1" class="headerlink" title="ServletContextEvent"></a>ServletContextEvent</h4><p><code>public ServletContextEvent(ServletContext source)</code>：<br>构造函数，使用ServletContext对象来初始化超类。</p>
+<p><code>public ServletContext getServletContext ()</code>：<br>Bean方法，用于返回ServletContext。</p>
+
+      
+    </div>
+    
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Servlet/" rel="tag">#Servlet</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/06/15/javaSourceCode/javax.servlet/ServletContextEvent/" rel="next" title="Servlet源码之ServletContextEvent">
+                <i class="fa fa-chevron-left"></i> Servlet源码之ServletContextEvent
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/10/30/javaSourceCode/java.util/Iterator/" rel="prev" title="java源码之Iterator">
+                java源码之Iterator <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2015/06/15/javaSourceCode/javax.servlet/Servlet源码之监听接口与事件类/"
+           data-title="Servlet源码之监听接口与事件类" data-url="http://jinpingwang.github.io/2015/06/15/javaSourceCode/javax.servlet/Servlet源码之监听接口与事件类/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/headImage.jpg"
+               alt="王谨平" />
+          <p class="site-author-name" itemprop="name">王谨平</p>
+          <p class="site-description motion-element" itemprop="description">精通one，学习another，关注next</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">52</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">20</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/jinpingwang" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/@349268138Jin" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/1848729614" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.zhihu.com/people/wang-jin-ping-1-68" target="_blank" title="Zhihu">
+                  
+                    <i class="fa fa-globe"></i>
+                  
+                  Zhihu
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#u6E90_u7801"><span class="nav-number">1.</span> <span class="nav-text">源码</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#ServletContextListener"><span class="nav-number">1.1.</span> <span class="nav-text">ServletContextListener</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ServletContextAttributeListener"><span class="nav-number">1.2.</span> <span class="nav-text">ServletContextAttributeListener</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ServletRequestListener"><span class="nav-number">1.3.</span> <span class="nav-text">ServletRequestListener</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ServletRequestAttributeListener"><span class="nav-number">1.4.</span> <span class="nav-text">ServletRequestAttributeListener</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#HttpSessionListener"><span class="nav-number">1.4.1.</span> <span class="nav-text">HttpSessionListener</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#HttpSessionAttributeListener"><span class="nav-number">1.5.</span> <span class="nav-text">HttpSessionAttributeListener</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#HttpSessionBindingListener"><span class="nav-number">1.6.</span> <span class="nav-text">HttpSessionBindingListener</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#HttpSessionActivationListener"><span class="nav-number">1.7.</span> <span class="nav-text">HttpSessionActivationListener</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ServletContextEvent"><span class="nav-number">1.8.</span> <span class="nav-text">ServletContextEvent</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ServletContextAttributeEvent"><span class="nav-number">1.9.</span> <span class="nav-text">ServletContextAttributeEvent</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ServletRequestEvent"><span class="nav-number">1.10.</span> <span class="nav-text">ServletRequestEvent</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ServletRequestAttributeEvent"><span class="nav-number">1.11.</span> <span class="nav-text">ServletRequestAttributeEvent</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#HttpSessionEvent"><span class="nav-number">1.12.</span> <span class="nav-text">HttpSessionEvent</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#HttpSessionBindingEvent"><span class="nav-number">1.13.</span> <span class="nav-text">HttpSessionBindingEvent</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#u5256_u6790"><span class="nav-number">2.</span> <span class="nav-text">剖析</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#ServletContextListener-1"><span class="nav-number">2.1.</span> <span class="nav-text">ServletContextListener</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ServletContextAttributeListener-1"><span class="nav-number">2.2.</span> <span class="nav-text">ServletContextAttributeListener</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ServletRequestListener-1"><span class="nav-number">2.3.</span> <span class="nav-text">ServletRequestListener</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ServletRequestAttributeListener-1"><span class="nav-number">2.4.</span> <span class="nav-text">ServletRequestAttributeListener</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#HttpSessionListener-1"><span class="nav-number">2.5.</span> <span class="nav-text">HttpSessionListener</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#HttpSessionAttributeListener-1"><span class="nav-number">2.6.</span> <span class="nav-text">HttpSessionAttributeListener</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#HttpSessionBindingListener-1"><span class="nav-number">2.7.</span> <span class="nav-text">HttpSessionBindingListener</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#HttpSessionActivationListener-1"><span class="nav-number">2.8.</span> <span class="nav-text">HttpSessionActivationListener</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ServletContextEvent-1"><span class="nav-number">2.9.</span> <span class="nav-text">ServletContextEvent</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2014 - 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">王谨平</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"wangjinping"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+  
+
+
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>
