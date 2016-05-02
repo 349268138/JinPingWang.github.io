@@ -1,0 +1,727 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="面试," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Quick notes" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="红黑数树是一棵特殊的二叉搜索树，可以保证没有一条路径会比其他路径长出2倍，即有n个点的红黑树高度至多为2lg(n+1)，因而是近似于平衡的。红黑树在操作系统内核以及TreeMap都有广泛的应用，本文先简要介绍二叉搜索树的插入与删除，由此基础上引入红黑树的插入与删除。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据结构之红黑树前世今生">
+<meta property="og:url" content="http://jinpingwang.github.io/2016/04/25/interview/数据结构之红黑树前世今生/index.html">
+<meta property="og:site_name" content="Quick notes">
+<meta property="og:description" content="红黑数树是一棵特殊的二叉搜索树，可以保证没有一条路径会比其他路径长出2倍，即有n个点的红黑树高度至多为2lg(n+1)，因而是近似于平衡的。红黑树在操作系统内核以及TreeMap都有广泛的应用，本文先简要介绍二叉搜索树的插入与删除，由此基础上引入红黑树的插入与删除。">
+<meta property="og:image" content="http://hi.csdn.net/attachment/201012/29/8394323_129361793372ZK.png">
+<meta property="og:image" content="http://hi.csdn.net/attachment/201012/29/8394323_129361793372ZK.png">
+<meta property="og:image" content="http://hi.csdn.net/attachment/201012/29/8394323_1293617934U9zr.png">
+<meta property="og:image" content="http://i2.piimg.com/4564064fdc8ca980.jpg">
+<meta property="og:image" content="http://i4.piimg.com/1a94c4e84b3ccf41.jpg">
+<meta property="og:image" content="http://i2.piimg.com/3259a5eb97a01f0d.png">
+<meta property="og:image" content="http://i2.piimg.com/3156521b2cecbcc4.png">
+<meta property="og:image" content="http://i2.piimg.com/0b40e366ca416e97.png">
+<meta property="og:image" content="http://i2.piimg.com/913e986ccc80628a.png">
+<meta property="og:updated_time" content="2016-05-02T07:31:03.195Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="数据结构之红黑树前世今生">
+<meta name="twitter:description" content="红黑数树是一棵特殊的二叉搜索树，可以保证没有一条路径会比其他路径长出2倍，即有n个点的红黑树高度至多为2lg(n+1)，因而是近似于平衡的。红黑树在操作系统内核以及TreeMap都有广泛的应用，本文先简要介绍二叉搜索树的插入与删除，由此基础上引入红黑树的插入与删除。">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> 数据结构之红黑树前世今生 | Quick notes </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Quick notes</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">王谨平</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-th fa-fw"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-user fa-fw"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="st-search-show-outputs">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'Aq7px34mBsH6UhwK43yW','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                数据结构之红黑树前世今生
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-04-25T08:36:27+08:00" content="2016-04-25">
+              2016-04-25
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/面试/" itemprop="url" rel="index">
+                    <span itemprop="name">面试</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/04/25/interview/数据结构之红黑树前世今生/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/25/interview/数据结构之红黑树前世今生/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><div align="center"><img src="http://hi.csdn.net/attachment/201012/29/8394323_129361793372ZK.png"></div><br>红黑数树是一棵特殊的二叉搜索树，可以保证没有一条路径会比其他路径长出2倍，即有n个点的红黑树高度至多为2lg(n+1)，因而是近似于平衡的。红黑树在操作系统内核以及TreeMap都有广泛的应用，本文先简要介绍二叉搜索树的插入与删除，由此基础上引入红黑树的插入与删除。<br><a id="more"></a></p>
+<h3 id="u6EE1_u4E8C_u53C9_u6811"><a href="#u6EE1_u4E8C_u53C9_u6811" class="headerlink" title="满二叉树"></a>满二叉树</h3><p>除了最后一层无叶子结点多，其它层的每个结点都有两个子结点。</p>
+<h3 id="u5B8C_u5168_u4E8C_u53C9_u6811"><a href="#u5B8C_u5168_u4E8C_u53C9_u6811" class="headerlink" title="完全二叉树"></a>完全二叉树</h3><p>假设树高为h，则第1层到第(h-1)层是一棵满足(h-1)层的满二叉树，第h层中的所有结点都集中连续排在最左边。</p>
+<h3 id="u4E8C_u53C9_u641C_u7D22_u6811"><a href="#u4E8C_u53C9_u641C_u7D22_u6811" class="headerlink" title="二叉搜索树"></a>二叉搜索树</h3><h4 id="u63D2_u5165"><a href="#u63D2_u5165" class="headerlink" title="插入"></a>插入</h4><p>最终插入的位置都是叶子结点位置</p>
+<h4 id="u5220_u9664"><a href="#u5220_u9664" class="headerlink" title="删除"></a>删除</h4><p>1：如果删除的点为叶子结点，则直接删除<br>2：如果删除的点只有一个左结点或只有一个右结点，则用左结点或右结点代替结点的位置。<br>3：如果删除的点同时有左右孩子，则让右子树中的最小结点（即最左节点，如果这个最左结点有右孩子，则让最左结点的父亲连接最左结点的右孩子）来替换结点。【第3步中的另一各思想（不直接将结点删除，而是通过将新结点的值赋值到删除结点，这样就相当于将删除结点删除）：删除的点为D, D的直接后继为E（直接后继是指按中序遍历排在D后的第一个数），则直接将D的内容设置为E的内容，然后对E进行TRANSPLANT删除操作，其中u为E, v为E.right。】<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">TRANSPLANT</span>(<span class="type">T</span>, u, v)&#123;</span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * 如果只有三个结点A, B, C, 其中B, C为A的孩子结点。则如果u=A, v=C</span><br><span class="line">     * 则变成根为C，这里C并没有将A的左子树B绑定到C的左子树中</span><br><span class="line">     * 而是在TREE-DELETE(T, z)中的</span><br><span class="line">     * y.left = z.left</span><br><span class="line">     * y.left.p = y</span><br><span class="line">     * 这两行进行将B绑定到C的左子树中</span><br><span class="line">     */</span></span><br><span class="line">    <span class="keyword">if</span> u.p == <span class="type">NIL</span></span><br><span class="line">        <span class="type">T</span>.root = v</span><br><span class="line">    elseif u == u.p.<span class="keyword">left</span></span><br><span class="line">        u.p.<span class="keyword">left</span> = v</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        u.p.<span class="keyword">right</span> = v</span><br><span class="line">    <span class="keyword">if</span>(v != <span class="type">NIL</span>)</span><br><span class="line">        v.p = u.p</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">TREE</span>-<span class="type">DELETE</span>(<span class="type">T</span>, z)&#123;</span><br><span class="line">    <span class="keyword">if</span>(z.<span class="keyword">left</span> == <span class="type">NIL</span>)</span><br><span class="line">        <span class="type">TRANSPLANT</span>(<span class="type">T</span>, z, z.<span class="keyword">right</span>)</span><br><span class="line">    elseif(z.<span class="keyword">right</span> == <span class="type">NIL</span>)</span><br><span class="line">        <span class="type">TRANSPLANT</span>(<span class="type">T</span>, z, z.<span class="keyword">left</span>)</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        <span class="comment">//也可以是TREE-MAXMUM(z.left), 只不过后面要进行相应的变换。</span></span><br><span class="line">        <span class="comment">//这里得到的y一定是没有左子树的，所以后面的if就没有考虑y.left的情况</span></span><br><span class="line">        y = <span class="type">TREE</span>-<span class="type">MINIMUM</span>(z.<span class="keyword">right</span>)</span><br><span class="line">        <span class="comment">//y不是z的右结点情况</span></span><br><span class="line">        <span class="keyword">if</span>(y.p != z)</span><br><span class="line">            <span class="comment">//要让y的右子树（y.right）绑定到y的父结点的左子树（y.p.left）</span></span><br><span class="line">            <span class="type">TRANSPLANT</span>(<span class="type">T</span>, y, y.<span class="keyword">right</span>)</span><br><span class="line">            <span class="comment">//然后再让删除结点的右子树绑定到y的右子树</span></span><br><span class="line">            <span class="comment">//再将z的右子树的父结点设置为y</span></span><br><span class="line">            y.<span class="keyword">right</span> = z.<span class="keyword">right</span>;</span><br><span class="line">            y.<span class="keyword">right</span>.p = y</span><br><span class="line">        <span class="comment">//将y绑定到z父结点的右子树</span></span><br><span class="line">        <span class="type">TRANSPLANT</span>(<span class="type">T</span>, z, y)</span><br><span class="line">        <span class="comment">//将z的左结点绑定到y, 将z左结点的双亲设置为y</span></span><br><span class="line">        y.<span class="keyword">left</span> = z.<span class="keyword">left</span></span><br><span class="line">        y.<span class="keyword">left</span>.p = y</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="u7EA2_u9ED1_u6811"><a href="#u7EA2_u9ED1_u6811" class="headerlink" title="红黑树"></a>红黑树</h3><h4 id="u5E94_u7528"><a href="#u5E94_u7528" class="headerlink" title="应用"></a>应用</h4><p>vm_area_struct（是虚拟内存管理的最基本单元）<br>java中的TreeMap（得到的结果是经过排序的，根据key值排序）</p>
+<h4 id="u5C5E_u6027"><a href="#u5C5E_u6027" class="headerlink" title="属性"></a>属性</h4><p>color：红或黑<br>key：关键字<br>left：指向左子树<br>right：指向右子树<br>p：指向父结点</p>
+<h4 id="u6027_u8D28"><a href="#u6027_u8D28" class="headerlink" title="性质"></a>性质</h4><p>1：首先是一个二叉搜索树<br>2：每个结点不是红色就是黑色<br>3：根结点是黑色<br>4：所有叶子结点(NIL)是黑色<br>5：红色结点的左右子结点为黑色<br>6：任意一个结点，从这个结点到其后代的叶子结点的路径中，每一条路径上包含的黑色结点数目相同</p>
+<h4 id="u63D2_u5165-1"><a href="#u63D2_u5165-1" class="headerlink" title="插入"></a>插入</h4><p>插入过程中会破坏红黑树中的性质3与性质5。以下插入过程步骤：<br>1：按二叉搜索树插入该点，并将该点标记为红色。该插入的点肯定是在最后一层，即”叶子结点”上（红黑中的的叶子结点是NIL，即刚插入的点的左右子树连接NIL）。<br>2：如果插入点是根结点（即一开始是空树），则直接将红色改为黑色即可。<br>3：如果插入点的父结点是黑色，则不用处理。<br>4：如果插入点的父结点是红色且插入点是父结点的左子树，且叔结点为红色，则将父结点与叔结点改为黑色，爷结点改为红色。<br><img src="http://hi.csdn.net/attachment/201012/29/8394323_129361793372ZK.png" alt="cmd-markdown-logo"><img src="http://hi.csdn.net/attachment/201012/29/8394323_1293617934U9zr.png" alt="cmd-markdown-logo"><br>5：如果插入点的父结点是红色且插入点是父结点的右子树，且叔结点为红色，处理情况同4。<br><img src="http://i2.piimg.com/4564064fdc8ca980.jpg" alt="cmd-markdown-logo"><img src="http://i4.piimg.com/1a94c4e84b3ccf41.jpg" alt="cmd-markdown-logo"></p>
+<p>6：如果插入点的父结点是红色且插入点是父结点的左子树，且叔结点为黑色，<font color="red">则父结点改为黑色，爷结点改为红色</font>，并将父结点，爷结点进行右旋转，爷结点的左子树为父结点的右子树。<br><img src="http://i2.piimg.com/3259a5eb97a01f0d.png" alt="cmd-markdown-logo"><img src="http://i2.piimg.com/3156521b2cecbcc4.png" alt="cmd-markdown-logo"><br>7：如果插入点的父结点是红色且插入点是父结点的右子树，且叔结点为黑色，则结点，父结点进行左旋转，父结点的右子树为结点的左子树。<br><img src="http://i2.piimg.com/0b40e366ca416e97.png" alt="cmd-markdown-logo"><img src="http://i2.piimg.com/913e986ccc80628a.png" alt="cmd-markdown-logo"></p>
+<h4 id="u5220_u9664-1"><a href="#u5220_u9664-1" class="headerlink" title="删除"></a>删除</h4><h5 id="z_u6CA1_u6709_u5B69_u5B50_u7ED3_u70B9"><a href="#z_u6CA1_u6709_u5B69_u5B50_u7ED3_u70B9" class="headerlink" title="z没有孩子结点"></a>z没有孩子结点</h5><p>1：如果z为红色，则直接删除z<br>2：如果z为黑色，则需要根据z的父结点，z的兄弟相应情况进行调整</p>
+<h5 id="z_u6709_u4E00_u4E2A_u5B69_u5B50_u7ED3_u70B9"><a href="#z_u6709_u4E00_u4E2A_u5B69_u5B50_u7ED3_u70B9" class="headerlink" title="z有一个孩子结点"></a>z有一个孩子结点</h5><p>1：如果z为黑色，则孩子结点一定为红色（因为如果孩子结点为黑色，则z另一个空的分析上的黑色点个数与这个分枝上黑色点个数就不相等了）。则将z的孩子结点绑定到父结点上，并将z的孩子结点的颜色改成黑色。<br>（如果z为红色，则孩子结点一定都为空，所以z为红色的情况下不可能只有一个孩子结点。情况不成立。）</p>
+<h5 id="z_u6709_u4E24_u4E2A_u5B69_u5B50_u7ED3_u70B9"><a href="#z_u6709_u4E24_u4E2A_u5B69_u5B50_u7ED3_u70B9" class="headerlink" title="z有两个孩子结点"></a>z有两个孩子结点</h5><p>可以不直接删除点为z,而是间接的删除z。y为z的直接后继。可以将y的值复制到z（但是y的颜色设置为z的颜色，这样能保证红黑树是否需要调整由y原来的位置上的颜色决定）。可知y最多只能有一个孩子结点（y是z右子树中最小的点）。<br>1：y没有孩子结点<br>1.1：如果y为红色，则直接删除y<br>1.2：如果y为黑色，则删除时违反了结点到其所有叶子结点路径中黑色结点个数要相等的性质。所以要根据父结点，兄弟结点的颜色对红黑树进行调整。<br>2：y有一个孩子结点<br>2.1：如果y为黑色，则孩子结点一定为红色，则可以删除y，并将y的孩子结点颜色改成黑色，然后绑定到y的父结点。<br>（y为红色的情况下不可能有一个孩子结点。情况不成立。）</p>
+
+      
+    </div>
+    
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/面试/" rel="tag">#面试</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/04/24/web/HTTP状态保持之Session与Cookie/" rel="next" title="HTTP状态保持之Session与Cookie">
+                <i class="fa fa-chevron-left"></i> HTTP状态保持之Session与Cookie
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/04/25/nlp/3:基于贝叶斯的2-Gram中文分词/" rel="prev" title="基于贝叶斯的2-Gram中文分词">
+                基于贝叶斯的2-Gram中文分词 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/04/25/interview/数据结构之红黑树前世今生/"
+           data-title="数据结构之红黑树前世今生" data-url="http://jinpingwang.github.io/2016/04/25/interview/数据结构之红黑树前世今生/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/headImage.jpg"
+               alt="王谨平" />
+          <p class="site-author-name" itemprop="name">王谨平</p>
+          <p class="site-description motion-element" itemprop="description">Waiting for wind</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">79</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">21</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/jinpingwang" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/@349268138Jin" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/1848729614" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.zhihu.com/people/wang-jin-ping-1-68" target="_blank" title="Zhihu">
+                  
+                    <i class="fa fa-globe"></i>
+                  
+                  Zhihu
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#u6EE1_u4E8C_u53C9_u6811"><span class="nav-number">1.</span> <span class="nav-text">满二叉树</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#u5B8C_u5168_u4E8C_u53C9_u6811"><span class="nav-number">2.</span> <span class="nav-text">完全二叉树</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#u4E8C_u53C9_u641C_u7D22_u6811"><span class="nav-number">3.</span> <span class="nav-text">二叉搜索树</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#u63D2_u5165"><span class="nav-number">3.1.</span> <span class="nav-text">插入</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#u5220_u9664"><span class="nav-number">3.2.</span> <span class="nav-text">删除</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#u7EA2_u9ED1_u6811"><span class="nav-number">4.</span> <span class="nav-text">红黑树</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#u5E94_u7528"><span class="nav-number">4.1.</span> <span class="nav-text">应用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#u5C5E_u6027"><span class="nav-number">4.2.</span> <span class="nav-text">属性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#u6027_u8D28"><span class="nav-number">4.3.</span> <span class="nav-text">性质</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#u63D2_u5165-1"><span class="nav-number">4.4.</span> <span class="nav-text">插入</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#u5220_u9664-1"><span class="nav-number">4.5.</span> <span class="nav-text">删除</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#z_u6CA1_u6709_u5B69_u5B50_u7ED3_u70B9"><span class="nav-number">4.5.1.</span> <span class="nav-text">z没有孩子结点</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#z_u6709_u4E00_u4E2A_u5B69_u5B50_u7ED3_u70B9"><span class="nav-number">4.5.2.</span> <span class="nav-text">z有一个孩子结点</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#z_u6709_u4E24_u4E2A_u5B69_u5B50_u7ED3_u70B9"><span class="nav-number">4.5.3.</span> <span class="nav-text">z有两个孩子结点</span></a></li></ol></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2014 - 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">王谨平</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"wangjinping"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+  
+
+
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>
