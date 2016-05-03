@@ -334,11 +334,11 @@
   </entry>
   
   <entry>
-    <title><![CDATA[数据结构之红黑树前世今生]]></title>
-    <link href="http://jinpingwang.github.io/2016/04/25/interview/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B9%8B%E7%BA%A2%E9%BB%91%E6%A0%91%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/"/>
-    <id>http://jinpingwang.github.io/2016/04/25/interview/数据结构之红黑树前世今生/</id>
+    <title><![CDATA[红黑树--一棵神奇的二叉搜索树]]></title>
+    <link href="http://jinpingwang.github.io/2016/04/25/interview/%E7%BA%A2%E9%BB%91%E6%A0%91--%E4%B8%80%E6%A3%B5%E7%A5%9E%E5%A5%87%E7%9A%84%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91/"/>
+    <id>http://jinpingwang.github.io/2016/04/25/interview/红黑树--一棵神奇的二叉搜索树/</id>
     <published>2016-04-25T00:36:27.000Z</published>
-    <updated>2016-05-02T07:31:03.195Z</updated>
+    <updated>2016-05-02T08:36:22.183Z</updated>
     <content type="html"><![CDATA[<p><div align="center"><img src="http://hi.csdn.net/attachment/201012/29/8394323_129361793372ZK.png"></div><br>红黑数树是一棵特殊的二叉搜索树，可以保证没有一条路径会比其他路径长出2倍，即有n个点的红黑树高度至多为2lg(n+1)，因而是近似于平衡的。红黑树在操作系统内核以及TreeMap都有广泛的应用，本文先简要介绍二叉搜索树的插入与删除，由此基础上引入红黑树的插入与删除。<br><a id="more"></a></p>
 <h3 id="u6EE1_u4E8C_u53C9_u6811"><a href="#u6EE1_u4E8C_u53C9_u6811" class="headerlink" title="满二叉树"></a>满二叉树</h3><p>除了最后一层无叶子结点多，其它层的每个结点都有两个子结点。</p>
 <h3 id="u5B8C_u5168_u4E8C_u53C9_u6811"><a href="#u5B8C_u5168_u4E8C_u53C9_u6811" class="headerlink" title="完全二叉树"></a>完全二叉树</h3><p>假设树高为h，则第1层到第(h-1)层是一棵满足(h-1)层的满二叉树，第h层中的所有结点都集中连续排在最左边。</p>
