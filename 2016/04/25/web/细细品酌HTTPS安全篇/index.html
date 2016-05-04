@@ -1,0 +1,740 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="web安全," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Quick notes" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="HTTP通信中存在很多隐患，比如：认证，授权，机密性，数据完整性等。如果没有使用安全措施，通信的信息就很容易被劫获并被修改等。由此，HTTPS（HTTP＋SSL/STL）应孕而生。本文先使用HTTP协议通信，通过wireshark抓取通信内容来佐证通信的安全隐患；然后引入一些密码学基础概念；接着介绍SSL/STL协议；最后通过HTTPS协议通信，使用wireshark抓取通信内容来佐证通信的安全性">
+<meta property="og:type" content="article">
+<meta property="og:title" content="细细品酌HTTPS安全篇">
+<meta property="og:url" content="http://jinpingwang.github.io/2016/04/25/web/细细品酌HTTPS安全篇/index.html">
+<meta property="og:site_name" content="Quick notes">
+<meta property="og:description" content="HTTP通信中存在很多隐患，比如：认证，授权，机密性，数据完整性等。如果没有使用安全措施，通信的信息就很容易被劫获并被修改等。由此，HTTPS（HTTP＋SSL/STL）应孕而生。本文先使用HTTP协议通信，通过wireshark抓取通信内容来佐证通信的安全隐患；然后引入一些密码学基础概念；接着介绍SSL/STL协议；最后通过HTTPS协议通信，使用wireshark抓取通信内容来佐证通信的安全性">
+<meta property="og:image" content="http://i3.piimg.com/44d2d6a69df052a4.jpg">
+<meta property="og:image" content="http://i2.piimg.com/93eb5bffdcfcb5a1.jpg">
+<meta property="og:updated_time" content="2016-05-04T07:14:48.405Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="细细品酌HTTPS安全篇">
+<meta name="twitter:description" content="HTTP通信中存在很多隐患，比如：认证，授权，机密性，数据完整性等。如果没有使用安全措施，通信的信息就很容易被劫获并被修改等。由此，HTTPS（HTTP＋SSL/STL）应孕而生。本文先使用HTTP协议通信，通过wireshark抓取通信内容来佐证通信的安全隐患；然后引入一些密码学基础概念；接着介绍SSL/STL协议；最后通过HTTPS协议通信，使用wireshark抓取通信内容来佐证通信的安全性">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> 细细品酌HTTPS安全篇 | Quick notes </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Quick notes</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">王谨平</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-th fa-fw"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-user fa-fw"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="st-search-show-outputs">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'Aq7px34mBsH6UhwK43yW','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                细细品酌HTTPS安全篇
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-04-25T22:16:28+08:00" content="2016-04-25">
+              2016-04-25
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/web/" itemprop="url" rel="index">
+                    <span itemprop="name">web</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/04/25/web/细细品酌HTTPS安全篇/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/25/web/细细品酌HTTPS安全篇/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><div align="center"><img src="http://i3.piimg.com/44d2d6a69df052a4.jpg"></div><br>HTTP通信中存在很多隐患，比如：认证，授权，机密性，数据完整性等。如果没有使用安全措施，通信的信息就很容易被劫获并被修改等。由此，HTTPS（HTTP＋SSL/STL）应孕而生。本文先使用HTTP协议通信，通过wireshark抓取通信内容来佐证通信的安全隐患；然后引入一些密码学基础概念；接着介绍SSL/STL协议；最后通过HTTPS协议通信，使用wireshark抓取通信内容来佐证通信的安全性。<br><a id="more"></a></p>
+<h3 id="HTTP_u901A_u4FE1_u9690_u60A3"><a href="#HTTP_u901A_u4FE1_u9690_u60A3" class="headerlink" title="HTTP通信隐患"></a>HTTP通信隐患</h3><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">HTML <span class="keyword">Form</span> URL <span class="keyword">Encode</span>: application/x-www-<span class="keyword">form</span>-urlencoded</span><br><span class="line">    <span class="keyword">Form</span> item: <span class="string">"username"</span> = <span class="string">"kitty"</span></span><br><span class="line">        Key: username</span><br><span class="line">        Value: kitty</span><br><span class="line">    <span class="keyword">Form</span> item: <span class="string">"password"</span> = <span class="string">"867954"</span></span><br><span class="line">        Key: password</span><br><span class="line">        Value: 867954</span><br></pre></td></tr></table></figure>
+<p>从wireshark捕获到的HTTP报文，可以看到username与password的信息完全暴露了。</p>
+<h3 id="u5BC6_u7801_u5B66_u57FA_u7840"><a href="#u5BC6_u7801_u5B66_u57FA_u7840" class="headerlink" title="密码学基础"></a>密码学基础</h3><h4 id="u5BF9_u79F0_u52A0_u5BC6"><a href="#u5BF9_u79F0_u52A0_u5BC6" class="headerlink" title="对称加密"></a>对称加密</h4><h5 id="u5B9A_u4E49"><a href="#u5B9A_u4E49" class="headerlink" title="定义"></a>定义</h5><p>对称加密指加密和解密使用相同密钥的加密算法，即加密和解密的密钥是相同的。</p>
+<h5 id="u4F18_u70B9"><a href="#u4F18_u70B9" class="headerlink" title="优点"></a>优点</h5><p>算法公开，计算量小，加密速度快，加密效率高。</p>
+<h5 id="u7F3A_u70B9"><a href="#u7F3A_u70B9" class="headerlink" title="缺点"></a>缺点</h5><p>双方都使用相同的密钥，安全性得不到保障。</p>
+<h5 id="u7C7B_u578B"><a href="#u7C7B_u578B" class="headerlink" title="类型"></a>类型</h5><p>DES(Data Encryption Standard)：数据加密标准<br>AES(Advanced Encryption Standard)：高级加密标准<br>AES与DES的区别在于AES比DES的位数更多。</p>
+<h4 id="u975E_u5BF9_u79F0_u52A0_u5BC6"><a href="#u975E_u5BF9_u79F0_u52A0_u5BC6" class="headerlink" title="非对称加密"></a>非对称加密</h4><h5 id="u5B9A_u4E49-1"><a href="#u5B9A_u4E49-1" class="headerlink" title="定义"></a>定义</h5><p>非对称密码有两个密钥。其中一个密钥对外公开，所有人都能获取到的，称为公钥；另一个密钥是不公开的称为私钥。由公钥很难推算出私钥，由私钥也很验难推算出公钥。使用公钥加密后，只能使用私钥来解密；使用私钥加密后，只能使用公钥来解密。</p>
+<h5 id="u4F18_u70B9-1"><a href="#u4F18_u70B9-1" class="headerlink" title="优点"></a>优点</h5><p>安全性高</p>
+<h5 id="u7F3A_u70B9-1"><a href="#u7F3A_u70B9-1" class="headerlink" title="缺点"></a>缺点</h5><p>加密耗时</p>
+<h5 id="u7C7B_u578B-1"><a href="#u7C7B_u578B-1" class="headerlink" title="类型"></a>类型</h5><p>RSA：三个发明者的首字母<br>RSA密钥长达2048位</p>
+<h4 id="u6458_u8981_u7B97_u6CD5"><a href="#u6458_u8981_u7B97_u6CD5" class="headerlink" title="摘要算法"></a>摘要算法</h4><h5 id="u4F5C_u7528"><a href="#u4F5C_u7528" class="headerlink" title="作用"></a>作用</h5><p>使用一个散列算法，将任意长度的一块数据转换为一个定长的，不可逆的数字，其长度通常在128-256位之间。</p>
+<h5 id="u7C7B_u578B-2"><a href="#u7C7B_u578B-2" class="headerlink" title="类型"></a>类型</h5><p>MD5</p>
+<h4 id="u6570_u5B57_u7B7E_u540D"><a href="#u6570_u5B57_u7B7E_u540D" class="headerlink" title="数字签名"></a>数字签名</h4><p>1：使用摘要算法对要发送明文生成摘要，<br>2：使用非对称加密中的私钥对摘要进行加密。<br>3：将加密后的摘要附加到明文后面，然后对外发送<br>4：客户收到后，对明文使用相同的摘要算法得到摘要（客户端），使用公钥对加密的摘要进行解密得到摘要（服务器）。比较摘要（客户端）与摘要（服务器）是否相等，若相等则表示是服务器发送的（因为只有服务器才有私钥），不相等则表示内容被修改或不是服务器发送的。</p>
+<h4 id="u6570_u5B57_u8BC1_u4E66"><a href="#u6570_u5B57_u8BC1_u4E66" class="headerlink" title="数字证书"></a>数字证书</h4><p>包含的内容：</p>
+<h5 id="Issuer"><a href="#Issuer" class="headerlink" title="Issuer"></a>Issuer</h5><p>证书的发布机构。指出是什么机构发布这个证书。</p>
+<h5 id="Valid_from_2C_Valid_to"><a href="#Valid_from_2C_Valid_to" class="headerlink" title="Valid from, Valid to"></a>Valid from, Valid to</h5><p>证书的有效期。</p>
+<h5 id="Public_key"><a href="#Public_key" class="headerlink" title="Public key"></a>Public key</h5><p>公钥。</p>
+<h5 id="Subject"><a href="#Subject" class="headerlink" title="Subject"></a>Subject</h5><p>主题。这个证书的所有者，一般指某个人或某个公司名称，公司网站的网址等。</p>
+<h5 id="Signature_algorithm"><a href="#Signature_algorithm" class="headerlink" title="Signature algorithm"></a>Signature algorithm</h5><p>签名所使用的算法。即服务器给客户端发送证书时，要保证这个证书在发送过程中没被别人修改过，因此使用摘要算法，计算这个证书获得摘要，然后使用私钥对这个摘要进行加密得到加密后的摘要（服务器加密），并与证书放到一块。客户端得到后就使用这个签名算法得到摘要，然后使用公钥解密摘要（服务器加密）与客户端生成的摘要相比较看是不是相等。可参见数字签名一节。</p>
+<h5 id="Thumbprint_2C_Thumbprint_algorithm"><a href="#Thumbprint_2C_Thumbprint_algorithm" class="headerlink" title="Thumbprint, Thumbprint algorithm"></a>Thumbprint, Thumbprint algorithm</h5><p>指纹以及指纹算法。保证这个证书不是伪造的。CA在发布证书时，证书的指纹（相当于摘要）和指纹算法（摘要算法），都会加密后再和证书放到一起发布。而证书的指纹是用CA的私钥进行加密生成的，即CA自己本身也是有一个证书，而这个证书在操作系统刚安装好时就已经被微软安装在操作系统中了，另外浏览器中也内嵌安装了一些CA的证书。所以，可以使用指纹算法去得到证书的摘要，使用CA的公钥解密指纹得到摘要，然后比较这两个摘要看是不是相等，即是CA的数字签名。</p>
+<h4 id="CA"><a href="#CA" class="headerlink" title="CA"></a>CA</h4><p>CA是证书的签发机构，负责签发证书，认证证书等。CA自己本身也拥有私钥和一个证书（内含公钥），而且这个证书一般在操作系统或浏览器安装时就内嵌在系统中或浏览器中了。<br>这里有一个漏洞是，有一些CA公司为了私利给一些非法公司颁发证书。如CA已经给taobao颁发了一个证书，现在另一家非法公司让这家CA也给他颁发一个taobao证书。这样，这家公司就可以使用这个证书来冒充taobao了。</p>
+<h3 id="SSL/STL"><a href="#SSL/STL" class="headerlink" title="SSL/STL"></a>SSL/STL</h3><h4 id="u540D_u8BCD_u89E3_u91CA"><a href="#u540D_u8BCD_u89E3_u91CA" class="headerlink" title="名词解释"></a>名词解释</h4><p>SSL(Secure Socket Layer)：安全套接字层<br>TLS(Transport Layer Security)：传输层安全协议</p>
+<h4 id="u7248_u672C_u5386_u53F2"><a href="#u7248_u672C_u5386_u53F2" class="headerlink" title="版本历史"></a>版本历史</h4><p>首先，网景公司制定了SSL协议，一直到SSL3.0版本<br>然后，互联网标准化组织接替网景公司，发布了SSL的升级版TLS1.0<br>接着，STL又升级了两次，分别为TSL1.1, TLS1.2</p>
+<h4 id="u4F5C_u7528-1"><a href="#u4F5C_u7528-1" class="headerlink" title="作用"></a>作用</h4><p>1：机密性（会话密钥）<br>2：数据完整性（数字签名）<br>3：完成客户端与服务器的认证（数字证书）</p>
+<h4 id="u534F_u8BAE_u7ED3_u6784"><a href="#u534F_u8BAE_u7ED3_u6784" class="headerlink" title="协议结构"></a>协议结构</h4><p>TLS握手协议：完成认证以及生成会话密钥<br>TLS记录协议：用会话密钥对数据加密传输</p>
+<h4 id="u534F_u8BAE_u6D41_u7A0B"><a href="#u534F_u8BAE_u6D41_u7A0B" class="headerlink" title="协议流程"></a>协议流程</h4><h5 id="u5BA2_u6237_u7AEF_u2013_26gt_3B_u670D_u52A1_u5668"><a href="#u5BA2_u6237_u7AEF_u2013_26gt_3B_u670D_u52A1_u5668" class="headerlink" title="客户端–&gt;服务器"></a>客户端–&gt;服务器</h5><p>1：协议版本（如TLS1.0）<br>2：加密算法（如RSA)<br>3：支持的压缩方法<br>4：产生一个随机数</p>
+<h5 id="u670D_u52A1_u5668_u2013_26gt_3B_u5BA2_u6237_u7AEF"><a href="#u670D_u52A1_u5668_u2013_26gt_3B_u5BA2_u6237_u7AEF" class="headerlink" title="服务器–&gt;客户端"></a>服务器–&gt;客户端</h5><p>1：确认使用协议版本（如TLS1.0）（如果客户端与服务器的版本不一致，则服务器关闭通信）<br>2：确认使用的加密算法（如RSA）<br>3：服务器数字证书<br>4：产生一个随机数<br>【注：如果服务器也要对客户端实行认证，则会在这一步告知客户端向服务器发送证书】</p>
+<h5 id="u5BA2_u6237_u7AEF_u2013_26gt_3B_u670D_u52A1_u5668-1"><a href="#u5BA2_u6237_u7AEF_u2013_26gt_3B_u670D_u52A1_u5668-1" class="headerlink" title="客户端–&gt;服务器"></a>客户端–&gt;服务器</h5><p>1：产生一个随机数，使用服务器的公钥加密<br>2：编码改变通知，表示随后的信息都使用双方协定好的协议进行发送<br>3：客户端握手结束通知。表示客户端握手结束。这一项也是前面1，2发送内容的hash值，供服务器校验。<br>【注：如果服务器有对客户端实行认证，则客户端会在这一步向服务器发送自己的证书】</p>
+<h5 id="u670D_u52A1_u5668_u2013_26gt_3B_u5BA2_u6237_u7AEF-1"><a href="#u670D_u52A1_u5668_u2013_26gt_3B_u5BA2_u6237_u7AEF-1" class="headerlink" title="服务器–&gt;客户端"></a>服务器–&gt;客户端</h5><p>1：编码改变通知，表示随后的信息都使用双方协定好的协议进行发送<br>2：服务器握手结束通知。表示服务器握手结束。这一项也是前面1发送内容的hash值，供客户端校验。<br>【注：如果服务器有对客户端实行认证，则在这一步服务器会对客户端发过来的证书进行验证，如果验证不通过则中断通信】</p>
+<h3 id="HTTPS_u901A_u4FE1_u5B89_u5168_u4FDD_u8BC1"><a href="#HTTPS_u901A_u4FE1_u5B89_u5168_u4FDD_u8BC1" class="headerlink" title="HTTPS通信安全保证"></a>HTTPS通信安全保证</h3><p>在tomcat中使用SSH/TLS协议，并用8443端口来接收数据，传输的数据都给过了会话密钥的加密。<br><img src="http://i2.piimg.com/93eb5bffdcfcb5a1.jpg" alt=""></p>
+<h3 id="HTTPS_u4F18_u7F3A_u70B9"><a href="#HTTPS_u4F18_u7F3A_u70B9" class="headerlink" title="HTTPS优缺点"></a>HTTPS优缺点</h3><h4 id="u4F18_u70B9-2"><a href="#u4F18_u70B9-2" class="headerlink" title="优点"></a>优点</h4><p>详见SSL/STL中的”作用”小节</p>
+<h4 id="u7F3A_u70B9-2"><a href="#u7F3A_u70B9-2" class="headerlink" title="缺点"></a>缺点</h4><p>1：费用<br>2：响应<br>3：消耗cpu<br>4：有些浏览器不能很好缓存https</p>
+
+      
+    </div>
+    
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/web安全/" rel="tag">#web安全</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/04/25/nlp/3:基于贝叶斯的2-Gram中文分词/" rel="next" title="基于贝叶斯的2-Gram中文分词">
+                <i class="fa fa-chevron-left"></i> 基于贝叶斯的2-Gram中文分词
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/04/26/web/基于tomcat的web应用安全/" rel="prev" title="基于tomcat的web应用安全">
+                基于tomcat的web应用安全 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/04/25/web/细细品酌HTTPS安全篇/"
+           data-title="细细品酌HTTPS安全篇" data-url="http://jinpingwang.github.io/2016/04/25/web/细细品酌HTTPS安全篇/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/headImage.jpg"
+               alt="王谨平" />
+          <p class="site-author-name" itemprop="name">王谨平</p>
+          <p class="site-description motion-element" itemprop="description">Waiting for wind</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">95</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">24</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/jinpingwang" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/@349268138Jin" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/1848729614" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.zhihu.com/people/wang-jin-ping-1-68" target="_blank" title="Zhihu">
+                  
+                    <i class="fa fa-globe"></i>
+                  
+                  Zhihu
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#HTTP_u901A_u4FE1_u9690_u60A3"><span class="nav-number">1.</span> <span class="nav-text">HTTP通信隐患</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#u5BC6_u7801_u5B66_u57FA_u7840"><span class="nav-number">2.</span> <span class="nav-text">密码学基础</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#u5BF9_u79F0_u52A0_u5BC6"><span class="nav-number">2.1.</span> <span class="nav-text">对称加密</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#u5B9A_u4E49"><span class="nav-number">2.1.1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#u4F18_u70B9"><span class="nav-number">2.1.2.</span> <span class="nav-text">优点</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#u7F3A_u70B9"><span class="nav-number">2.1.3.</span> <span class="nav-text">缺点</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#u7C7B_u578B"><span class="nav-number">2.1.4.</span> <span class="nav-text">类型</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#u975E_u5BF9_u79F0_u52A0_u5BC6"><span class="nav-number">2.2.</span> <span class="nav-text">非对称加密</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#u5B9A_u4E49-1"><span class="nav-number">2.2.1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#u4F18_u70B9-1"><span class="nav-number">2.2.2.</span> <span class="nav-text">优点</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#u7F3A_u70B9-1"><span class="nav-number">2.2.3.</span> <span class="nav-text">缺点</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#u7C7B_u578B-1"><span class="nav-number">2.2.4.</span> <span class="nav-text">类型</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#u6458_u8981_u7B97_u6CD5"><span class="nav-number">2.3.</span> <span class="nav-text">摘要算法</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#u4F5C_u7528"><span class="nav-number">2.3.1.</span> <span class="nav-text">作用</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#u7C7B_u578B-2"><span class="nav-number">2.3.2.</span> <span class="nav-text">类型</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#u6570_u5B57_u7B7E_u540D"><span class="nav-number">2.4.</span> <span class="nav-text">数字签名</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#u6570_u5B57_u8BC1_u4E66"><span class="nav-number">2.5.</span> <span class="nav-text">数字证书</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Issuer"><span class="nav-number">2.5.1.</span> <span class="nav-text">Issuer</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Valid_from_2C_Valid_to"><span class="nav-number">2.5.2.</span> <span class="nav-text">Valid from, Valid to</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Public_key"><span class="nav-number">2.5.3.</span> <span class="nav-text">Public key</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Subject"><span class="nav-number">2.5.4.</span> <span class="nav-text">Subject</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Signature_algorithm"><span class="nav-number">2.5.5.</span> <span class="nav-text">Signature algorithm</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Thumbprint_2C_Thumbprint_algorithm"><span class="nav-number">2.5.6.</span> <span class="nav-text">Thumbprint, Thumbprint algorithm</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CA"><span class="nav-number">2.6.</span> <span class="nav-text">CA</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SSL/STL"><span class="nav-number">3.</span> <span class="nav-text">SSL/STL</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#u540D_u8BCD_u89E3_u91CA"><span class="nav-number">3.1.</span> <span class="nav-text">名词解释</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#u7248_u672C_u5386_u53F2"><span class="nav-number">3.2.</span> <span class="nav-text">版本历史</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#u4F5C_u7528-1"><span class="nav-number">3.3.</span> <span class="nav-text">作用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#u534F_u8BAE_u7ED3_u6784"><span class="nav-number">3.4.</span> <span class="nav-text">协议结构</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#u534F_u8BAE_u6D41_u7A0B"><span class="nav-number">3.5.</span> <span class="nav-text">协议流程</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#u5BA2_u6237_u7AEF_u2013_26gt_3B_u670D_u52A1_u5668"><span class="nav-number">3.5.1.</span> <span class="nav-text">客户端–>服务器</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#u670D_u52A1_u5668_u2013_26gt_3B_u5BA2_u6237_u7AEF"><span class="nav-number">3.5.2.</span> <span class="nav-text">服务器–>客户端</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#u5BA2_u6237_u7AEF_u2013_26gt_3B_u670D_u52A1_u5668-1"><span class="nav-number">3.5.3.</span> <span class="nav-text">客户端–>服务器</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#u670D_u52A1_u5668_u2013_26gt_3B_u5BA2_u6237_u7AEF-1"><span class="nav-number">3.5.4.</span> <span class="nav-text">服务器–>客户端</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HTTPS_u901A_u4FE1_u5B89_u5168_u4FDD_u8BC1"><span class="nav-number">4.</span> <span class="nav-text">HTTPS通信安全保证</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HTTPS_u4F18_u7F3A_u70B9"><span class="nav-number">5.</span> <span class="nav-text">HTTPS优缺点</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#u4F18_u70B9-2"><span class="nav-number">5.1.</span> <span class="nav-text">优点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#u7F3A_u70B9-2"><span class="nav-number">5.2.</span> <span class="nav-text">缺点</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2014 - 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">王谨平</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"wangjinping"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+  
+
+
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>
