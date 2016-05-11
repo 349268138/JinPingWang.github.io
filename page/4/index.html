@@ -1379,8 +1379,8 @@
             
               
                 
-                <a class="post-title-link" href="/2015/05/13/leetcodeDatabase/SecondHighestSalary/" itemprop="url">
-                  Second Highest Salary
+                <a class="post-title-link" href="/2015/05/14/interview/关系型数据库范式/" itemprop="url">
+                  关系型数据库范式
                 </a>
               
             
@@ -1393,8 +1393,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-05-13T20:45:38+08:00" content="2015-05-13">
-              2015-05-13
+            <time itemprop="dateCreated" datetime="2015-05-14T09:13:48+08:00" content="2015-05-14">
+              2015-05-14
             </time>
           </span>
 
@@ -1407,8 +1407,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/leetcode/" itemprop="url" rel="index">
-                    <span itemprop="name">leetcode</span>
+                  <a href="/categories/面试/" itemprop="url" rel="index">
+                    <span itemprop="name">面试</span>
                   </a>
                 </span>
 
@@ -1423,8 +1423,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2015/05/13/leetcodeDatabase/SecondHighestSalary/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/13/leetcodeDatabase/SecondHighestSalary/" itemprop="commentsCount"></span>
+                <a href="/2015/05/14/interview/关系型数据库范式/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/14/interview/关系型数据库范式/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -1448,13 +1448,74 @@
 
       
         
-          <h3 id="u9898_u76EE"><a href="#u9898_u76EE" class="headerlink" title="题目"></a>题目</h3><h4 id="Describe"><a href="#Describe" class="headerlink" title="Describe"></a>Describe</h4><p>Write a SQL query to get the second highest salary from the Employee table.<br><figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="code">+----+</span>--------+</span><br><span class="line"><span class="header">| Id | Salary |</span><br><span class="line">+----+--------+</span></span><br><span class="line">| 1  | 100    |</span><br><span class="line">| 2  | 200    |</span><br><span class="line"><span class="header">| 3  | 300    |</span><br><span class="line">+----+--------+</span></span><br></pre></td></tr></table></figure></p>
-<h4 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h4><p>given the above Employee table, the second highest salary is 200. If there is no second highest salary, then the query should return null.</p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/05/13/leetcodeDatabase/SecondHighestSalary/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
+          
+            <h3 id="u60C5_u666F"><a href="#u60C5_u666F" class="headerlink" title="情景"></a>情景</h3><h4 id="u5173_u7CFB_u6A21_u5F0FSCD"><a href="#u5173_u7CFB_u6A21_u5F0FSCD" class="headerlink" title="关系模式SCD"></a>关系模式SCD</h4><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//(SNo, CNo)为主键</span></span><br><span class="line"><span class="function"><span class="title">SCD</span><span class="params">(SNo, SN, Age, Dept, MN, CNo, Score)</span></span></span><br></pre></td></tr></table></figure>
+<h4 id="u5404_u5217_u542B_u4E49"><a href="#u5404_u5217_u542B_u4E49" class="headerlink" title="各列含义"></a>各列含义</h4><table>
+<thead>
+<tr>
+<th style="text-align:center">列名</th>
+<th style="text-align:center">含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">SNo</td>
+<td style="text-align:center">学号</td>
+</tr>
+<tr>
+<td style="text-align:center">SN</td>
+<td style="text-align:center">姓名</td>
+</tr>
+<tr>
+<td style="text-align:center">Age</td>
+<td style="text-align:center">年龄</td>
+</tr>
+<tr>
+<td style="text-align:center">Dept</td>
+<td style="text-align:center">系别</td>
+</tr>
+<tr>
+<td style="text-align:center">MN</td>
+<td style="text-align:center">系主任姓名</td>
+</tr>
+<tr>
+<td style="text-align:center">CNo</td>
+<td style="text-align:center">课程号</td>
+</tr>
+<tr>
+<td style="text-align:center">Score</td>
+<td style="text-align:center">成绩</td>
+</tr>
+</tbody>
+</table>
+<h4 id="u8BED_u4E49_u89C4_u5B9A"><a href="#u8BED_u4E49_u89C4_u5B9A" class="headerlink" title="语义规定"></a>语义规定</h4><p>1：一个系有若干学生，但一个学生只属于一个系<br>2：一个系只有一名系主任，但一个系主任可以同时兼几个系的系主任<br>3：一个学生可以选修多门功课，每门课程可以被若干学生选修<br>4：每个学生学习的课程有一个成绩</p>
+<h4 id="u5B58_u5728_u9690_u60A3"><a href="#u5B58_u5728_u9690_u60A3" class="headerlink" title="存在隐患"></a>存在隐患</h4><h5 id="u6570_u636E_u5197_u4F59"><a href="#u6570_u636E_u5197_u4F59" class="headerlink" title="数据冗余"></a>数据冗余</h5><p>系名，系主任，姓名，年龄重复存储多次</p>
+<h5 id="u63D2_u5165_u5F02_u5E38"><a href="#u63D2_u5165_u5F02_u5E38" class="headerlink" title="插入异常"></a>插入异常</h5><p>某个新系没有招生，则系别与系主任信息无法输入到SCD中，因为SCD的主键为(SNo, CNo)，但是因为没有学生，则只能为空，可主键不能为空，因此会有插入异常。</p>
+<h5 id="u5220_u9664_u5F02_u5E38"><a href="#u5220_u9664_u5F02_u5E38" class="headerlink" title="删除异常"></a>删除异常</h5><p>某个系的所有学生毕业了而没有招生时，删除学生信息，也就把系别与系主任给删了，然而这个系别与系主任是存在的。<br>如果某个学生不再选修某个课程CNo1时，本应该只删除Cno1，然而删除的同时也将学生信息给删除了（如果这个学生只选了这一门课）。</p>
+<h5 id="u66F4_u65B0_u5F02_u5E38"><a href="#u66F4_u65B0_u5F02_u5E38" class="headerlink" title="更新异常"></a>更新异常</h5><p>如果某个学生改名，则有关该学生的所有记录都要逐一修改SN的值；同理某个系别的主任换届时，则这个系的学生记录都要修改MN的值。</p>
+<h3 id="u51FD_u6570_u4F9D_u8D56"><a href="#u51FD_u6570_u4F9D_u8D56" class="headerlink" title="函数依赖"></a>函数依赖</h3><h4 id="u51FD_u6570_u4F9D_u8D56_u5B9A_u4E49"><a href="#u51FD_u6570_u4F9D_u8D56_u5B9A_u4E49" class="headerlink" title="函数依赖定义"></a>函数依赖定义</h4><figure class="highlight elm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">U</span>=&#123;<span class="type">SNo</span>, <span class="type">SN</span>, <span class="type">Age</span>, <span class="type">Dept</span>, <span class="type">MN</span>, <span class="type">CNo</span>, <span class="type">Score</span>&#125;</span><br><span class="line"><span class="type">F</span>=&#123;<span class="type">SNo</span>-&gt;<span class="type">SN</span>, <span class="type">SNo</span>-&gt;<span class="type">Age</span>, <span class="type">SNo</span>-&gt;<span class="type">Dept</span>, (<span class="type">SNo</span>, <span class="type">CNo</span>)-&gt;<span class="type">Score</span>&#125;</span><br></pre></td></tr></table></figure>
+<p>设关系模式R(U, F)，U是属性全集，F是U上的函数依赖集，X和Y是U的子集，如果对于R(U)的任意一个可能关系r，对于X的每一个具体值，Y都有唯一的具体值与之对应，则称X决定函数Y，或函数Y依赖于X，记做X-&gt;Y。<br>例：一个SNo有多个Score的值与其对应，因此Score不能唯一地确定，即Score不能函数依赖于SNo。</p>
+<h4 id="u51FD_u6570_u4F9D_u8D56_u7EC6_u5206"><a href="#u51FD_u6570_u4F9D_u8D56_u7EC6_u5206" class="headerlink" title="函数依赖细分"></a>函数依赖细分</h4><h5 id="u5B8C_u5168_u51FD_u6570_u4F9D_u8D56"><a href="#u5B8C_u5168_u51FD_u6570_u4F9D_u8D56" class="headerlink" title="完全函数依赖"></a>完全函数依赖</h5><figure class="highlight elm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">U</span>=&#123;<span class="type">SNo</span>, <span class="type">SN</span>, <span class="type">Age</span>, <span class="type">Dept</span>, <span class="type">MN</span>, <span class="type">CNo</span>, <span class="type">Score</span>&#125;</span><br><span class="line"><span class="type">F</span>=&#123;<span class="type">SNo</span>-&gt;<span class="type">SN</span>, <span class="type">SNo</span>-&gt;<span class="type">Age</span>, <span class="type">SNo</span>-&gt;<span class="type">Dept</span>, (<span class="type">SNo</span>, <span class="type">CNo</span>)-&gt;<span class="type">Score</span>&#125;</span><br></pre></td></tr></table></figure>
+<p>设有关系模式R(U)，U是属性全集，X和Y是U的子集，如果X-&gt;Y，并且对于X的任何一个真字集X`，都有Y不函数依赖于X`，则称Y完全函数依赖于X。<br>例：Score完全函数依赖于(SNo, CNo)</p>
+<h5 id="u90E8_u5206_u51FD_u6570_u4F9D_u8D56"><a href="#u90E8_u5206_u51FD_u6570_u4F9D_u8D56" class="headerlink" title="部分函数依赖"></a>部分函数依赖</h5><figure class="highlight elm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">U</span>=&#123;<span class="type">SNo</span>, <span class="type">SN</span>, <span class="type">Age</span>, <span class="type">Dept</span>, <span class="type">MN</span>, <span class="type">CNo</span>, <span class="type">Score</span>&#125;</span><br><span class="line"><span class="type">F</span>=&#123;<span class="type">SNo</span>-&gt;<span class="type">SN</span>, <span class="type">SNo</span>-&gt;<span class="type">Age</span>, <span class="type">SNo</span>-&gt;<span class="type">Dept</span>, (<span class="type">SNo</span>, <span class="type">CNo</span>)-&gt;<span class="type">Score</span>&#125;</span><br></pre></td></tr></table></figure>
+<p>设有关系模式R(U)，U是属性全集，X和Y是U的子集，如果X-&gt;Y，并且对于X的某一个真字集X`，存在Y函数依赖于X`，则称Y部分函数依赖于X。<br>例：Age完全函数依赖于(SNo, CNo)</p>
+<h5 id="u4F20_u9012_u51FD_u6570_u4F9D_u8D56"><a href="#u4F20_u9012_u51FD_u6570_u4F9D_u8D56" class="headerlink" title="传递函数依赖"></a>传递函数依赖</h5><figure class="highlight elm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">U</span>=&#123;<span class="type">SNo</span>, <span class="type">SN</span>, <span class="type">Age</span>, <span class="type">Dept</span>, <span class="type">MN</span>, <span class="type">CNo</span>, <span class="type">Score</span>&#125;</span><br><span class="line"><span class="type">F</span>=&#123;<span class="type">SNo</span>-&gt;<span class="type">SN</span>, <span class="type">SNo</span>-&gt;<span class="type">Age</span>, <span class="type">SNo</span>-&gt;<span class="type">Dept</span>, (<span class="type">SNo</span>, <span class="type">CNo</span>)-&gt;<span class="type">Score</span>&#125;</span><br></pre></td></tr></table></figure>
+<p>设有关系模式R(U)，U是属性全集，X，Y，Z是U的子集，若X-&gt;Y（Y函数依赖于X），但X不函数依赖于Y，而Y-&gt;Z，则称Z对X传递函数依赖。<br>例：SNo-&gt;Dept，但SNo不函数依赖于Dept，而Dept-&gt;MN，则有MN对SNo传递函数依赖。</p>
+<h3 id="u5173_u7CFB_u6A21_u5F0F_u7684_u8303_u5F0F"><a href="#u5173_u7CFB_u6A21_u5F0F_u7684_u8303_u5F0F" class="headerlink" title="关系模式的范式"></a>关系模式的范式</h3><h4 id="1NF"><a href="#1NF" class="headerlink" title="1NF"></a>1NF</h4><h5 id="u60C5_u666F-1"><a href="#u60C5_u666F-1" class="headerlink" title="情景"></a>情景</h5><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">SCD</span><span class="params">(SNo, SN, Age, Dept, MN, CNo, Score)</span></span></span><br></pre></td></tr></table></figure>
+<h5 id="u5B9A_u4E49"><a href="#u5B9A_u4E49" class="headerlink" title="定义"></a>定义</h5><p>关系模式R所有的属性均为简单属性，即每个属性都是不可再分的。</p>
+<h5 id="u5B58_u5728_u9690_u60A3-1"><a href="#u5B58_u5728_u9690_u60A3-1" class="headerlink" title="存在隐患"></a>存在隐患</h5><p>数据冗余，插入异常，删除异常，更新异常</p>
+<h4 id="2NF"><a href="#2NF" class="headerlink" title="2NF"></a>2NF</h4><h5 id="u60C5_u666F-2"><a href="#u60C5_u666F-2" class="headerlink" title="情景"></a>情景</h5><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">SCD</span><span class="params">(SNo, SN, Age, Dept, MN, CNo, Score)</span></span></span><br><span class="line">由<span class="number">1</span>NF转换为<span class="number">2</span>NF</span><br><span class="line"><span class="function"><span class="title">SD</span><span class="params">(SNo, SN, Age, Dept, MN)</span></span></span><br><span class="line"><span class="function"><span class="title">SC</span><span class="params">(SNo, CNo, Score)</span></span></span><br></pre></td></tr></table></figure>
+<h5 id="u5B9A_u4E49-1"><a href="#u5B9A_u4E49-1" class="headerlink" title="定义"></a>定义</h5><p>首先是满足1NF，且每个非主属性都完全函数依赖于R的主关系键。</p>
+<h5 id="u5B58_u5728_u9690_u60A3-2"><a href="#u5B58_u5728_u9690_u60A3-2" class="headerlink" title="存在隐患"></a>存在隐患</h5><p>数据冗余，插入异常，删除异常，更新异常</p>
+<h4 id="3NF"><a href="#3NF" class="headerlink" title="3NF"></a>3NF</h4><h5 id="u60C5_u666F-3"><a href="#u60C5_u666F-3" class="headerlink" title="情景"></a>情景</h5><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">SD</span><span class="params">(SNo, SN, Age, Dept, MN)</span></span></span><br><span class="line"><span class="function"><span class="title">SC</span><span class="params">(SNo, CNo, Score)</span></span></span><br><span class="line">由<span class="number">2</span>NF转换为<span class="number">3</span>NF</span><br><span class="line"><span class="function"><span class="title">S</span><span class="params">(SNo, SN, Age, Dept)</span></span></span><br><span class="line"><span class="function"><span class="title">D</span><span class="params">(Dept, MN)</span></span></span><br><span class="line"><span class="function"><span class="title">SC</span><span class="params">(SNo, CNo, Score)</span></span></span><br></pre></td></tr></table></figure>
+<h5 id="u5B9A_u4E49-2"><a href="#u5B9A_u4E49-2" class="headerlink" title="定义"></a>定义</h5><p>首先是满足2NF，且第个非主属性都不传递函数依赖于R的主关系键。</p>
+<h5 id="u5B58_u5728_u9690_u60A3-3"><a href="#u5B58_u5728_u9690_u60A3-3" class="headerlink" title="存在隐患"></a>存在隐患</h5><p>数据冗余降低，不存在插入异常，不存在删除异常，不存在更新异常。</p>
+<h4 id="BCNF"><a href="#BCNF" class="headerlink" title="BCNF"></a>BCNF</h4><h5 id="u60C5_u666F-4"><a href="#u60C5_u666F-4" class="headerlink" title="情景"></a>情景</h5><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line"> * 假设名字没有重复，即SNo&lt;-&gt;SN</span><br><span class="line"> * 若(SNo, CNo)为主键，则SN部分函数依赖于SNo</span><br><span class="line"> * 若(SN, CNo)为主键，则SNo部分函数依赖于SN</span><br><span class="line"> */</span></span><br><span class="line"><span class="function"><span class="title">SNC</span><span class="params">(SNo, SN, CNo, Score)</span></span></span><br><span class="line">转换为BCNF</span><br><span class="line"><span class="function"><span class="title">S1</span><span class="params">(SNo, SN)</span></span></span><br><span class="line"><span class="function"><span class="title">S2</span><span class="params">(SNo, CNo, Score)</span></span></span><br></pre></td></tr></table></figure>
+<h5 id="u5B9A_u4E49-3"><a href="#u5B9A_u4E49-3" class="headerlink" title="定义"></a>定义</h5><p>消除主属性对键的依赖关系。</p>
+<h4 id="4NF"><a href="#4NF" class="headerlink" title="4NF"></a>4NF</h4><p>暂不考虑</p>
+<h4 id="5NF"><a href="#5NF" class="headerlink" title="5NF"></a>5NF</h4><p>暂不考虑</p>
+
+          
         
       
     </div>
@@ -1526,7 +1587,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">102</span>
+              <span class="site-state-item-count">103</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
