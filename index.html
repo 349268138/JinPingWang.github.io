@@ -474,7 +474,7 @@
         
           <p>介绍了基于贝叶斯的2-Gram分词方法（可以与另外两篇机械分词器相比对：<a href="http://blog.wangjinping.top/2016/01/02/nlp/1:%E6%AD%A3%E5%90%91%E6%9C%80%E9%95%BF%E5%8C%B9%E9%85%8D%E4%B8%AD%E5%88%86%E8%AF%8D/">正向最长匹配</a> 和 <a href="http://blog.wangjinping.top/2016/01/02/nlp/2:%E5%8F%8D%E5%90%91%E6%9C%80%E9%95%BF%E5%8C%B9%E9%85%8D%E4%B8%AD%E5%88%86%E8%AF%8D/">反向最长匹配</a>）。</p>
 <h3 id="u95EE_u9898"><a href="#u95EE_u9898" class="headerlink" title="问题"></a>问题</h3><p>1：输入语料库词频<br>2：输入”上网站联盟”<br>3：输出分词结果</p>
-<h3 id="u89E3_u51B3_u63CF_u8FF0"><a href="#u89E3_u51B3_u63CF_u8FF0" class="headerlink" title="解决描述"></a>解决描述</h3><p>1：一个n+1个字的句子，它的分词方法有：2的n次方。比如：”上网站”，可以分词为：上/网/站，上/网站，上网/站，上网站。<br>2：按照每一种分词，根据语料库中的词频统计，利用贝叶斯计算出这种分词下的概率；比如，上，网，站这三个字独自出现的概率为100，上出现在网站前的词频为1000，词表中有10000个词，那么按照贝叶斯公式可计算出”上/网站”这种分词的概率为：p(上网站)=p(上)*p(网站/上)=(100/10000)*(1000/10000)=0.001；同理按贝叶斯公式可计算出”上/网/站”这种分词的概率为：p(上网站)=p(上)*p(网)*p(站)=(100/10000)*(100/10000)*(100/10000)=0.000001。因为0.001&gt;0.000001，所以，分词”上/网站”要优于”上/网/站”。<br>3：对所有分词的情况都计算出它的概率，取概率最大的那个分词方式，即为该句子的分词方式。<br>
+<h3 id="u89E3_u51B3_u63CF_u8FF0"><a href="#u89E3_u51B3_u63CF_u8FF0" class="headerlink" title="解决描述"></a>解决描述</h3><p>1：一个n+1个字的句子，它的分词方法有：2的n次方。比如：”上网站”，可以分词为：上/网/站，上/网站，上网/站，上网站。<br>2：按照每一种分词，根据语料库中的词频统计，利用贝叶斯计算出这种分词下的概率；比如，上，网，站这三个字独自出现的概率为1000，上出现在网站前的词频为200，词表中有10000个词，那么按照贝叶斯公式可计算出”上/网站”这种分词的概率为：p(上网站)=p(上)*p(网站|上)=(1000/10000)*(200/10000)=0.002；同理按贝叶斯公式可计算出”上/网/站”这种分词的概率为：p(上网站)=p(上)*p(网)*p(站)=(1000/10000)*(1000/10000)*(1000/10000)=0.001。因为0.002&gt;0.001，所以，分词”上/网站”要优于”上/网/站”。<br>3：对所有分词的情况都计算出它的概率，取概率最大的那个分词方式，即为该句子的分词方式。<br>
           <div class="post-more-link text-center">
             <a class="btn" href="/2016/04/25/nlp/3:基于贝叶斯的2-Gram中文分词/#more" rel="contents">
               阅读全文 &raquo;
@@ -840,7 +840,7 @@
 
       
         
-          <p><div align="center"><img src="http://i3.piimg.com/44d2d6a69df052a4.jpg"></div><br>HTTP通信中存在很多隐患，比如：认证，授权，机密性，数据完整性等。如果没有使用安全措施，通信的信息就很容易被劫获并被修改等。由此，HTTPS（HTTP＋SSL/STL）应孕而生。本文先使用HTTP协议通信，通过wireshark抓取通信内容来佐证通信的安全隐患；然后引入一些密码学基础概念；接着介绍SSL/STL协议；最后通过HTTPS协议通信，使用wireshark抓取通信内容来佐证通信的安全性。<br>
+          <p><div align="center"><img src="http://i3.piimg.com/44d2d6a69df052a4.jpg"></div><br>HTTP通信中存在很多隐患，比如：认证，授权，机密性，数据完整性等。如果没有使用安全措施，通信的信息就很容易被劫获并被修改等。由此，HTTPS（HTTP＋SSL/TLS）应孕而生。本文先使用HTTP协议通信，通过wireshark抓取通信内容来佐证通信的安全隐患；然后引入一些密码学基础概念；接着介绍SSL/TLS协议；最后通过HTTPS协议通信，使用wireshark抓取通信内容来佐证通信的安全性。<br>
           <div class="post-more-link text-center">
             <a class="btn" href="/2016/04/23/web/细细品酌HTTPS安全篇/#more" rel="contents">
               阅读全文 &raquo;
@@ -1532,7 +1532,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">103</span>
+              <span class="site-state-item-count">105</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

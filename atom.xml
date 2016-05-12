@@ -102,10 +102,10 @@
     <link href="http://jinpingwang.github.io/2016/04/25/nlp/3:%E5%9F%BA%E4%BA%8E%E8%B4%9D%E5%8F%B6%E6%96%AF%E7%9A%842-Gram%E4%B8%AD%E6%96%87%E5%88%86%E8%AF%8D/"/>
     <id>http://jinpingwang.github.io/2016/04/25/nlp/3:基于贝叶斯的2-Gram中文分词/</id>
     <published>2016-04-25T02:41:56.000Z</published>
-    <updated>2016-04-30T07:55:12.012Z</updated>
+    <updated>2016-05-12T14:05:11.545Z</updated>
     <content type="html"><![CDATA[<p>介绍了基于贝叶斯的2-Gram分词方法（可以与另外两篇机械分词器相比对：<a href="http://blog.wangjinping.top/2016/01/02/nlp/1:%E6%AD%A3%E5%90%91%E6%9C%80%E9%95%BF%E5%8C%B9%E9%85%8D%E4%B8%AD%E5%88%86%E8%AF%8D/" target="_blank" rel="external">正向最长匹配</a> 和 <a href="http://blog.wangjinping.top/2016/01/02/nlp/2:%E5%8F%8D%E5%90%91%E6%9C%80%E9%95%BF%E5%8C%B9%E9%85%8D%E4%B8%AD%E5%88%86%E8%AF%8D/" target="_blank" rel="external">反向最长匹配</a>）。</p>
 <h3 id="u95EE_u9898"><a href="#u95EE_u9898" class="headerlink" title="问题"></a>问题</h3><p>1：输入语料库词频<br>2：输入”上网站联盟”<br>3：输出分词结果</p>
-<h3 id="u89E3_u51B3_u63CF_u8FF0"><a href="#u89E3_u51B3_u63CF_u8FF0" class="headerlink" title="解决描述"></a>解决描述</h3><p>1：一个n+1个字的句子，它的分词方法有：2的n次方。比如：”上网站”，可以分词为：上/网/站，上/网站，上网/站，上网站。<br>2：按照每一种分词，根据语料库中的词频统计，利用贝叶斯计算出这种分词下的概率；比如，上，网，站这三个字独自出现的概率为100，上出现在网站前的词频为1000，词表中有10000个词，那么按照贝叶斯公式可计算出”上/网站”这种分词的概率为：p(上网站)=p(上)*p(网站/上)=(100/10000)*(1000/10000)=0.001；同理按贝叶斯公式可计算出”上/网/站”这种分词的概率为：p(上网站)=p(上)*p(网)*p(站)=(100/10000)*(100/10000)*(100/10000)=0.000001。因为0.001&gt;0.000001，所以，分词”上/网站”要优于”上/网/站”。<br>3：对所有分词的情况都计算出它的概率，取概率最大的那个分词方式，即为该句子的分词方式。<br><a id="more"></a></p>
+<h3 id="u89E3_u51B3_u63CF_u8FF0"><a href="#u89E3_u51B3_u63CF_u8FF0" class="headerlink" title="解决描述"></a>解决描述</h3><p>1：一个n+1个字的句子，它的分词方法有：2的n次方。比如：”上网站”，可以分词为：上/网/站，上/网站，上网/站，上网站。<br>2：按照每一种分词，根据语料库中的词频统计，利用贝叶斯计算出这种分词下的概率；比如，上，网，站这三个字独自出现的概率为1000，上出现在网站前的词频为200，词表中有10000个词，那么按照贝叶斯公式可计算出”上/网站”这种分词的概率为：p(上网站)=p(上)*p(网站|上)=(1000/10000)*(200/10000)=0.002；同理按贝叶斯公式可计算出”上/网/站”这种分词的概率为：p(上网站)=p(上)*p(网)*p(站)=(1000/10000)*(1000/10000)*(1000/10000)=0.001。因为0.002&gt;0.001，所以，分词”上/网站”要优于”上/网/站”。<br>3：对所有分词的情况都计算出它的概率，取概率最大的那个分词方式，即为该句子的分词方式。<br><a id="more"></a></p>
 <h3 id="u8BED_u6599_u5E93_u8BCD_u9891"><a href="#u8BED_u6599_u5E93_u8BCD_u9891" class="headerlink" title="语料库词频"></a>语料库词频</h3><table>
 <thead>
 <tr>
@@ -130,27 +130,27 @@
 <tbody>
 <tr>
 <td>上</td>
-<td style="text-align:right">100</td>
-<td style="text-align:center">1000</td>
+<td style="text-align:right">1000</td>
+<td style="text-align:center">100</td>
 <td></td>
 <td></td>
 <td></td>
 <td></td>
-<td>1600</td>
+<td>160</td>
 <td></td>
 <td></td>
 <td></td>
 <td>3</td>
 <td></td>
 <td></td>
-<td>1400</td>
+<td>140</td>
 <td></td>
 </tr>
 <tr>
 <td>网</td>
 <td style="text-align:right"></td>
-<td style="text-align:center">100</td>
-<td>1300</td>
+<td style="text-align:center">1000</td>
+<td>130</td>
 <td></td>
 <td></td>
 <td></td>
@@ -168,7 +168,7 @@
 <td>站</td>
 <td style="text-align:right"></td>
 <td style="text-align:center"></td>
-<td>100</td>
+<td>1000</td>
 <td>4</td>
 <td></td>
 <td></td>
@@ -187,8 +187,8 @@
 <td style="text-align:right"></td>
 <td style="text-align:center"></td>
 <td></td>
-<td>100</td>
-<td>1900</td>
+<td>1000</td>
+<td>190</td>
 <td></td>
 <td></td>
 <td></td>
@@ -206,7 +206,7 @@
 <td style="text-align:center"></td>
 <td></td>
 <td></td>
-<td>100</td>
+<td>1000</td>
 <td></td>
 <td></td>
 <td></td>
@@ -225,7 +225,7 @@
 <td>5</td>
 <td></td>
 <td></td>
-<td>400</td>
+<td>4000</td>
 <td></td>
 <td>4</td>
 <td></td>
@@ -244,7 +244,7 @@
 <td>3</td>
 <td></td>
 <td></td>
-<td>600</td>
+<td>6000</td>
 <td></td>
 <td>800</td>
 <td></td>
@@ -301,7 +301,7 @@
 <td></td>
 <td></td>
 <td></td>
-<td>50</td>
+<td>500</td>
 <td></td>
 <td></td>
 <td></td>
@@ -404,7 +404,7 @@
     <summary type="html">
     <![CDATA[<p>介绍了基于贝叶斯的2-Gram分词方法（可以与另外两篇机械分词器相比对：<a href="http://blog.wangjinping.top/2016/01/02/nlp/1:%E6%AD%A3%E5%90%91%E6%9C%80%E9%95%BF%E5%8C%B9%E9%85%8D%E4%B8%AD%E5%88%86%E8%AF%8D/">正向最长匹配</a> 和 <a href="http://blog.wangjinping.top/2016/01/02/nlp/2:%E5%8F%8D%E5%90%91%E6%9C%80%E9%95%BF%E5%8C%B9%E9%85%8D%E4%B8%AD%E5%88%86%E8%AF%8D/">反向最长匹配</a>）。</p>
 <h3 id="u95EE_u9898"><a href="#u95EE_u9898" class="headerlink" title="问题"></a>问题</h3><p>1：输入语料库词频<br>2：输入”上网站联盟”<br>3：输出分词结果</p>
-<h3 id="u89E3_u51B3_u63CF_u8FF0"><a href="#u89E3_u51B3_u63CF_u8FF0" class="headerlink" title="解决描述"></a>解决描述</h3><p>1：一个n+1个字的句子，它的分词方法有：2的n次方。比如：”上网站”，可以分词为：上/网/站，上/网站，上网/站，上网站。<br>2：按照每一种分词，根据语料库中的词频统计，利用贝叶斯计算出这种分词下的概率；比如，上，网，站这三个字独自出现的概率为100，上出现在网站前的词频为1000，词表中有10000个词，那么按照贝叶斯公式可计算出”上/网站”这种分词的概率为：p(上网站)=p(上)*p(网站/上)=(100/10000)*(1000/10000)=0.001；同理按贝叶斯公式可计算出”上/网/站”这种分词的概率为：p(上网站)=p(上)*p(网)*p(站)=(100/10000)*(100/10000)*(100/10000)=0.000001。因为0.001&gt;0.000001，所以，分词”上/网站”要优于”上/网/站”。<br>3：对所有分词的情况都计算出它的概率，取概率最大的那个分词方式，即为该句子的分词方式。<br>]]>
+<h3 id="u89E3_u51B3_u63CF_u8FF0"><a href="#u89E3_u51B3_u63CF_u8FF0" class="headerlink" title="解决描述"></a>解决描述</h3><p>1：一个n+1个字的句子，它的分词方法有：2的n次方。比如：”上网站”，可以分词为：上/网/站，上/网站，上网/站，上网站。<br>2：按照每一种分词，根据语料库中的词频统计，利用贝叶斯计算出这种分词下的概率；比如，上，网，站这三个字独自出现的概率为1000，上出现在网站前的词频为200，词表中有10000个词，那么按照贝叶斯公式可计算出”上/网站”这种分词的概率为：p(上网站)=p(上)*p(网站|上)=(1000/10000)*(200/10000)=0.002；同理按贝叶斯公式可计算出”上/网/站”这种分词的概率为：p(上网站)=p(上)*p(网)*p(站)=(1000/10000)*(1000/10000)*(1000/10000)=0.001。因为0.002&gt;0.001，所以，分词”上/网站”要优于”上/网/站”。<br>3：对所有分词的情况都计算出它的概率，取概率最大的那个分词方式，即为该句子的分词方式。<br>]]>
     
     </summary>
     
@@ -479,8 +479,8 @@
     <link href="http://jinpingwang.github.io/2016/04/23/web/%E7%BB%86%E7%BB%86%E5%93%81%E9%85%8CHTTPS%E5%AE%89%E5%85%A8%E7%AF%87/"/>
     <id>http://jinpingwang.github.io/2016/04/23/web/细细品酌HTTPS安全篇/</id>
     <published>2016-04-23T14:16:28.000Z</published>
-    <updated>2016-05-04T07:19:37.740Z</updated>
-    <content type="html"><![CDATA[<p><div align="center"><img src="http://i3.piimg.com/44d2d6a69df052a4.jpg"></div><br>HTTP通信中存在很多隐患，比如：认证，授权，机密性，数据完整性等。如果没有使用安全措施，通信的信息就很容易被劫获并被修改等。由此，HTTPS（HTTP＋SSL/STL）应孕而生。本文先使用HTTP协议通信，通过wireshark抓取通信内容来佐证通信的安全隐患；然后引入一些密码学基础概念；接着介绍SSL/STL协议；最后通过HTTPS协议通信，使用wireshark抓取通信内容来佐证通信的安全性。<br><a id="more"></a></p>
+    <updated>2016-05-12T13:53:15.797Z</updated>
+    <content type="html"><![CDATA[<p><div align="center"><img src="http://i3.piimg.com/44d2d6a69df052a4.jpg"></div><br>HTTP通信中存在很多隐患，比如：认证，授权，机密性，数据完整性等。如果没有使用安全措施，通信的信息就很容易被劫获并被修改等。由此，HTTPS（HTTP＋SSL/TLS）应孕而生。本文先使用HTTP协议通信，通过wireshark抓取通信内容来佐证通信的安全隐患；然后引入一些密码学基础概念；接着介绍SSL/TLS协议；最后通过HTTPS协议通信，使用wireshark抓取通信内容来佐证通信的安全性。<br><a id="more"></a></p>
 <h3 id="HTTP_u901A_u4FE1_u9690_u60A3"><a href="#HTTP_u901A_u4FE1_u9690_u60A3" class="headerlink" title="HTTP通信隐患"></a>HTTP通信隐患</h3><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">HTML <span class="keyword">Form</span> URL <span class="keyword">Encode</span>: application/x-www-<span class="keyword">form</span>-urlencoded</span><br><span class="line">    <span class="keyword">Form</span> item: <span class="string">"username"</span> = <span class="string">"kitty"</span></span><br><span class="line">        Key: username</span><br><span class="line">        Value: kitty</span><br><span class="line">    <span class="keyword">Form</span> item: <span class="string">"password"</span> = <span class="string">"867954"</span></span><br><span class="line">        Key: password</span><br><span class="line">        Value: 867954</span><br></pre></td></tr></table></figure>
 <p>从wireshark捕获到的HTTP报文，可以看到username与password的信息完全暴露了。</p>
 <h3 id="u5BC6_u7801_u5B66_u57FA_u7840"><a href="#u5BC6_u7801_u5B66_u57FA_u7840" class="headerlink" title="密码学基础"></a>密码学基础</h3><h4 id="u5BF9_u79F0_u52A0_u5BC6"><a href="#u5BF9_u79F0_u52A0_u5BC6" class="headerlink" title="对称加密"></a>对称加密</h4><h5 id="u5B9A_u4E49"><a href="#u5B9A_u4E49" class="headerlink" title="定义"></a>定义</h5><p>对称加密指加密和解密使用相同密钥的加密算法，即加密和解密的密钥是相同的。</p>
@@ -502,8 +502,8 @@
 <h5 id="Signature_algorithm"><a href="#Signature_algorithm" class="headerlink" title="Signature algorithm"></a>Signature algorithm</h5><p>签名所使用的算法。即服务器给客户端发送证书时，要保证这个证书在发送过程中没被别人修改过，因此使用摘要算法，计算这个证书获得摘要，然后使用私钥对这个摘要进行加密得到加密后的摘要（服务器加密），并与证书放到一块。客户端得到后就使用这个签名算法得到摘要，然后使用公钥解密摘要（服务器加密）与客户端生成的摘要相比较看是不是相等。可参见数字签名一节。</p>
 <h5 id="Thumbprint_2C_Thumbprint_algorithm"><a href="#Thumbprint_2C_Thumbprint_algorithm" class="headerlink" title="Thumbprint, Thumbprint algorithm"></a>Thumbprint, Thumbprint algorithm</h5><p>指纹以及指纹算法。保证这个证书不是伪造的。CA在发布证书时，证书的指纹（相当于摘要）和指纹算法（摘要算法），都会加密后再和证书放到一起发布。而证书的指纹是用CA的私钥进行加密生成的，即CA自己本身也是有一个证书，而这个证书在操作系统刚安装好时就已经被微软安装在操作系统中了，另外浏览器中也内嵌安装了一些CA的证书。所以，可以使用指纹算法去得到证书的摘要，使用CA的公钥解密指纹得到摘要，然后比较这两个摘要看是不是相等，即是CA的数字签名。</p>
 <h4 id="CA"><a href="#CA" class="headerlink" title="CA"></a>CA</h4><p>CA是证书的签发机构，负责签发证书，认证证书等。CA自己本身也拥有私钥和一个证书（内含公钥），而且这个证书一般在操作系统或浏览器安装时就内嵌在系统中或浏览器中了。<br>这里有一个漏洞是，有一些CA公司为了私利给一些非法公司颁发证书。如CA已经给taobao颁发了一个证书，现在另一家非法公司让这家CA也给他颁发一个taobao证书。这样，这家公司就可以使用这个证书来冒充taobao了。</p>
-<h3 id="SSL/STL"><a href="#SSL/STL" class="headerlink" title="SSL/STL"></a>SSL/STL</h3><h4 id="u540D_u8BCD_u89E3_u91CA"><a href="#u540D_u8BCD_u89E3_u91CA" class="headerlink" title="名词解释"></a>名词解释</h4><p>SSL(Secure Socket Layer)：安全套接字层<br>TLS(Transport Layer Security)：传输层安全协议</p>
-<h4 id="u7248_u672C_u5386_u53F2"><a href="#u7248_u672C_u5386_u53F2" class="headerlink" title="版本历史"></a>版本历史</h4><p>首先，网景公司制定了SSL协议，一直到SSL3.0版本<br>然后，互联网标准化组织接替网景公司，发布了SSL的升级版TLS1.0<br>接着，STL又升级了两次，分别为TSL1.1, TLS1.2</p>
+<h3 id="SSL/TLS"><a href="#SSL/TLS" class="headerlink" title="SSL/TLS"></a>SSL/TLS</h3><h4 id="u540D_u8BCD_u89E3_u91CA"><a href="#u540D_u8BCD_u89E3_u91CA" class="headerlink" title="名词解释"></a>名词解释</h4><p>SSL(Secure Socket Layer)：安全套接字层<br>TLS(Transport Layer Security)：传输层安全协议</p>
+<h4 id="u7248_u672C_u5386_u53F2"><a href="#u7248_u672C_u5386_u53F2" class="headerlink" title="版本历史"></a>版本历史</h4><p>首先，网景公司制定了SSL协议，一直到SSL3.0版本<br>然后，互联网标准化组织接替网景公司，发布了SSL的升级版TLS1.0<br>接着，TLS又升级了两次，分别为TSL1.1, TLS1.2</p>
 <h4 id="u4F5C_u7528-1"><a href="#u4F5C_u7528-1" class="headerlink" title="作用"></a>作用</h4><p>1：机密性（会话密钥）<br>2：数据完整性（数字签名）<br>3：完成客户端与服务器的认证（数字证书）</p>
 <h4 id="u534F_u8BAE_u7ED3_u6784"><a href="#u534F_u8BAE_u7ED3_u6784" class="headerlink" title="协议结构"></a>协议结构</h4><p>TLS握手协议：完成认证以及生成会话密钥<br>TLS记录协议：用会话密钥对数据加密传输</p>
 <h4 id="u534F_u8BAE_u6D41_u7A0B"><a href="#u534F_u8BAE_u6D41_u7A0B" class="headerlink" title="协议流程"></a>协议流程</h4><h5 id="u5BA2_u6237_u7AEF_u2013_26gt_3B_u670D_u52A1_u5668"><a href="#u5BA2_u6237_u7AEF_u2013_26gt_3B_u670D_u52A1_u5668" class="headerlink" title="客户端–&gt;服务器"></a>客户端–&gt;服务器</h5><p>1：协议版本（如TLS1.0）<br>2：加密算法（如RSA)<br>3：支持的压缩方法<br>4：产生一个随机数</p>
@@ -511,11 +511,11 @@
 <h5 id="u5BA2_u6237_u7AEF_u2013_26gt_3B_u670D_u52A1_u5668-1"><a href="#u5BA2_u6237_u7AEF_u2013_26gt_3B_u670D_u52A1_u5668-1" class="headerlink" title="客户端–&gt;服务器"></a>客户端–&gt;服务器</h5><p>1：产生一个随机数，使用服务器的公钥加密<br>2：编码改变通知，表示随后的信息都使用双方协定好的协议进行发送<br>3：客户端握手结束通知。表示客户端握手结束。这一项也是前面1，2发送内容的hash值，供服务器校验。<br>【注：如果服务器有对客户端实行认证，则客户端会在这一步向服务器发送自己的证书】</p>
 <h5 id="u670D_u52A1_u5668_u2013_26gt_3B_u5BA2_u6237_u7AEF-1"><a href="#u670D_u52A1_u5668_u2013_26gt_3B_u5BA2_u6237_u7AEF-1" class="headerlink" title="服务器–&gt;客户端"></a>服务器–&gt;客户端</h5><p>1：编码改变通知，表示随后的信息都使用双方协定好的协议进行发送<br>2：服务器握手结束通知。表示服务器握手结束。这一项也是前面1发送内容的hash值，供客户端校验。<br>【注：如果服务器有对客户端实行认证，则在这一步服务器会对客户端发过来的证书进行验证，如果验证不通过则中断通信】</p>
 <h3 id="HTTPS_u901A_u4FE1_u5B89_u5168_u4FDD_u8BC1"><a href="#HTTPS_u901A_u4FE1_u5B89_u5168_u4FDD_u8BC1" class="headerlink" title="HTTPS通信安全保证"></a>HTTPS通信安全保证</h3><p>在tomcat中使用SSH/TLS协议，并用8443端口来接收数据，传输的数据都给过了会话密钥的加密。<br><img src="http://i2.piimg.com/93eb5bffdcfcb5a1.jpg" alt=""></p>
-<h3 id="HTTPS_u4F18_u7F3A_u70B9"><a href="#HTTPS_u4F18_u7F3A_u70B9" class="headerlink" title="HTTPS优缺点"></a>HTTPS优缺点</h3><h4 id="u4F18_u70B9-2"><a href="#u4F18_u70B9-2" class="headerlink" title="优点"></a>优点</h4><p>详见SSL/STL中的”作用”小节</p>
+<h3 id="HTTPS_u4F18_u7F3A_u70B9"><a href="#HTTPS_u4F18_u7F3A_u70B9" class="headerlink" title="HTTPS优缺点"></a>HTTPS优缺点</h3><h4 id="u4F18_u70B9-2"><a href="#u4F18_u70B9-2" class="headerlink" title="优点"></a>优点</h4><p>详见SSL/TLS中的”作用”小节</p>
 <h4 id="u7F3A_u70B9-2"><a href="#u7F3A_u70B9-2" class="headerlink" title="缺点"></a>缺点</h4><p>1：费用<br>2：响应<br>3：消耗cpu<br>4：有些浏览器不能很好缓存https</p>
 ]]></content>
     <summary type="html">
-    <![CDATA[<p><div align="center"><img src="http://i3.piimg.com/44d2d6a69df052a4.jpg"></div><br>HTTP通信中存在很多隐患，比如：认证，授权，机密性，数据完整性等。如果没有使用安全措施，通信的信息就很容易被劫获并被修改等。由此，HTTPS（HTTP＋SSL/STL）应孕而生。本文先使用HTTP协议通信，通过wireshark抓取通信内容来佐证通信的安全隐患；然后引入一些密码学基础概念；接着介绍SSL/STL协议；最后通过HTTPS协议通信，使用wireshark抓取通信内容来佐证通信的安全性。<br>]]>
+    <![CDATA[<p><div align="center"><img src="http://i3.piimg.com/44d2d6a69df052a4.jpg"></div><br>HTTP通信中存在很多隐患，比如：认证，授权，机密性，数据完整性等。如果没有使用安全措施，通信的信息就很容易被劫获并被修改等。由此，HTTPS（HTTP＋SSL/TLS）应孕而生。本文先使用HTTP协议通信，通过wireshark抓取通信内容来佐证通信的安全隐患；然后引入一些密码学基础概念；接着介绍SSL/TLS协议；最后通过HTTPS协议通信，使用wireshark抓取通信内容来佐证通信的安全性。<br>]]>
     
     </summary>
     
