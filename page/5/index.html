@@ -281,6 +281,444 @@
             
               
                 
+                <a class="post-title-link" href="/2015/05/14/interview/关系型数据库范式/" itemprop="url">
+                  关系型数据库范式
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-05-14T09:13:48+08:00" content="2015-05-14">
+              2015-05-14
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/面试/" itemprop="url" rel="index">
+                    <span itemprop="name">面试</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/05/14/interview/关系型数据库范式/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/14/interview/关系型数据库范式/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="u60C5_u666F"><a href="#u60C5_u666F" class="headerlink" title="情景"></a>情景</h3><h4 id="u5173_u7CFB_u6A21_u5F0FSCD"><a href="#u5173_u7CFB_u6A21_u5F0FSCD" class="headerlink" title="关系模式SCD"></a>关系模式SCD</h4><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//(SNo, CNo)为主键</span></span><br><span class="line"><span class="function"><span class="title">SCD</span><span class="params">(SNo, SN, Age, Dept, MN, CNo, Score)</span></span></span><br></pre></td></tr></table></figure>
+<h4 id="u5404_u5217_u542B_u4E49"><a href="#u5404_u5217_u542B_u4E49" class="headerlink" title="各列含义"></a>各列含义</h4><table>
+<thead>
+<tr>
+<th style="text-align:center">列名</th>
+<th style="text-align:center">含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">SNo</td>
+<td style="text-align:center">学号</td>
+</tr>
+<tr>
+<td style="text-align:center">SN</td>
+<td style="text-align:center">姓名</td>
+</tr>
+<tr>
+<td style="text-align:center">Age</td>
+<td style="text-align:center">年龄</td>
+</tr>
+<tr>
+<td style="text-align:center">Dept</td>
+<td style="text-align:center">系别</td>
+</tr>
+<tr>
+<td style="text-align:center">MN</td>
+<td style="text-align:center">系主任姓名</td>
+</tr>
+<tr>
+<td style="text-align:center">CNo</td>
+<td style="text-align:center">课程号</td>
+</tr>
+<tr>
+<td style="text-align:center">Score</td>
+<td style="text-align:center">成绩</td>
+</tr>
+</tbody>
+</table>
+<h4 id="u8BED_u4E49_u89C4_u5B9A"><a href="#u8BED_u4E49_u89C4_u5B9A" class="headerlink" title="语义规定"></a>语义规定</h4><p>1：一个系有若干学生，但一个学生只属于一个系<br>2：一个系只有一名系主任，但一个系主任可以同时兼几个系的系主任<br>3：一个学生可以选修多门功课，每门课程可以被若干学生选修<br>4：每个学生学习的课程有一个成绩</p>
+<h4 id="u5B58_u5728_u9690_u60A3"><a href="#u5B58_u5728_u9690_u60A3" class="headerlink" title="存在隐患"></a>存在隐患</h4><h5 id="u6570_u636E_u5197_u4F59"><a href="#u6570_u636E_u5197_u4F59" class="headerlink" title="数据冗余"></a>数据冗余</h5><p>系名，系主任，姓名，年龄重复存储多次</p>
+<h5 id="u63D2_u5165_u5F02_u5E38"><a href="#u63D2_u5165_u5F02_u5E38" class="headerlink" title="插入异常"></a>插入异常</h5><p>某个新系没有招生，则系别与系主任信息无法输入到SCD中，因为SCD的主键为(SNo, CNo)，但是因为没有学生，则只能为空，可主键不能为空，因此会有插入异常。</p>
+<h5 id="u5220_u9664_u5F02_u5E38"><a href="#u5220_u9664_u5F02_u5E38" class="headerlink" title="删除异常"></a>删除异常</h5><p>某个系的所有学生毕业了而没有招生时，删除学生信息，也就把系别与系主任给删了，然而这个系别与系主任是存在的。<br>如果某个学生不再选修某个课程CNo1时，本应该只删除Cno1，然而删除的同时也将学生信息给删除了（如果这个学生只选了这一门课）。</p>
+<h5 id="u66F4_u65B0_u5F02_u5E38"><a href="#u66F4_u65B0_u5F02_u5E38" class="headerlink" title="更新异常"></a>更新异常</h5><p>如果某个学生改名，则有关该学生的所有记录都要逐一修改SN的值；同理某个系别的主任换届时，则这个系的学生记录都要修改MN的值。</p>
+<h3 id="u51FD_u6570_u4F9D_u8D56"><a href="#u51FD_u6570_u4F9D_u8D56" class="headerlink" title="函数依赖"></a>函数依赖</h3><h4 id="u51FD_u6570_u4F9D_u8D56_u5B9A_u4E49"><a href="#u51FD_u6570_u4F9D_u8D56_u5B9A_u4E49" class="headerlink" title="函数依赖定义"></a>函数依赖定义</h4><figure class="highlight elm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">U</span>=&#123;<span class="type">SNo</span>, <span class="type">SN</span>, <span class="type">Age</span>, <span class="type">Dept</span>, <span class="type">MN</span>, <span class="type">CNo</span>, <span class="type">Score</span>&#125;</span><br><span class="line"><span class="type">F</span>=&#123;<span class="type">SNo</span>-&gt;<span class="type">SN</span>, <span class="type">SNo</span>-&gt;<span class="type">Age</span>, <span class="type">SNo</span>-&gt;<span class="type">Dept</span>, (<span class="type">SNo</span>, <span class="type">CNo</span>)-&gt;<span class="type">Score</span>&#125;</span><br></pre></td></tr></table></figure>
+<p>设关系模式R(U, F)，U是属性全集，F是U上的函数依赖集，X和Y是U的子集，如果对于R(U)的任意一个可能关系r，对于X的每一个具体值，Y都有唯一的具体值与之对应，则称X决定函数Y，或函数Y依赖于X，记做X-&gt;Y。<br>例：一个SNo有多个Score的值与其对应，因此Score不能唯一地确定，即Score不能函数依赖于SNo。</p>
+<h4 id="u51FD_u6570_u4F9D_u8D56_u7EC6_u5206"><a href="#u51FD_u6570_u4F9D_u8D56_u7EC6_u5206" class="headerlink" title="函数依赖细分"></a>函数依赖细分</h4><h5 id="u5B8C_u5168_u51FD_u6570_u4F9D_u8D56"><a href="#u5B8C_u5168_u51FD_u6570_u4F9D_u8D56" class="headerlink" title="完全函数依赖"></a>完全函数依赖</h5><figure class="highlight elm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">U</span>=&#123;<span class="type">SNo</span>, <span class="type">SN</span>, <span class="type">Age</span>, <span class="type">Dept</span>, <span class="type">MN</span>, <span class="type">CNo</span>, <span class="type">Score</span>&#125;</span><br><span class="line"><span class="type">F</span>=&#123;<span class="type">SNo</span>-&gt;<span class="type">SN</span>, <span class="type">SNo</span>-&gt;<span class="type">Age</span>, <span class="type">SNo</span>-&gt;<span class="type">Dept</span>, (<span class="type">SNo</span>, <span class="type">CNo</span>)-&gt;<span class="type">Score</span>&#125;</span><br></pre></td></tr></table></figure>
+<p>设有关系模式R(U)，U是属性全集，X和Y是U的子集，如果X-&gt;Y，并且对于X的任何一个真字集X`，都有Y不函数依赖于X`，则称Y完全函数依赖于X。<br>例：Score完全函数依赖于(SNo, CNo)</p>
+<h5 id="u90E8_u5206_u51FD_u6570_u4F9D_u8D56"><a href="#u90E8_u5206_u51FD_u6570_u4F9D_u8D56" class="headerlink" title="部分函数依赖"></a>部分函数依赖</h5><figure class="highlight elm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">U</span>=&#123;<span class="type">SNo</span>, <span class="type">SN</span>, <span class="type">Age</span>, <span class="type">Dept</span>, <span class="type">MN</span>, <span class="type">CNo</span>, <span class="type">Score</span>&#125;</span><br><span class="line"><span class="type">F</span>=&#123;<span class="type">SNo</span>-&gt;<span class="type">SN</span>, <span class="type">SNo</span>-&gt;<span class="type">Age</span>, <span class="type">SNo</span>-&gt;<span class="type">Dept</span>, (<span class="type">SNo</span>, <span class="type">CNo</span>)-&gt;<span class="type">Score</span>&#125;</span><br></pre></td></tr></table></figure>
+<p>设有关系模式R(U)，U是属性全集，X和Y是U的子集，如果X-&gt;Y，并且对于X的某一个真字集X`，存在Y函数依赖于X`，则称Y部分函数依赖于X。<br>例：Age完全函数依赖于(SNo, CNo)</p>
+<h5 id="u4F20_u9012_u51FD_u6570_u4F9D_u8D56"><a href="#u4F20_u9012_u51FD_u6570_u4F9D_u8D56" class="headerlink" title="传递函数依赖"></a>传递函数依赖</h5><figure class="highlight elm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">U</span>=&#123;<span class="type">SNo</span>, <span class="type">SN</span>, <span class="type">Age</span>, <span class="type">Dept</span>, <span class="type">MN</span>, <span class="type">CNo</span>, <span class="type">Score</span>&#125;</span><br><span class="line"><span class="type">F</span>=&#123;<span class="type">SNo</span>-&gt;<span class="type">SN</span>, <span class="type">SNo</span>-&gt;<span class="type">Age</span>, <span class="type">SNo</span>-&gt;<span class="type">Dept</span>, (<span class="type">SNo</span>, <span class="type">CNo</span>)-&gt;<span class="type">Score</span>&#125;</span><br></pre></td></tr></table></figure>
+<p>设有关系模式R(U)，U是属性全集，X，Y，Z是U的子集，若X-&gt;Y（Y函数依赖于X），但X不函数依赖于Y，而Y-&gt;Z，则称Z对X传递函数依赖。<br>例：SNo-&gt;Dept，但SNo不函数依赖于Dept，而Dept-&gt;MN，则有MN对SNo传递函数依赖。</p>
+<h3 id="u5173_u7CFB_u6A21_u5F0F_u7684_u8303_u5F0F"><a href="#u5173_u7CFB_u6A21_u5F0F_u7684_u8303_u5F0F" class="headerlink" title="关系模式的范式"></a>关系模式的范式</h3><h4 id="1NF"><a href="#1NF" class="headerlink" title="1NF"></a>1NF</h4><h5 id="u60C5_u666F-1"><a href="#u60C5_u666F-1" class="headerlink" title="情景"></a>情景</h5><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">SCD</span><span class="params">(SNo, SN, Age, Dept, MN, CNo, Score)</span></span></span><br></pre></td></tr></table></figure>
+<h5 id="u5B9A_u4E49"><a href="#u5B9A_u4E49" class="headerlink" title="定义"></a>定义</h5><p>关系模式R所有的属性均为简单属性，即每个属性都是不可再分的。</p>
+<h5 id="u5B58_u5728_u9690_u60A3-1"><a href="#u5B58_u5728_u9690_u60A3-1" class="headerlink" title="存在隐患"></a>存在隐患</h5><p>数据冗余，插入异常，删除异常，更新异常</p>
+<h4 id="2NF"><a href="#2NF" class="headerlink" title="2NF"></a>2NF</h4><h5 id="u60C5_u666F-2"><a href="#u60C5_u666F-2" class="headerlink" title="情景"></a>情景</h5><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">SCD</span><span class="params">(SNo, SN, Age, Dept, MN, CNo, Score)</span></span></span><br><span class="line">由<span class="number">1</span>NF转换为<span class="number">2</span>NF</span><br><span class="line"><span class="function"><span class="title">SD</span><span class="params">(SNo, SN, Age, Dept, MN)</span></span></span><br><span class="line"><span class="function"><span class="title">SC</span><span class="params">(SNo, CNo, Score)</span></span></span><br></pre></td></tr></table></figure>
+<h5 id="u5B9A_u4E49-1"><a href="#u5B9A_u4E49-1" class="headerlink" title="定义"></a>定义</h5><p>首先是满足1NF，且每个非主属性都完全函数依赖于R的主关系键。</p>
+<h5 id="u5B58_u5728_u9690_u60A3-2"><a href="#u5B58_u5728_u9690_u60A3-2" class="headerlink" title="存在隐患"></a>存在隐患</h5><p>数据冗余，插入异常，删除异常，更新异常</p>
+<h4 id="3NF"><a href="#3NF" class="headerlink" title="3NF"></a>3NF</h4><h5 id="u60C5_u666F-3"><a href="#u60C5_u666F-3" class="headerlink" title="情景"></a>情景</h5><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">SD</span><span class="params">(SNo, SN, Age, Dept, MN)</span></span></span><br><span class="line"><span class="function"><span class="title">SC</span><span class="params">(SNo, CNo, Score)</span></span></span><br><span class="line">由<span class="number">2</span>NF转换为<span class="number">3</span>NF</span><br><span class="line"><span class="function"><span class="title">S</span><span class="params">(SNo, SN, Age, Dept)</span></span></span><br><span class="line"><span class="function"><span class="title">D</span><span class="params">(Dept, MN)</span></span></span><br><span class="line"><span class="function"><span class="title">SC</span><span class="params">(SNo, CNo, Score)</span></span></span><br></pre></td></tr></table></figure>
+<h5 id="u5B9A_u4E49-2"><a href="#u5B9A_u4E49-2" class="headerlink" title="定义"></a>定义</h5><p>首先是满足2NF，且第个非主属性都不传递函数依赖于R的主关系键。</p>
+<h5 id="u5B58_u5728_u9690_u60A3-3"><a href="#u5B58_u5728_u9690_u60A3-3" class="headerlink" title="存在隐患"></a>存在隐患</h5><p>数据冗余降低，不存在插入异常，不存在删除异常，不存在更新异常。</p>
+<h4 id="BCNF"><a href="#BCNF" class="headerlink" title="BCNF"></a>BCNF</h4><h5 id="u60C5_u666F-4"><a href="#u60C5_u666F-4" class="headerlink" title="情景"></a>情景</h5><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line"> * 假设名字没有重复，即SNo&lt;-&gt;SN</span><br><span class="line"> * 若(SNo, CNo)为主键，则SN部分函数依赖于SNo</span><br><span class="line"> * 若(SN, CNo)为主键，则SNo部分函数依赖于SN</span><br><span class="line"> */</span></span><br><span class="line"><span class="function"><span class="title">SNC</span><span class="params">(SNo, SN, CNo, Score)</span></span></span><br><span class="line">转换为BCNF</span><br><span class="line"><span class="function"><span class="title">S1</span><span class="params">(SNo, SN)</span></span></span><br><span class="line"><span class="function"><span class="title">S2</span><span class="params">(SNo, CNo, Score)</span></span></span><br></pre></td></tr></table></figure>
+<h5 id="u5B9A_u4E49-3"><a href="#u5B9A_u4E49-3" class="headerlink" title="定义"></a>定义</h5><p>消除主属性对键的依赖关系。</p>
+<h4 id="4NF"><a href="#4NF" class="headerlink" title="4NF"></a>4NF</h4><p>暂不考虑</p>
+<h4 id="5NF"><a href="#5NF" class="headerlink" title="5NF"></a>5NF</h4><p>暂不考虑</p>
+
+          
+        
+      
+    </div>
+    
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/05/14/interview/TCP连接与关闭时会出现的各种情况分析/" itemprop="url">
+                  TCP连接与关闭时会出现的各种情况分析
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-05-14T07:04:38+08:00" content="2015-05-14">
+              2015-05-14
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/面试/" itemprop="url" rel="index">
+                    <span itemprop="name">面试</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/05/14/interview/TCP连接与关闭时会出现的各种情况分析/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/14/interview/TCP连接与关闭时会出现的各种情况分析/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="u5BA2_u6237_u7AEF-_u670D_u52A1_u5668"><a href="#u5BA2_u6237_u7AEF-_u670D_u52A1_u5668" class="headerlink" title="客户端-服务器"></a>客户端-服务器</h3><h4 id="u6253_u5F00"><a href="#u6253_u5F00" class="headerlink" title="打开"></a>打开</h4><p>tcpdump抓的包：<br><img src="http://i2.buimg.com/2f49b5ab4c08c238.jpg" alt=""><br>wireshark抓的包：<br><img src="http://i3.buimg.com/13cc268f4e1dbacf.jpg" alt=""><br>（从以上tcpdump与wireshark抓的包可以看出，同样的包，不同工具解析出来的序列号等都不一样。）<br>1：客户端—（SYN）—&gt;服务器<br>如图中的红色字1，客户端给服务器发送SYN包，序列号为0<br>2：服务器—（SYN+ACK）—&gt;客户端<br>如图中的红色字2，因为客户端发送的标志位SYN会占用一个序列号，所以ack的值为客户端中的序列号+1，即1 = 0 + 1。同时服务器也给客户端发送一个SYN标志位<br>3：客户端—（ACK）—&gt;服务器<br>如图中的红色字3，客户端接收到服务器的SYN，便给服务器发送一个ACK。因为服务器发送的标志位会占用一个序列号，所以ack的值为服务器中的语+1，即1 = 0 + 1。此时表示ESTABLISHED建立。</p>
+<p>异常情况：<br>1：客户端发送完SYN没有收到服务器发送过来的SYN+ACK<br>处理办法：出现超时连接，可能一次，多次或超过次数进入CLOSED状态<br>情景再现：<br>从图中可以知道第一次接连超时是隔1s再发送，以后每次是前面的2倍：<br><img src="http://i2.buimg.com/274fd891901ff63e.jpg" alt=""><br>连接超时最大次数设置：<br><img src="http://i3.buimg.com/cc28b037eff53721.jpg" alt=""><br>2：服务器没有收到客户端的ACK<br>处理办法：会超时重传SYN+ACK，情况类似1.2</p>
+<h4 id="u5173_u95ED"><a href="#u5173_u95ED" class="headerlink" title="关闭"></a>关闭</h4><p>正常情况之客户端发起关闭<br><img src="http://i2.buimg.com/6ad39eadc2deb2cc.jpg" alt=""><br>1：客户端—（FIN+ACK）—&gt;服务器<br>如图红色字1，此处的ACK表示以上一次客户端发送数据的序列号进行确认<br>2：服务器—（ACK）—&gt;客户端<br>如图红色字2，因为ACK不会占用1个序列号（SYN，FIN会占用一个），发以红色字体3处的seq并没有加1（从红色字1处的ack=2826，以及红色字3处的seq可推断）<br>3：服务器—（FIN+ACK）—&gt;客户端<br>因为红色字1中发送FIN占用了一个序列号，所以这里红色字3中的ack=红色字1中的seq+1<br>4：客户端—（ACK）—&gt;服务器<br>同里，红色字3中使用FIN占用了一个序列号，所以这里红色字4的ack=红色字3中的seq+1</p>
+<p>异常情况<br>1：客户端发送完FIN+ACK后，没有收到服务器的ACK<br>处理办法：类似1.2<br>2：服务器发送的ACK没有到达客户端<br>处理办法：不需要处理，因为客户端还会再重发FIN＋ACK<br>3：客户端处于FIN_WAIT_2，即没有收到服务器传输的数据又没收到服务器的FIN，则经过一些时间后就不等服务器的FIN，直接关闭由内核接管，称之为孤儿连接（有两个变量：孤独连接队列的连接数，孤儿连接在内核的生存时间）<br>4：服务器发送完FIN+ACK后，没有收到客户端的ACK<br>处理办法：类似1.2<br>5：客户端发送的ACK服务器没有收到<br>处理办法：不需要处理，国为服务器会再重发FIN+ACK，另外，此时的客户端发送完ACK后进入了TIME_WAIT，等到TIME_WAIT超时，不管服务器有没有收到ACK，客户端都会CLOSED</p>
+<h3 id="u670D_u52A1_u5668-_u670D_u52A1_u5668"><a href="#u670D_u52A1_u5668-_u670D_u52A1_u5668" class="headerlink" title="服务器-服务器"></a>服务器-服务器</h3><h4 id="u6B63_u5E38_u6253_u5F00"><a href="#u6B63_u5E38_u6253_u5F00" class="headerlink" title="正常打开"></a>正常打开</h4><p>注：同是服务器的情形，正常打开是否是和”客户端-服务器”的打开是一样的。</p>
+<h4 id="u540C_u65F6_u6253_u5F00"><a href="#u540C_u65F6_u6253_u5F00" class="headerlink" title="同时打开"></a>同时打开</h4><p>1：两端同时打开<br>服务器（客户端）—（SYN）—&gt;客户端（服务器）<br>客户端（服务器）—（SYN）—&gt;服务器（客户端）<br>2：服务器（客户端）—（SYN+ACK）—&gt;客户端（服务器）<br>3：客户端（服务器）—（SYN+ACK）—&gt;服务器（客户端）</p>
+<h4 id="u6B63_u5E38_u5173_u95ED1"><a href="#u6B63_u5E38_u5173_u95ED1" class="headerlink" title="正常关闭1"></a>正常关闭1</h4><p>同”客户端-服务器”的关闭是一样的</p>
+<h4 id="u6B63_u5E38_u5173_u95ED2"><a href="#u6B63_u5E38_u5173_u95ED2" class="headerlink" title="正常关闭2"></a>正常关闭2</h4><p><img src="http://i2.buimg.com/74adb64fb8063391.jpg" alt=""><br>这种情况下，服务器直接收到带确认信息的结束报文段（而不是先收到确认报文段，再收到结束报文段）<br>1：服务器（客户端）—（FIN+ACK）—&gt;客户端（服务器）<br>此处的ACK表示以上一次客户端（服务器）方发送数据的序列号进行确认。<br>2：客户端（服务器）—（FIN+ACK）—&gt;服务器（客户端）<br>此处的ACK=上一次服务器（客户端）方发送数据的序列+上一次服务器（客户端）主发送FIN占的1位序列号。这样服务器（客户端）接收到这个ACK后就知道，自己之前发送的数据以及发送的FIN标志位，对方都已经收到了。<br>3：服务器（客户端）—（ACK）—&gt;客户端（服务器）<br>同里，红色字2中使用FIN占用了一个序列号，所以这里红色字3的ack=红色字2中的seq+1</p>
+<h4 id="u540C_u65F6_u5173_u95ED"><a href="#u540C_u65F6_u5173_u95ED" class="headerlink" title="同时关闭"></a>同时关闭</h4><p>1：两端同时关闭<br>服务器（客户端）—（FIN+ACK）—&gt;客户端（服务器）<br>客户端（服务器）—（FIN+ACK）—&gt;服务器（客户端）<br>2：服务器（客户端）—（ACK）—&gt;客户端（服务器）<br>3：客户端（服务器）—（ACK）—&gt;服务器（客户端）<br>异常情况<br>可以类似按客户端-服务器进行分析</p>
+
+          
+        
+      
+    </div>
+    
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/05/13/interview/TCP状态转移分析篇/" itemprop="url">
+                  TCP状态转移分析
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-05-13T23:08:15+08:00" content="2015-05-13">
+              2015-05-13
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/面试/" itemprop="url" rel="index">
+                    <span itemprop="name">面试</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/05/13/interview/TCP状态转移分析篇/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/13/interview/TCP状态转移分析篇/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="u5BA2_u6237_u7AEF_u72B6_u6001_u8F6C_u79FB"><a href="#u5BA2_u6237_u7AEF_u72B6_u6001_u8F6C_u79FB" class="headerlink" title="客户端状态转移"></a>客户端状态转移</h3><p><img src="http://i4.buimg.com/adcdf5f87fbcfdc1.jpg" alt=""></p>
+<h3 id="u670D_u52A1_u5668_u72B6_u6001_u8F6C_u79FB"><a href="#u670D_u52A1_u5668_u72B6_u6001_u8F6C_u79FB" class="headerlink" title="服务器状态转移"></a>服务器状态转移</h3><p><img src="http://i4.buimg.com/0e117539fd10d877.jpg" alt=""></p>
+<h3 id="u65E2_u662F_u5BA2_u6237_u7AEF_u53C8_u662F_u670D_u52A1_u5668_u72B6_u6001_u8F6C_u79FB"><a href="#u65E2_u662F_u5BA2_u6237_u7AEF_u53C8_u662F_u670D_u52A1_u5668_u72B6_u6001_u8F6C_u79FB" class="headerlink" title="既是客户端又是服务器状态转移"></a>既是客户端又是服务器状态转移</h3><p><img src="http://i4.buimg.com/88bcd136c71b9014.jpg" alt=""></p>
+<h3 id="u7279_u6B8A_u72B6_u6001_u5206_u6790"><a href="#u7279_u6B8A_u72B6_u6001_u5206_u6790" class="headerlink" title="特殊状态分析"></a>特殊状态分析</h3><h4 id="u534A_u5173_u95ED_u72B6_u6001"><a href="#u534A_u5173_u95ED_u72B6_u6001" class="headerlink" title="半关闭状态"></a>半关闭状态</h4><p>通信的一端可以发送结束报文给对方，告诉对方本端已经完成了数据的发送，但允许接收来自对方的数据直到对方也发送结束报文段以关闭连接。</p>
+<h4 id="TIME_WAIT_u72B6_u6001"><a href="#TIME_WAIT_u72B6_u6001" class="headerlink" title="TIME_WAIT状态"></a>TIME_WAIT状态</h4><h5 id="u5B9A_u4E49"><a href="#u5B9A_u4E49" class="headerlink" title="定义"></a>定义</h5><p>客户端连接在收到服务器的结束报文段之后，给服务器发送ACK确认后，并没有直接进入CLOSED状态，而是转移到TIME_WAIT状态。在这个连接状态，客户端需要等待一段长为2MSL的时间，才能完全关闭。</p>
+<h4 id="MSL"><a href="#MSL" class="headerlink" title="MSL"></a>MSL</h4><p>Maximum Segment Lifetime：报文段最大生存时间。RFC标准指定的是2分钟，现实中常用的是30秒，1分钟或2分钟。</p>
+<h4 id="u4F5C_u7528"><a href="#u4F5C_u7528" class="headerlink" title="作用"></a>作用</h4><p>1：可靠地终止TCP连接。如果服务器没有收到客户端发的ACK，则可以让客户端进行重传。<br>2：保证让迟来的TCP报文段有足够的时间被识别并丢弃。即当过了2MSL后，如果用这个插槽，就不会收到原先属于这个插槽的数据。</p>
+
+          
+        
+      
+    </div>
+    
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2015/05/13/leetcodeDatabase/DuplicateValue/" itemprop="url">
                   Duplicate Value
                 </a>
@@ -1122,377 +1560,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/05/11/leetcode/RotateArray/" itemprop="url">
-                  Rotate Array
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-05-11T09:18:32+08:00" content="2015-05-11">
-              2015-05-11
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/leetcode/" itemprop="url" rel="index">
-                    <span itemprop="name">leetcode</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/05/11/leetcode/RotateArray/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/11/leetcode/RotateArray/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h3 id="u9898_u76EE"><a href="#u9898_u76EE" class="headerlink" title="题目"></a>题目</h3><h4 id="Describe"><a href="#Describe" class="headerlink" title="Describe"></a>Describe</h4><p>Rotate an array of n elements to the right by k steps.</p>
-<h4 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h4><p>with n = 7 and k = 3, the array [1,2,3,4,5,6,7] is rotated to [5,6,7,1,2,3,4].</p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/05/11/leetcode/RotateArray/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-    
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/05/11/java/java输入输出以及中文乱码处理/" itemprop="url">
-                  java输入输出以及中文乱码处理
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-05-11T09:18:06+08:00" content="2015-05-11">
-              2015-05-11
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/java/" itemprop="url" rel="index">
-                    <span itemprop="name">java</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/05/11/java/java输入输出以及中文乱码处理/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/11/java/java输入输出以及中文乱码处理/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="u8F93_u5165"><a href="#u8F93_u5165" class="headerlink" title="输入"></a>输入</h3><h4 id="u65B9_u5F0F_u4E00"><a href="#u65B9_u5F0F_u4E00" class="headerlink" title="方式一"></a>方式一</h4><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">String filePath = <span class="string">"你的文件路径，路径格式/../..或（windows文件则\\..\\..）"</span>;</span><br><span class="line"><span class="keyword">File</span> txtRead=new <span class="keyword">File</span>(filePath);</span><br><span class="line"><span class="comment">/**</span><br><span class="line"> * 如果txtRead的存储格式非UTF-8，假设为Unicode则需要使用用以下格式</span><br><span class="line"> * Scanner sc = new Scanner(txtRead, "Unicode");</span><br><span class="line"> */</span></span><br><span class="line">Scanner <span class="keyword">sc</span> = null;</span><br><span class="line">try&#123;</span><br><span class="line">    <span class="keyword">sc</span> = new Scanner(txtRead);</span><br><span class="line">&#125;catch (FileNotFoundException <span class="keyword">e</span>) &#123;</span><br><span class="line">	<span class="comment">// TODO Auto-generated catch block</span></span><br><span class="line">	<span class="keyword">e</span>.printStackTrace();</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">while</span>(<span class="keyword">sc</span>.hasNextLine())&#123;</span><br><span class="line">    System.<span class="keyword">out</span>.println(<span class="keyword">sc</span>.nextLine());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="u65B9_u5F0F_u4E8C"><a href="#u65B9_u5F0F_u4E8C" class="headerlink" title="方式二"></a>方式二</h4><figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">String</span> filePath = <span class="string">"你的文件路径，路径格式/../..或（windows文件则\\..\\..）"</span>;</span><br><span class="line">File txtRead=<span class="keyword">new</span> File(filePath);</span><br><span class="line"><span class="comment">//这里UTF-8根据你的文件实际存储格式进行相应修改</span></span><br><span class="line">InputStreamReader isr = <span class="keyword">new</span> InputStreamReader(<span class="keyword">new</span> FileInputStream(txtRead), <span class="string">"UTF-8"</span>);	</span><br><span class="line"><span class="keyword">BufferedReader</span> br = <span class="keyword">new</span> <span class="keyword">BufferedReader</span>(isr);</span><br><span class="line"><span class="keyword">String</span> <span class="built_in">line</span>;</span><br><span class="line"><span class="keyword">while</span>((<span class="built_in">line</span>=br.readLine())!=<span class="keyword">null</span>)&#123;</span><br><span class="line">    System.out.<span class="built_in">println</span>(<span class="built_in">line</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="u8F93_u51FA"><a href="#u8F93_u51FA" class="headerlink" title="输出"></a>输出</h3><h4 id="u65B9_u5F0F_u4E00-1"><a href="#u65B9_u5F0F_u4E00-1" class="headerlink" title="方式一"></a>方式一</h4><p>默认输出存储格式为UTF-8<br><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">File</span> txtWrite=<span class="keyword">new</span> <span class="keyword">File</span>(<span class="string">"你的文件路径，路径格式/../..或（windows文件则\\..\\..）,如果不存在则自动创建"</span>);</span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">	BufferedWriter bw=<span class="keyword">new</span> BufferedWriter(<span class="keyword">new</span> FileWriter(txtWrite));</span><br><span class="line">	bw.<span class="keyword">write</span>(<span class="string">"红包"</span>);</span><br><span class="line">	bw.close();</span><br><span class="line">&#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">	<span class="comment">// TODO Auto-generated catch block</span></span><br><span class="line">	e.printStackTrace();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h3 id="txt_u6587_u4EF6_u8BFB_u5165_u4E71_u7801"><a href="#txt_u6587_u4EF6_u8BFB_u5165_u4E71_u7801" class="headerlink" title="txt文件读入乱码"></a>txt文件读入乱码</h3><h4 id="u6587_u4EF6_u5B58_u50A8_u683C_u5F0F_u4E3AANSI"><a href="#u6587_u4EF6_u5B58_u50A8_u683C_u5F0F_u4E3AANSI" class="headerlink" title="文件存储格式为ANSI"></a>文件存储格式为ANSI</h4><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//方式一</span></span><br><span class="line">Scanner sc = <span class="keyword">new</span> Scanner(txtRead, <span class="string">"GBK"</span>);</span><br><span class="line"><span class="comment">//方式二</span></span><br><span class="line">InputStreamReader isr = <span class="keyword">new</span> InputStreamReader(<span class="keyword">new</span> FileInputStream(txtRead), <span class="string">"GBK"</span>);</span><br></pre></td></tr></table></figure>
-<h4 id="u6587_u4EF6_u5B58_u50A8_u683C_u5F0F_u4E3AUTF-8"><a href="#u6587_u4EF6_u5B58_u50A8_u683C_u5F0F_u4E3AUTF-8" class="headerlink" title="文件存储格式为UTF-8"></a>文件存储格式为UTF-8</h4><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//方式一</span></span><br><span class="line">Scanner sc = <span class="keyword">new</span> Scanner(txtRead, <span class="string">"UTF-8"</span>);</span><br><span class="line"><span class="comment">//方式二</span></span><br><span class="line">InputStreamReader isr = <span class="keyword">new</span> InputStreamReader(<span class="keyword">new</span> FileInputStream(txtRead), <span class="string">"UTF-8"</span>);</span><br></pre></td></tr></table></figure>
-<h4 id="u6587_u4EF6_u5B58_u50A8_u683C_u5F0F_u4E3AUnicode"><a href="#u6587_u4EF6_u5B58_u50A8_u683C_u5F0F_u4E3AUnicode" class="headerlink" title="文件存储格式为Unicode"></a>文件存储格式为Unicode</h4><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//方式一</span></span><br><span class="line">Scanner sc = <span class="keyword">new</span> Scanner(txtRead, <span class="string">"Unicode"</span>);</span><br><span class="line"><span class="comment">//方式二</span></span><br><span class="line">InputStreamReader isr = <span class="keyword">new</span> InputStreamReader(<span class="keyword">new</span> FileInputStream(txtRead), <span class="string">"Unicode"</span>);</span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-    
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/05/08/leetcode/FactorialTrailingZeroes/" itemprop="url">
-                  Factorial Trailing Zeroes
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-05-08T23:15:58+08:00" content="2015-05-08">
-              2015-05-08
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/leetcode/" itemprop="url" rel="index">
-                    <span itemprop="name">leetcode</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/05/08/leetcode/FactorialTrailingZeroes/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/08/leetcode/FactorialTrailingZeroes/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h3 id="u9898_u76EE"><a href="#u9898_u76EE" class="headerlink" title="题目"></a>题目</h3><h4 id="Describe"><a href="#Describe" class="headerlink" title="Describe"></a>Describe</h4><p>Given an integer n, return the number of trailing zeroes in n!.</p>
-<h4 id="Note"><a href="#Note" class="headerlink" title="Note"></a>Note</h4><p>Your solution should be in logarithmic time complexity.</p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/05/08/leetcode/FactorialTrailingZeroes/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-    
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1538,7 +1605,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">105</span>
+              <span class="site-state-item-count">109</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1546,7 +1613,7 @@
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-count">14</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -1555,7 +1622,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">26</span>
+                <span class="site-state-item-count">27</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

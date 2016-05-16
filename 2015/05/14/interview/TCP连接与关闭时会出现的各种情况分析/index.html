@@ -1,0 +1,720 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="面试," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Quick notes" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="客户端-服务器打开tcpdump抓的包：wireshark抓的包：（从以上tcpdump与wireshark抓的包可以看出，同样的包，不同工具解析出来的序列号等都不一样。）1：客户端—（SYN）—&amp;gt;服务器如图中的红色字1，客户端给服务器发送SYN包，序列号为02：服务器—（SYN+ACK）—&amp;gt;客户端如图中的红色字2，因为客户端发送的标志位SYN会占用一个序列号，所以ack的值为客户端中">
+<meta property="og:type" content="article">
+<meta property="og:title" content="TCP连接与关闭时会出现的各种情况分析">
+<meta property="og:url" content="http://jinpingwang.github.io/2015/05/14/interview/TCP连接与关闭时会出现的各种情况分析/index.html">
+<meta property="og:site_name" content="Quick notes">
+<meta property="og:description" content="客户端-服务器打开tcpdump抓的包：wireshark抓的包：（从以上tcpdump与wireshark抓的包可以看出，同样的包，不同工具解析出来的序列号等都不一样。）1：客户端—（SYN）—&amp;gt;服务器如图中的红色字1，客户端给服务器发送SYN包，序列号为02：服务器—（SYN+ACK）—&amp;gt;客户端如图中的红色字2，因为客户端发送的标志位SYN会占用一个序列号，所以ack的值为客户端中">
+<meta property="og:image" content="http://i2.buimg.com/2f49b5ab4c08c238.jpg">
+<meta property="og:image" content="http://i3.buimg.com/13cc268f4e1dbacf.jpg">
+<meta property="og:image" content="http://i2.buimg.com/274fd891901ff63e.jpg">
+<meta property="og:image" content="http://i3.buimg.com/cc28b037eff53721.jpg">
+<meta property="og:image" content="http://i2.buimg.com/6ad39eadc2deb2cc.jpg">
+<meta property="og:image" content="http://i2.buimg.com/74adb64fb8063391.jpg">
+<meta property="og:updated_time" content="2016-05-14T14:13:08.397Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="TCP连接与关闭时会出现的各种情况分析">
+<meta name="twitter:description" content="客户端-服务器打开tcpdump抓的包：wireshark抓的包：（从以上tcpdump与wireshark抓的包可以看出，同样的包，不同工具解析出来的序列号等都不一样。）1：客户端—（SYN）—&amp;gt;服务器如图中的红色字1，客户端给服务器发送SYN包，序列号为02：服务器—（SYN+ACK）—&amp;gt;客户端如图中的红色字2，因为客户端发送的标志位SYN会占用一个序列号，所以ack的值为客户端中">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> TCP连接与关闭时会出现的各种情况分析 | Quick notes </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Quick notes</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">王谨平</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-th fa-fw"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-user fa-fw"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="st-search-show-outputs">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'Aq7px34mBsH6UhwK43yW','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                TCP连接与关闭时会出现的各种情况分析
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-05-14T07:04:38+08:00" content="2015-05-14">
+              2015-05-14
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/面试/" itemprop="url" rel="index">
+                    <span itemprop="name">面试</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/05/14/interview/TCP连接与关闭时会出现的各种情况分析/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/14/interview/TCP连接与关闭时会出现的各种情况分析/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="u5BA2_u6237_u7AEF-_u670D_u52A1_u5668"><a href="#u5BA2_u6237_u7AEF-_u670D_u52A1_u5668" class="headerlink" title="客户端-服务器"></a>客户端-服务器</h3><h4 id="u6253_u5F00"><a href="#u6253_u5F00" class="headerlink" title="打开"></a>打开</h4><p>tcpdump抓的包：<br><img src="http://i2.buimg.com/2f49b5ab4c08c238.jpg" alt=""><br>wireshark抓的包：<br><img src="http://i3.buimg.com/13cc268f4e1dbacf.jpg" alt=""><br>（从以上tcpdump与wireshark抓的包可以看出，同样的包，不同工具解析出来的序列号等都不一样。）<br>1：客户端—（SYN）—&gt;服务器<br>如图中的红色字1，客户端给服务器发送SYN包，序列号为0<br>2：服务器—（SYN+ACK）—&gt;客户端<br>如图中的红色字2，因为客户端发送的标志位SYN会占用一个序列号，所以ack的值为客户端中的序列号+1，即1 = 0 + 1。同时服务器也给客户端发送一个SYN标志位<br>3：客户端—（ACK）—&gt;服务器<br>如图中的红色字3，客户端接收到服务器的SYN，便给服务器发送一个ACK。因为服务器发送的标志位会占用一个序列号，所以ack的值为服务器中的语+1，即1 = 0 + 1。此时表示ESTABLISHED建立。</p>
+<p>异常情况：<br>1：客户端发送完SYN没有收到服务器发送过来的SYN+ACK<br>处理办法：出现超时连接，可能一次，多次或超过次数进入CLOSED状态<br>情景再现：<br>从图中可以知道第一次接连超时是隔1s再发送，以后每次是前面的2倍：<br><img src="http://i2.buimg.com/274fd891901ff63e.jpg" alt=""><br>连接超时最大次数设置：<br><img src="http://i3.buimg.com/cc28b037eff53721.jpg" alt=""><br>2：服务器没有收到客户端的ACK<br>处理办法：会超时重传SYN+ACK，情况类似1.2</p>
+<h4 id="u5173_u95ED"><a href="#u5173_u95ED" class="headerlink" title="关闭"></a>关闭</h4><p>正常情况之客户端发起关闭<br><img src="http://i2.buimg.com/6ad39eadc2deb2cc.jpg" alt=""><br>1：客户端—（FIN+ACK）—&gt;服务器<br>如图红色字1，此处的ACK表示以上一次客户端发送数据的序列号进行确认<br>2：服务器—（ACK）—&gt;客户端<br>如图红色字2，因为ACK不会占用1个序列号（SYN，FIN会占用一个），发以红色字体3处的seq并没有加1（从红色字1处的ack=2826，以及红色字3处的seq可推断）<br>3：服务器—（FIN+ACK）—&gt;客户端<br>因为红色字1中发送FIN占用了一个序列号，所以这里红色字3中的ack=红色字1中的seq+1<br>4：客户端—（ACK）—&gt;服务器<br>同里，红色字3中使用FIN占用了一个序列号，所以这里红色字4的ack=红色字3中的seq+1</p>
+<p>异常情况<br>1：客户端发送完FIN+ACK后，没有收到服务器的ACK<br>处理办法：类似1.2<br>2：服务器发送的ACK没有到达客户端<br>处理办法：不需要处理，因为客户端还会再重发FIN＋ACK<br>3：客户端处于FIN_WAIT_2，即没有收到服务器传输的数据又没收到服务器的FIN，则经过一些时间后就不等服务器的FIN，直接关闭由内核接管，称之为孤儿连接（有两个变量：孤独连接队列的连接数，孤儿连接在内核的生存时间）<br>4：服务器发送完FIN+ACK后，没有收到客户端的ACK<br>处理办法：类似1.2<br>5：客户端发送的ACK服务器没有收到<br>处理办法：不需要处理，国为服务器会再重发FIN+ACK，另外，此时的客户端发送完ACK后进入了TIME_WAIT，等到TIME_WAIT超时，不管服务器有没有收到ACK，客户端都会CLOSED</p>
+<h3 id="u670D_u52A1_u5668-_u670D_u52A1_u5668"><a href="#u670D_u52A1_u5668-_u670D_u52A1_u5668" class="headerlink" title="服务器-服务器"></a>服务器-服务器</h3><h4 id="u6B63_u5E38_u6253_u5F00"><a href="#u6B63_u5E38_u6253_u5F00" class="headerlink" title="正常打开"></a>正常打开</h4><p>注：同是服务器的情形，正常打开是否是和”客户端-服务器”的打开是一样的。</p>
+<h4 id="u540C_u65F6_u6253_u5F00"><a href="#u540C_u65F6_u6253_u5F00" class="headerlink" title="同时打开"></a>同时打开</h4><p>1：两端同时打开<br>服务器（客户端）—（SYN）—&gt;客户端（服务器）<br>客户端（服务器）—（SYN）—&gt;服务器（客户端）<br>2：服务器（客户端）—（SYN+ACK）—&gt;客户端（服务器）<br>3：客户端（服务器）—（SYN+ACK）—&gt;服务器（客户端）</p>
+<h4 id="u6B63_u5E38_u5173_u95ED1"><a href="#u6B63_u5E38_u5173_u95ED1" class="headerlink" title="正常关闭1"></a>正常关闭1</h4><p>同”客户端-服务器”的关闭是一样的</p>
+<h4 id="u6B63_u5E38_u5173_u95ED2"><a href="#u6B63_u5E38_u5173_u95ED2" class="headerlink" title="正常关闭2"></a>正常关闭2</h4><p><img src="http://i2.buimg.com/74adb64fb8063391.jpg" alt=""><br>这种情况下，服务器直接收到带确认信息的结束报文段（而不是先收到确认报文段，再收到结束报文段）<br>1：服务器（客户端）—（FIN+ACK）—&gt;客户端（服务器）<br>此处的ACK表示以上一次客户端（服务器）方发送数据的序列号进行确认。<br>2：客户端（服务器）—（FIN+ACK）—&gt;服务器（客户端）<br>此处的ACK=上一次服务器（客户端）方发送数据的序列+上一次服务器（客户端）主发送FIN占的1位序列号。这样服务器（客户端）接收到这个ACK后就知道，自己之前发送的数据以及发送的FIN标志位，对方都已经收到了。<br>3：服务器（客户端）—（ACK）—&gt;客户端（服务器）<br>同里，红色字2中使用FIN占用了一个序列号，所以这里红色字3的ack=红色字2中的seq+1</p>
+<h4 id="u540C_u65F6_u5173_u95ED"><a href="#u540C_u65F6_u5173_u95ED" class="headerlink" title="同时关闭"></a>同时关闭</h4><p>1：两端同时关闭<br>服务器（客户端）—（FIN+ACK）—&gt;客户端（服务器）<br>客户端（服务器）—（FIN+ACK）—&gt;服务器（客户端）<br>2：服务器（客户端）—（ACK）—&gt;客户端（服务器）<br>3：客户端（服务器）—（ACK）—&gt;服务器（客户端）<br>异常情况<br>可以类似按客户端-服务器进行分析</p>
+
+      
+    </div>
+    
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/面试/" rel="tag">#面试</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/05/13/interview/TCP状态转移分析篇/" rel="next" title="TCP状态转移分析">
+                <i class="fa fa-chevron-left"></i> TCP状态转移分析
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/05/14/interview/关系型数据库范式/" rel="prev" title="关系型数据库范式">
+                关系型数据库范式 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2015/05/14/interview/TCP连接与关闭时会出现的各种情况分析/"
+           data-title="TCP连接与关闭时会出现的各种情况分析" data-url="http://jinpingwang.github.io/2015/05/14/interview/TCP连接与关闭时会出现的各种情况分析/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/headImage.jpg"
+               alt="王谨平" />
+          <p class="site-author-name" itemprop="name">王谨平</p>
+          <p class="site-description motion-element" itemprop="description">Waiting for wind</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">109</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">27</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/jinpingwang" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/@349268138Jin" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/1848729614" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.zhihu.com/people/wang-jin-ping-1-68" target="_blank" title="Zhihu">
+                  
+                    <i class="fa fa-globe"></i>
+                  
+                  Zhihu
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#u5BA2_u6237_u7AEF-_u670D_u52A1_u5668"><span class="nav-number">1.</span> <span class="nav-text">客户端-服务器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#u6253_u5F00"><span class="nav-number">1.1.</span> <span class="nav-text">打开</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#u5173_u95ED"><span class="nav-number">1.2.</span> <span class="nav-text">关闭</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#u670D_u52A1_u5668-_u670D_u52A1_u5668"><span class="nav-number">2.</span> <span class="nav-text">服务器-服务器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#u6B63_u5E38_u6253_u5F00"><span class="nav-number">2.1.</span> <span class="nav-text">正常打开</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#u540C_u65F6_u6253_u5F00"><span class="nav-number">2.2.</span> <span class="nav-text">同时打开</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#u6B63_u5E38_u5173_u95ED1"><span class="nav-number">2.3.</span> <span class="nav-text">正常关闭1</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#u6B63_u5E38_u5173_u95ED2"><span class="nav-number">2.4.</span> <span class="nav-text">正常关闭2</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#u540C_u65F6_u5173_u95ED"><span class="nav-number">2.5.</span> <span class="nav-text">同时关闭</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2014 - 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">王谨平</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"wangjinping"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+  
+
+
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>
