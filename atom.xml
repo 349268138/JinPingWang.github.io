@@ -46,8 +46,8 @@
     <link href="http://jinpingwang.github.io/2016/04/26/web/%E5%9F%BA%E4%BA%8Etomcat%E7%9A%84web%E5%BA%94%E7%94%A8%E5%AE%89%E5%85%A8/"/>
     <id>http://jinpingwang.github.io/2016/04/26/web/基于tomcat的web应用安全/</id>
     <published>2016-04-26T01:55:12.000Z</published>
-    <updated>2016-05-04T07:52:03.599Z</updated>
-    <content type="html"><![CDATA[<p><img src="http://i3.piimg.com/52abf64bfd1ed18b.jpg" alt=""><br>本篇讲解基于tomcat容器下的web应用安全。主要包括四个方面即：认证，授权，机密性以及数据完整性，以及如何在Tomcat下配置SSH/TLS单边，双边认证。<br><a id="more"></a></p>
+    <updated>2016-05-24T02:54:39.106Z</updated>
+    <content type="html"><![CDATA[<p><img src="http://7xrn7f.com1.z0.glb.clouddn.com/16-5-24/73458577.jpg" alt=""><br>本篇讲解基于tomcat容器下的web应用安全。主要包括四个方面即：认证，授权，机密性以及数据完整性，以及如何在Tomcat下配置SSH/TLS单边，双边认证。<br><a id="more"></a></p>
 <h3 id="u8BA4_u8BC1"><a href="#u8BA4_u8BC1" class="headerlink" title="认证"></a>认证</h3><h4 id="u57FA_u672C_uFF08BASIC_uFF09"><a href="#u57FA_u672C_uFF08BASIC_uFF09" class="headerlink" title="基本（BASIC）"></a>基本（BASIC）</h4><p>以一种编码形式（未加密）传输登录信息，由于编码机制（base64）已经广为人知，所以BASIC认证的安全性很弱。</p>
 <h5 id="web-xml_u4E2D_u7684_u8BBE_u7F6E"><a href="#web-xml_u4E2D_u7684_u8BBE_u7F6E" class="headerlink" title="web.xml中的设置"></a>web.xml中的设置</h5><figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;login-config&gt;</span><br><span class="line">    &lt;auth-<span class="keyword">method</span>&gt;<span class="type">BASIC</span>&lt;/auth-<span class="keyword">method</span>&gt;</span><br><span class="line">&lt;/login-config&gt;</span><br></pre></td></tr></table></figure>
 <h5 id="wireshark_u6355_u83B7_u7684_u62A5_u6587"><a href="#wireshark_u6355_u83B7_u7684_u62A5_u6587" class="headerlink" title="wireshark捕获的报文"></a>wireshark捕获的报文</h5><p><img src="http://i3.piimg.com/6569b445c966c286.jpg" alt=""></p>
@@ -110,7 +110,7 @@
 <h5 id="u67E5_u770Btomcat-keystore_u4E2D_u5305_u542B_u4E86_u51E0_u4E2A_u8BC1_u4E66"><a href="#u67E5_u770Btomcat-keystore_u4E2D_u5305_u542B_u4E86_u51E0_u4E2A_u8BC1_u4E66" class="headerlink" title="查看tomcat.keystore中包含了几个证书"></a>查看tomcat.keystore中包含了几个证书</h5><p>keytool -list -keystore ./tomcat.keystore</p>
 ]]></content>
     <summary type="html">
-    <![CDATA[<p><img src="http://i3.piimg.com/52abf64bfd1ed18b.jpg" alt=""><br>本篇讲解基于tomcat容器下的web应用安全。主要包括四个方面即：认证，授权，机密性以及数据完整性，以及如何在Tomcat下配置SSH/TLS单边，双边认证。<br>]]>
+    <![CDATA[<p><img src="http://7xrn7f.com1.z0.glb.clouddn.com/16-5-24/73458577.jpg" alt=""><br>本篇讲解基于tomcat容器下的web应用安全。主要包括四个方面即：认证，授权，机密性以及数据完整性，以及如何在Tomcat下配置SSH/TLS单边，双边认证。<br>]]>
     
     </summary>
     
@@ -510,8 +510,8 @@
     <link href="http://jinpingwang.github.io/2016/04/23/web/%E7%BB%86%E7%BB%86%E5%93%81%E9%85%8CHTTPS%E5%AE%89%E5%85%A8%E7%AF%87/"/>
     <id>http://jinpingwang.github.io/2016/04/23/web/细细品酌HTTPS安全篇/</id>
     <published>2016-04-23T14:16:28.000Z</published>
-    <updated>2016-05-12T13:53:15.797Z</updated>
-    <content type="html"><![CDATA[<p><div align="center"><img src="http://i3.piimg.com/44d2d6a69df052a4.jpg"></div><br>HTTP通信中存在很多隐患，比如：认证，授权，机密性，数据完整性等。如果没有使用安全措施，通信的信息就很容易被劫获并被修改等。由此，HTTPS（HTTP＋SSL/TLS）应孕而生。本文先使用HTTP协议通信，通过wireshark抓取通信内容来佐证通信的安全隐患；然后引入一些密码学基础概念；接着介绍SSL/TLS协议；最后通过HTTPS协议通信，使用wireshark抓取通信内容来佐证通信的安全性。<br><a id="more"></a></p>
+    <updated>2016-05-24T02:54:45.890Z</updated>
+    <content type="html"><![CDATA[<p><div align="center"><img src="http://7xrn7f.com1.z0.glb.clouddn.com/16-5-24/80035348.jpg"></div><br>HTTP通信中存在很多隐患，比如：认证，授权，机密性，数据完整性等。如果没有使用安全措施，通信的信息就很容易被劫获并被修改等。由此，HTTPS（HTTP＋SSL/TLS）应孕而生。本文先使用HTTP协议通信，通过wireshark抓取通信内容来佐证通信的安全隐患；然后引入一些密码学基础概念；接着介绍SSL/TLS协议；最后通过HTTPS协议通信，使用wireshark抓取通信内容来佐证通信的安全性。<br><a id="more"></a></p>
 <h3 id="HTTP_u901A_u4FE1_u9690_u60A3"><a href="#HTTP_u901A_u4FE1_u9690_u60A3" class="headerlink" title="HTTP通信隐患"></a>HTTP通信隐患</h3><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">HTML <span class="keyword">Form</span> URL <span class="keyword">Encode</span>: application/x-www-<span class="keyword">form</span>-urlencoded</span><br><span class="line">    <span class="keyword">Form</span> item: <span class="string">"username"</span> = <span class="string">"kitty"</span></span><br><span class="line">        Key: username</span><br><span class="line">        Value: kitty</span><br><span class="line">    <span class="keyword">Form</span> item: <span class="string">"password"</span> = <span class="string">"867954"</span></span><br><span class="line">        Key: password</span><br><span class="line">        Value: 867954</span><br></pre></td></tr></table></figure>
 <p>从wireshark捕获到的HTTP报文，可以看到username与password的信息完全暴露了。</p>
 <h3 id="u5BC6_u7801_u5B66_u57FA_u7840"><a href="#u5BC6_u7801_u5B66_u57FA_u7840" class="headerlink" title="密码学基础"></a>密码学基础</h3><h4 id="u5BF9_u79F0_u52A0_u5BC6"><a href="#u5BF9_u79F0_u52A0_u5BC6" class="headerlink" title="对称加密"></a>对称加密</h4><h5 id="u5B9A_u4E49"><a href="#u5B9A_u4E49" class="headerlink" title="定义"></a>定义</h5><p>对称加密指加密和解密使用相同密钥的加密算法，即加密和解密的密钥是相同的。</p>
@@ -546,7 +546,7 @@
 <h4 id="u7F3A_u70B9-2"><a href="#u7F3A_u70B9-2" class="headerlink" title="缺点"></a>缺点</h4><p>1：费用<br>2：响应<br>3：消耗cpu<br>4：有些浏览器不能很好缓存https</p>
 ]]></content>
     <summary type="html">
-    <![CDATA[<p><div align="center"><img src="http://i3.piimg.com/44d2d6a69df052a4.jpg"></div><br>HTTP通信中存在很多隐患，比如：认证，授权，机密性，数据完整性等。如果没有使用安全措施，通信的信息就很容易被劫获并被修改等。由此，HTTPS（HTTP＋SSL/TLS）应孕而生。本文先使用HTTP协议通信，通过wireshark抓取通信内容来佐证通信的安全隐患；然后引入一些密码学基础概念；接着介绍SSL/TLS协议；最后通过HTTPS协议通信，使用wireshark抓取通信内容来佐证通信的安全性。<br>]]>
+    <![CDATA[<p><div align="center"><img src="http://7xrn7f.com1.z0.glb.clouddn.com/16-5-24/80035348.jpg"></div><br>HTTP通信中存在很多隐患，比如：认证，授权，机密性，数据完整性等。如果没有使用安全措施，通信的信息就很容易被劫获并被修改等。由此，HTTPS（HTTP＋SSL/TLS）应孕而生。本文先使用HTTP协议通信，通过wireshark抓取通信内容来佐证通信的安全隐患；然后引入一些密码学基础概念；接着介绍SSL/TLS协议；最后通过HTTPS协议通信，使用wireshark抓取通信内容来佐证通信的安全性。<br>]]>
     
     </summary>
     
