@@ -64,7 +64,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="序列化," />
+  <meta name="keywords" content="java," />
 
 
 
@@ -82,16 +82,16 @@
 
 
 
-<meta name="description" content="本文简述了java中序列化的定义以及常用序列化解决方案，并通过实际例子来进行简要的说明。">
+<meta name="description" content="json是一种轻量级的数据交换语言，以文字为基础，且易于让人阅读。将对象序列化成json格式，可以在网络上非常方便的进行传输，且各个平台几乎都拥有成熟的工具，能很快地将json反序列化为其对应语言所需要的格式。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="浅谈java中的序列化与反序列">
-<meta property="og:url" content="http://jinpingwang.github.io/2016/04/18/java/java中的序列化与反序列/index.html">
+<meta property="og:title" content="基于json的序列化与反序列化">
+<meta property="og:url" content="http://jinpingwang.github.io/2016/04/23/java/基于json的序列化与反序列化/index.html">
 <meta property="og:site_name" content="Quick notes">
-<meta property="og:description" content="本文简述了java中序列化的定义以及常用序列化解决方案，并通过实际例子来进行简要的说明。">
-<meta property="og:updated_time" content="2016-05-03T13:56:52.864Z">
+<meta property="og:description" content="json是一种轻量级的数据交换语言，以文字为基础，且易于让人阅读。将对象序列化成json格式，可以在网络上非常方便的进行传输，且各个平台几乎都拥有成熟的工具，能很快地将json反序列化为其对应语言所需要的格式。">
+<meta property="og:updated_time" content="2016-05-24T01:49:39.298Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="浅谈java中的序列化与反序列">
-<meta name="twitter:description" content="本文简述了java中序列化的定义以及常用序列化解决方案，并通过实际例子来进行简要的说明。">
+<meta name="twitter:title" content="基于json的序列化与反序列化">
+<meta name="twitter:description" content="json是一种轻量级的数据交换语言，以文字为基础，且易于让人阅读。将对象序列化成json格式，可以在网络上非常方便的进行传输，且各个平台几乎都拥有成熟的工具，能很快地将json反序列化为其对应语言所需要的格式。">
 
 
 
@@ -109,7 +109,7 @@
   };
 </script>
 
-  <title> 浅谈java中的序列化与反序列 | Quick notes </title>
+  <title> 基于json的序列化与反序列化 | Quick notes </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -279,7 +279,7 @@
             
             
               
-                浅谈java中的序列化与反序列
+                基于json的序列化与反序列化
               
             
           </h1>
@@ -291,8 +291,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-04-18T22:16:28+08:00" content="2016-04-18">
-              2016-04-18
+            <time itemprop="dateCreated" datetime="2016-04-23T09:11:36+08:00" content="2016-04-23">
+              2016-04-23
             </time>
           </span>
 
@@ -321,8 +321,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/04/18/java/java中的序列化与反序列/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/18/java/java中的序列化与反序列/" itemprop="commentsCount"></span>
+                <a href="/2016/04/23/java/基于json的序列化与反序列化/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/23/java/基于json的序列化与反序列化/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -345,11 +345,13 @@
       
 
       
-        <p>本文简述了java中序列化的定义以及常用序列化解决方案，并通过实际例子来进行简要的说明。<br><a id="more"></a></p>
-<h3 id="u5B9A_u4E49"><a href="#u5B9A_u4E49" class="headerlink" title="定义"></a>定义</h3><p>对象的序列化：将对象转换为二进制流的过程<br>对象的反序列化：将二进制流恢复为对象的过程</p>
-<h3 id="u89E3_u51B3_u65B9_u6848"><a href="#u89E3_u51B3_u65B9_u6848" class="headerlink" title="解决方案"></a>解决方案</h3><p>java内置的序列化<br>JSON<br>XML</p>
-<h3 id="u4F8B_u5B50"><a href="#u4F8B_u5B50" class="headerlink" title="例子"></a>例子</h3><h4 id="java_u5185_u7F6E_u7684_u5E8F_u5217_u5316"><a href="#java_u5185_u7F6E_u7684_u5E8F_u5217_u5316" class="headerlink" title="java内置的序列化"></a>java内置的序列化</h4><h5 id="u5C06_u5E8F_u5217_u5316_u7684_u7ED3_u679C_u5B58_u50A8_u5230_u78C1_u76D8_u4E2D"><a href="#u5C06_u5E8F_u5217_u5316_u7684_u7ED3_u679C_u5B58_u50A8_u5230_u78C1_u76D8_u4E2D" class="headerlink" title="将序列化的结果存储到磁盘中"></a>将序列化的结果存储到磁盘中</h5><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//FileOutputStream的构造函数参数即为将要序列化结果存储到磁盘上的位置</span></span><br><span class="line">FileOutputStream fileOutput = <span class="keyword">new</span> FileOutputStream(<span class="string">"test.dat"</span>);</span><br><span class="line"><span class="comment">//ObjectOutputStream就是将对象转换成序列化的类，它的构造函数参数是一个OutputStream抽象类</span></span><br><span class="line">ObjectOutputStream objectOutput = <span class="keyword">new</span> ObjectOutputStream(fileOutput);</span><br><span class="line">ArrayList&lt;Integer&gt; hobby = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</span><br><span class="line">hobby.add(<span class="number">3</span>);</span><br><span class="line">Person personWriteFirst = <span class="keyword">new</span> Person(<span class="number">1</span>, <span class="string">"kitty"</span>, hobby);</span><br><span class="line">Person personWriteSecond = <span class="keyword">new</span> Person(<span class="number">2</span>, <span class="string">"Candy"</span>, hobby);</span><br><span class="line">objectOutput.writeObject(personWriteFirst);</span><br><span class="line">objectOutput.writeObject(personWriteSecond);</span><br><span class="line"></span><br><span class="line">FileInputStream fileInput = <span class="keyword">new</span> FileInputStream(<span class="string">"test.dat"</span>);</span><br><span class="line">ObjectInputStream objectInput = <span class="keyword">new</span> ObjectInputStream(fileInput);</span><br><span class="line">Person personReadFirst = objectInput.readObject();</span><br><span class="line">Person personReadSecond = objectInput.readObject();</span><br></pre></td></tr></table></figure>
-<h5 id="u5C06_u5E8F_u5217_u5316_u7684_u7ED3_u679C_u5B58_u50A8_u5230_u5B57_u8282_u6570_u7EC4_u4E2D"><a href="#u5C06_u5E8F_u5217_u5316_u7684_u7ED3_u679C_u5B58_u50A8_u5230_u5B57_u8282_u6570_u7EC4_u4E2D" class="headerlink" title="将序列化的结果存储到字节数组中"></a>将序列化的结果存储到字节数组中</h5><figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">ByteArrayOutputStream byteArrayOutput = new ByteArrayOutputStream()<span class="comment">;</span></span><br><span class="line">ObjectOutputStream objectOutput = new ObjectOutputStream(fileOutput)<span class="comment">;</span></span><br><span class="line">ArrayList&lt;Integer&gt; hobby = new ArrayList&lt;Integer&gt;()<span class="comment">;</span></span><br><span class="line">hobby.add(3)<span class="comment">;</span></span><br><span class="line">Person personWriteFirst = new Person(1, "kitty", hobby)<span class="comment">;</span></span><br><span class="line">Person personWriteSecond = new Person(2, "Candy", hobby)<span class="comment">;</span></span><br><span class="line">objectOutput.writeObject(personWriteFirst)<span class="comment">;</span></span><br><span class="line">objectOutput.writeObject(personWriteSecond)<span class="comment">;</span></span><br><span class="line">byte[] person = byteArrayOutput.toByteArray()<span class="comment">;</span></span><br><span class="line"></span><br><span class="line">ByteArrayInputStream byteArrayInput = new ByteArrayInputStream(person)<span class="comment">;</span></span><br><span class="line">ObjectInputStream objectInput = new ObjectInputStream(byteArrayInput)<span class="comment">;</span></span><br><span class="line">Person personReadFirst = objectInput.readObject()<span class="comment">;</span></span><br><span class="line">Person personReadSecond = objectInput.readObject()<span class="comment">;</span></span><br></pre></td></tr></table></figure>
+        <p>json是一种轻量级的数据交换语言，以文字为基础，且易于让人阅读。将对象序列化成json格式，可以在网络上非常方便的进行传输，且各个平台几乎都拥有成熟的工具，能很快地将json反序列化为其对应语言所需要的格式。<br><a id="more"></a></p>
+<h3 id="u6E90_u7801"><a href="#u6E90_u7801" class="headerlink" title="源码"></a>源码</h3><h4 id="Maven"><a href="#Maven" class="headerlink" title="Maven"></a>Maven</h4><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">groupId</span>&gt;</span>org.codehaus.jackson<span class="tag">&lt;/<span class="title">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">artifactId</span>&gt;</span>jackson-mapper-asl<span class="tag">&lt;/<span class="title">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">version</span>&gt;</span>1.9.13<span class="tag">&lt;/<span class="title">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h4 id="POJO"><a href="#POJO" class="headerlink" title="POJO"></a>POJO</h4><figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title">Person</span>&#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">int</span> id;</span><br><span class="line">	<span class="keyword">public</span> String name;</span><br><span class="line">	<span class="keyword">public</span> List&lt;Integer&gt; hobby;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">Person</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">Person</span>(<span class="params"><span class="keyword">int</span> id, String name, List&lt;Integer&gt; hobby</span>)</span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.id = id;</span><br><span class="line">		<span class="keyword">this</span>.name = name;</span><br><span class="line">		<span class="keyword">this</span>.hobby = hobby;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="u4E3B_u7A0B_u5E8F"><a href="#u4E3B_u7A0B_u5E8F" class="headerlink" title="主程序"></a>主程序</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">package com.uestc.json;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.io.StringWriter;</span><br><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.codehaus.jackson.JsonFactory;</span><br><span class="line"><span class="keyword">import</span> org.codehaus.jackson.JsonGenerator;</span><br><span class="line"><span class="keyword">import</span> org.codehaus.jackson.annotate.JsonAutoDetect.Visibility;</span><br><span class="line"><span class="keyword">import</span> org.codehaus.jackson.annotate.JsonMethod;</span><br><span class="line"><span class="keyword">import</span> org.codehaus.jackson.map.ObjectMapper;</span><br><span class="line"></span><br><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">Test01</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	public static <span class="keyword">void</span> main(<span class="built_in">String</span>[] args) throws IOException &#123;</span><br><span class="line">		<span class="comment">// TODO Auto-generated method stub</span></span><br><span class="line">		<span class="comment">//构建待序列化对象</span></span><br><span class="line">		List&lt;Integer&gt; hobby = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</span><br><span class="line">		hobby.add(<span class="number">3</span>);</span><br><span class="line">		hobby.add(<span class="number">4</span>);</span><br><span class="line">		Person person = <span class="keyword">new</span> Person(<span class="number">1</span>, <span class="string">"kitty"</span>, hobby);</span><br><span class="line">		</span><br><span class="line">		<span class="comment">//序列化</span></span><br><span class="line">		<span class="built_in">String</span> personJson = <span class="literal">null</span>;</span><br><span class="line">		ObjectMapper mapper = <span class="keyword">new</span> ObjectMapper();</span><br><span class="line">		mapper.setVisibility(JsonMethod.FIELD, Visibility.ANY);</span><br><span class="line">		StringWriter sw = <span class="keyword">new</span> StringWriter();</span><br><span class="line">		JsonGenerator gen = <span class="keyword">new</span> JsonFactory().createJsonGenerator(sw);</span><br><span class="line">		mapper.writeValue(gen, person);</span><br><span class="line">		gen.close();</span><br><span class="line">		personJson = sw.toString();</span><br><span class="line">		sw.close();</span><br><span class="line"></span><br><span class="line">		System.out.println(personJson);</span><br><span class="line">		</span><br><span class="line">		<span class="comment">//反序列化</span></span><br><span class="line">		Person personResult = (Person)mapper.readValue(personJson, Person.class);</span><br><span class="line">		System.out.println(personResult.id+<span class="string">"\t"</span>+personResult.name+<span class="string">"\t"</span>+personResult.hobby);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输出结果：</span><br><span class="line">&#123;<span class="string">"id"</span>:<span class="number">1</span>,<span class="string">"name"</span>:<span class="string">"kitty"</span>,<span class="string">"hobby"</span>:[<span class="number">3</span>,<span class="number">4</span>]&#125;</span><br><span class="line"><span class="number">1</span>	kitty	[<span class="number">3</span>, <span class="number">4</span>]</span><br></pre></td></tr></table></figure>
+<h3 id="u89E3_u6790"><a href="#u89E3_u6790" class="headerlink" title="解析"></a>解析</h3><p>有两点需要注意：<br>1：如果在序列化非public域时，需要在创建完ObjectMapper后添加这一句：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">mapper</span><span class="class">.setVisibility</span>(<span class="tag">JsonMethod</span><span class="class">.FIELD</span>, <span class="tag">Visibility</span><span class="class">.ANY</span>);</span><br></pre></td></tr></table></figure></p>
+<p>2：对于需要序列化的类，需要有一个默认的构造函数，如果没有默认的构造函数会抛出异常。</p>
 
       
     </div>
@@ -370,7 +372,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/序列化/" rel="tag">#序列化</a>
+            <a href="/tags/java/" rel="tag">#java</a>
           
         </div>
       
@@ -379,16 +381,16 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/04/18/database/mysql之用户表与授权/" rel="next" title="mysql之用户表与授权">
-                <i class="fa fa-chevron-left"></i> mysql之用户表与授权
+              <a href="/2016/04/18/java/基于java中自带的序列化反序列化/" rel="next" title="浅谈java中的序列化与反序列">
+                <i class="fa fa-chevron-left"></i> 浅谈java中的序列化与反序列
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2016/04/23/web/细细品酌HTTPS安全篇/" rel="prev" title="细细品酌HTTPS安全篇">
-                细细品酌HTTPS安全篇 <i class="fa fa-chevron-right"></i>
+              <a href="/2016/04/23/java/基于xml的序列化与反序列化/" rel="prev" title="基于xml的序列化与反序列化">
+                基于xml的序列化与反序列化 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -415,8 +417,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/04/18/java/java中的序列化与反序列/"
-           data-title="浅谈java中的序列化与反序列" data-url="http://jinpingwang.github.io/2016/04/18/java/java中的序列化与反序列/">
+      <div class="ds-thread" data-thread-key="2016/04/23/java/基于json的序列化与反序列化/"
+           data-title="基于json的序列化与反序列化" data-url="http://jinpingwang.github.io/2016/04/23/java/基于json的序列化与反序列化/">
       </div>
     
   </div>
@@ -461,7 +463,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">112</span>
+              <span class="site-state-item-count">116</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -478,7 +480,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">27</span>
+                <span class="site-state-item-count">28</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -552,7 +554,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#u5B9A_u4E49"><span class="nav-number">1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#u89E3_u51B3_u65B9_u6848"><span class="nav-number">2.</span> <span class="nav-text">解决方案</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#u4F8B_u5B50"><span class="nav-number">3.</span> <span class="nav-text">例子</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#java_u5185_u7F6E_u7684_u5E8F_u5217_u5316"><span class="nav-number">3.1.</span> <span class="nav-text">java内置的序列化</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#u5C06_u5E8F_u5217_u5316_u7684_u7ED3_u679C_u5B58_u50A8_u5230_u78C1_u76D8_u4E2D"><span class="nav-number">3.1.1.</span> <span class="nav-text">将序列化的结果存储到磁盘中</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#u5C06_u5E8F_u5217_u5316_u7684_u7ED3_u679C_u5B58_u50A8_u5230_u5B57_u8282_u6570_u7EC4_u4E2D"><span class="nav-number">3.1.2.</span> <span class="nav-text">将序列化的结果存储到字节数组中</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#u6E90_u7801"><span class="nav-number">1.</span> <span class="nav-text">源码</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Maven"><span class="nav-number">1.1.</span> <span class="nav-text">Maven</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#POJO"><span class="nav-number">1.2.</span> <span class="nav-text">POJO</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#u4E3B_u7A0B_u5E8F"><span class="nav-number">1.3.</span> <span class="nav-text">主程序</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#u89E3_u6790"><span class="nav-number">2.</span> <span class="nav-text">解析</span></a></li></ol></div>
             
           </div>
         </section>
