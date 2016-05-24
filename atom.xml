@@ -4,7 +4,7 @@
   <subtitle><![CDATA[王谨平]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://jinpingwang.github.io/"/>
-  <updated>2016-05-23T13:13:17.566Z</updated>
+  <updated>2016-05-24T01:27:23.620Z</updated>
   <id>http://jinpingwang.github.io/</id>
   
   <author>
@@ -13,38 +13,6 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
-  
-  <entry>
-    <title></title>
-    <link href="http://jinpingwang.github.io/2016/05/23/java/%E5%88%A9%E7%94%A8%E5%8F%8D%E5%B0%84%E6%9C%BA%E5%88%B6%E6%9D%A5%E4%BF%AE%E6%94%B9String%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%80%BC/"/>
-    <id>http://jinpingwang.github.io/2016/05/23/java/利用反射机制来修改String对象的值/</id>
-    <published>2016-05-23T13:13:17.570Z</published>
-    <updated>2016-05-23T13:13:17.566Z</updated>
-    <content type="html"><![CDATA[<p>title:  利用反射机制来修改String对象的值<br>date: 2016-04-18 07:06:05<br>categories:</p>
-<ul>
-<li>java<br>tags:</li>
-<li>java<br>String对象的值是没办法改变的，若要修改，则只能通过重新创建一个新的String对象。本文通过利用反射机制来达到修改String对象的值，而不用创建新的String对象。<a id="more"></a>
-<h3 id="String_u7C7B_u4E3A_u4EC0_u4E48_u795E_u5947"><a href="#String_u7C7B_u4E3A_u4EC0_u4E48_u795E_u5947" class="headerlink" title="String类为什么神奇"></a>String类为什么神奇</h3>使用过java语言的程序员都知道，String类与普通的类有很多不同，是一个神奇的类。比如，它可以这样创建：<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">String</span> s1 = <span class="string">"hello"</span>;</span><br><span class="line"><span class="built_in">String</span> s2 = <span class="keyword">new</span> <span class="built_in">String</span>(<span class="string">"hello"</span>);</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>我们知道创建的对象都是在堆上分配的，但String s1 = “hello”却是引用常量池中的字符串常量。而且，如果没有以下这一句：<br><figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">String </span><span class="literal">s1</span> = <span class="string">"hello"</span><span class="comment">;</span></span><br></pre></td></tr></table></figure></p>
-<p>而直接执行<br><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">String</span> s2 = <span class="keyword">new</span> <span class="built_in">String</span>(<span class="string">"hello"</span>)</span><br></pre></td></tr></table></figure></p>
-<p>会先在常量池中创建一个”hello”字符串常量，然后再在堆中创建一个”hello”。</p>
-<h3 id="u5229_u7528_u53CD_u5C04_u673A_u5236_u4FEE_u6539String_u7C7B_u5BF9_u8C61_u7684_u503C"><a href="#u5229_u7528_u53CD_u5C04_u673A_u5236_u4FEE_u6539String_u7C7B_u5BF9_u8C61_u7684_u503C" class="headerlink" title="利用反射机制修改String类对象的值"></a>利用反射机制修改String类对象的值</h3><p>说了String对象的神奇后，我们通过String的源码可知，String类没有提供修改的方法，即setter方法。所以你想要修改String的值，则只能重新进行创建一个String对象。但通过反射机制，可以将String中的value进行修改，从而达到修改String对象的值。</p>
-<h4 id="u672A_u4F7F_u7528_u53CD_u5C04_u673A_u5236"><a href="#u672A_u4F7F_u7528_u53CD_u5C04_u673A_u5236" class="headerlink" title="未使用反射机制"></a>未使用反射机制</h4><figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">String</span> <span class="built_in">str</span> = <span class="keyword">new</span> <span class="keyword">String</span>(<span class="string">"hello"</span>);</span><br><span class="line"><span class="keyword">String</span> strOriginal = <span class="built_in">str</span>;</span><br><span class="line"><span class="built_in">str</span> = <span class="keyword">new</span> <span class="keyword">String</span>(<span class="string">"good"</span>);</span><br><span class="line">System.out.<span class="built_in">println</span>(<span class="built_in">str</span>+<span class="string">"\t"</span>+strOriginal);</span><br></pre></td></tr></table></figure>
-<p>以上代码输出：good  hello。<br>可知str引用不再指向”hello”这块空间。</p>
-<h4 id="u4F7F_u7528_u53CD_u5C04_u673A_u5236"><a href="#u4F7F_u7528_u53CD_u5C04_u673A_u5236" class="headerlink" title="使用反射机制"></a>使用反射机制</h4><figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">String</span> <span class="built_in">str</span> = <span class="keyword">new</span> <span class="keyword">String</span>(<span class="string">"hello"</span>);</span><br><span class="line"><span class="keyword">String</span> strOriginal = <span class="built_in">str</span>;</span><br><span class="line">Class c1 = <span class="keyword">String</span>.class;</span><br><span class="line">Field field = c1.getDeclaredField(<span class="string">"value"</span>);</span><br><span class="line">field.setAccessible(<span class="keyword">true</span>);</span><br><span class="line"><span class="built_in">char</span> temp[] = &#123;<span class="string">'a'</span>, <span class="string">'b'</span>&#125;;</span><br><span class="line">field.<span class="built_in">set</span>(<span class="built_in">str</span>, temp);</span><br><span class="line">System.out.<span class="built_in">println</span>(<span class="built_in">str</span>+<span class="string">"\t"</span>+strOriginal);</span><br></pre></td></tr></table></figure>
-<p>以上代码输出：ab    ab<br>可知str所指的空间没有改变，即指向strOriginal所指向的空间，从而达到修改String对象值的目的。</p>
-]]></content>
-    <summary type="html">
-    <![CDATA[<p>title:  利用反射机制来修改String对象的值<br>date: 2016-04-18 07:06:05<br>categories:</p>
-<ul>
-<li>java<br>tags:</li>
-<li>java<br>String对象的值是没办法改变的，若要修改，则只能通过重新创建一个新的String对象。本文通过利用反射机制来达到修改String对象的值，而不用创建新的String对象。]]>
-    
-    </summary>
-    
-  </entry>
   
   <entry>
     <title><![CDATA[基于TCP协议的RPC]]></title>
@@ -691,6 +659,34 @@
       <category term="数据库" scheme="http://jinpingwang.github.io/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
     
       <category term="数据库" scheme="http://jinpingwang.github.io/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[利用反射机制来修改String对象的值]]></title>
+    <link href="http://jinpingwang.github.io/2016/04/18/java/%E5%88%A9%E7%94%A8%E5%8F%8D%E5%B0%84%E6%9C%BA%E5%88%B6%E6%9D%A5%E4%BF%AE%E6%94%B9String%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%80%BC/"/>
+    <id>http://jinpingwang.github.io/2016/04/18/java/利用反射机制来修改String对象的值/</id>
+    <published>2016-04-17T23:06:05.000Z</published>
+    <updated>2016-05-24T02:43:39.959Z</updated>
+    <content type="html"><![CDATA[<p>String对象的值是没办法改变的，若要修改，则只能通过重新创建一个新的String对象。本文通过利用反射机制来达到修改String对象的值，而不用创建新的String对象。<br><a id="more"></a></p>
+<h3 id="String_u7C7B_u4E3A_u4EC0_u4E48_u795E_u5947"><a href="#String_u7C7B_u4E3A_u4EC0_u4E48_u795E_u5947" class="headerlink" title="String类为什么神奇"></a>String类为什么神奇</h3><p>使用过java语言的程序员都知道，String类与普通的类有很多不同，是一个神奇的类。比如，它可以这样创建：<br><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">String</span> s1 = <span class="string">"hello"</span>;</span><br><span class="line"><span class="built_in">String</span> s2 = <span class="keyword">new</span> <span class="built_in">String</span>(<span class="string">"hello"</span>);</span><br></pre></td></tr></table></figure></p>
+<p>我们知道创建的对象都是在堆上分配的，但String s1 = “hello”却是引用常量池中的字符串常量。而且，如果没有以下这一句：<br><figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">String </span><span class="literal">s1</span> = <span class="string">"hello"</span><span class="comment">;</span></span><br></pre></td></tr></table></figure></p>
+<p>而直接执行<br><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">String</span> s2 = <span class="keyword">new</span> <span class="built_in">String</span>(<span class="string">"hello"</span>)</span><br></pre></td></tr></table></figure></p>
+<p>会先在常量池中创建一个”hello”字符串常量，然后再在堆中创建一个”hello”。</p>
+<h3 id="u5229_u7528_u53CD_u5C04_u673A_u5236_u4FEE_u6539String_u7C7B_u5BF9_u8C61_u7684_u503C"><a href="#u5229_u7528_u53CD_u5C04_u673A_u5236_u4FEE_u6539String_u7C7B_u5BF9_u8C61_u7684_u503C" class="headerlink" title="利用反射机制修改String类对象的值"></a>利用反射机制修改String类对象的值</h3><p>说了String对象的神奇后，我们通过String的源码可知，String类没有提供修改的方法，即setter方法。所以你想要修改String的值，则只能重新进行创建一个String对象。但通过反射机制，可以将String中的value进行修改，从而达到修改String对象的值。</p>
+<h4 id="u672A_u4F7F_u7528_u53CD_u5C04_u673A_u5236"><a href="#u672A_u4F7F_u7528_u53CD_u5C04_u673A_u5236" class="headerlink" title="未使用反射机制"></a>未使用反射机制</h4><figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">String</span> <span class="built_in">str</span> = <span class="keyword">new</span> <span class="keyword">String</span>(<span class="string">"hello"</span>);</span><br><span class="line"><span class="keyword">String</span> strOriginal = <span class="built_in">str</span>;</span><br><span class="line"><span class="built_in">str</span> = <span class="keyword">new</span> <span class="keyword">String</span>(<span class="string">"good"</span>);</span><br><span class="line">System.out.<span class="built_in">println</span>(<span class="built_in">str</span>+<span class="string">"\t"</span>+strOriginal);</span><br></pre></td></tr></table></figure>
+<p>以上代码输出：good  hello。<br>可知str引用不再指向”hello”这块空间。</p>
+<h4 id="u4F7F_u7528_u53CD_u5C04_u673A_u5236"><a href="#u4F7F_u7528_u53CD_u5C04_u673A_u5236" class="headerlink" title="使用反射机制"></a>使用反射机制</h4><figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">String</span> <span class="built_in">str</span> = <span class="keyword">new</span> <span class="keyword">String</span>(<span class="string">"hello"</span>);</span><br><span class="line"><span class="keyword">String</span> strOriginal = <span class="built_in">str</span>;</span><br><span class="line">Class c1 = <span class="keyword">String</span>.class;</span><br><span class="line">Field field = c1.getDeclaredField(<span class="string">"value"</span>);</span><br><span class="line">field.setAccessible(<span class="keyword">true</span>);</span><br><span class="line"><span class="built_in">char</span> temp[] = &#123;<span class="string">'a'</span>, <span class="string">'b'</span>&#125;;</span><br><span class="line">field.<span class="built_in">set</span>(<span class="built_in">str</span>, temp);</span><br><span class="line">System.out.<span class="built_in">println</span>(<span class="built_in">str</span>+<span class="string">"\t"</span>+strOriginal);</span><br></pre></td></tr></table></figure>
+<p>以上代码输出：ab    ab<br>可知str所指的空间没有改变，即指向strOriginal所指向的空间，从而达到修改String对象值的目的。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>String对象的值是没办法改变的，若要修改，则只能通过重新创建一个新的String对象。本文通过利用反射机制来达到修改String对象的值，而不用创建新的String对象。<br>]]>
+    
+    </summary>
+    
+      <category term="java" scheme="http://jinpingwang.github.io/tags/java/"/>
+    
+      <category term="java" scheme="http://jinpingwang.github.io/categories/java/"/>
     
   </entry>
   
