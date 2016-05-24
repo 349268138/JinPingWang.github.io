@@ -1,0 +1,752 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="java," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Quick notes" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="反射定义能够分析类能力的程序
+作用1：运行中分析类的能力2：运行中查看对象3：实现通用的数组操作代码4：利用Method对象
+Class类创建Object类的getClass()方法Object类中有getClass()方法会返回一个Class类型实例，所以任何继承Object类的对象都可以调用这个方法获得Class类实例。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="浅谈java中的反射机制">
+<meta property="og:url" content="http://jinpingwang.github.io/2015/06/12/java/浅谈java中的反射机制/index.html">
+<meta property="og:site_name" content="Quick notes">
+<meta property="og:description" content="反射定义能够分析类能力的程序
+作用1：运行中分析类的能力2：运行中查看对象3：实现通用的数组操作代码4：利用Method对象
+Class类创建Object类的getClass()方法Object类中有getClass()方法会返回一个Class类型实例，所以任何继承Object类的对象都可以调用这个方法获得Class类实例。">
+<meta property="og:updated_time" content="2016-05-24T02:59:31.657Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="浅谈java中的反射机制">
+<meta name="twitter:description" content="反射定义能够分析类能力的程序
+作用1：运行中分析类的能力2：运行中查看对象3：实现通用的数组操作代码4：利用Method对象
+Class类创建Object类的getClass()方法Object类中有getClass()方法会返回一个Class类型实例，所以任何继承Object类的对象都可以调用这个方法获得Class类实例。">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> 浅谈java中的反射机制 | Quick notes </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Quick notes</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">王谨平</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-th fa-fw"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-user fa-fw"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="st-search-show-outputs">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'Aq7px34mBsH6UhwK43yW','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                浅谈java中的反射机制
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-06-12T08:25:16+08:00" content="2015-06-12">
+              2015-06-12
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/06/12/java/浅谈java中的反射机制/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/06/12/java/浅谈java中的反射机制/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="u53CD_u5C04"><a href="#u53CD_u5C04" class="headerlink" title="反射"></a>反射</h3><h4 id="u5B9A_u4E49"><a href="#u5B9A_u4E49" class="headerlink" title="定义"></a>定义</h4><p>能够分析类能力的程序</p>
+<h4 id="u4F5C_u7528"><a href="#u4F5C_u7528" class="headerlink" title="作用"></a>作用</h4><p>1：运行中分析类的能力<br>2：运行中查看对象<br>3：实现通用的数组操作代码<br>4：利用Method对象</p>
+<h3 id="Class_u7C7B"><a href="#Class_u7C7B" class="headerlink" title="Class类"></a>Class类</h3><h4 id="u521B_u5EFA"><a href="#u521B_u5EFA" class="headerlink" title="创建"></a>创建</h4><h5 id="Object_u7C7B_u7684getClass_28_29_u65B9_u6CD5"><a href="#Object_u7C7B_u7684getClass_28_29_u65B9_u6CD5" class="headerlink" title="Object类的getClass()方法"></a>Object类的getClass()方法</h5><p>Object类中有getClass()方法会返回一个Class类型实例，所以任何继承Object类的对象都可以调用这个方法获得Class类实例。<br><a id="more"></a><br><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Object类中的getClass方法</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">native</span> <span class="keyword">Class</span>&lt;?&gt; getClass();</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight monkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">//Test01继承于Object，自然可以使用getClass()方法获得<span class="class"><span class="keyword">Class</span>类的实例</span></span><br><span class="line">Test01 t02 = <span class="keyword">new</span> Test01();</span><br><span class="line"><span class="class"><span class="keyword">Class</span> <span class="title">c1</span> = <span class="title">t02</span>.<span class="title">getClass</span>();</span></span><br></pre></td></tr></table></figure>
+<h5 id="Class_u7C7B_u7684_u9759_u6001_u65B9_u6CD5"><a href="#Class_u7C7B_u7684_u9759_u6001_u65B9_u6CD5" class="headerlink" title="Class类的静态方法"></a>Class类的静态方法</h5><figure class="highlight vbnet"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">String</span> className = <span class="string">"com.uestc.test.Test01"</span>;</span><br><span class="line"><span class="keyword">Class</span> c1 = <span class="keyword">Class</span>.forName(className);</span><br></pre></td></tr></table></figure>
+<h5 id="T-class"><a href="#T-class" class="headerlink" title="T.class"></a>T.class</h5><p>如果T是任意的java类型，T.class将代表匹配的类对象。如：<br><figure class="highlight delphi"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Class</span> c1 = Test01.<span class="keyword">class</span>;</span><br></pre></td></tr></table></figure></p>
+<h4 id="u65B9_u6CD5"><a href="#u65B9_u6CD5" class="headerlink" title="方法"></a>方法</h4><h5 id="newInstance_28_29"><a href="#newInstance_28_29" class="headerlink" title="newInstance()"></a>newInstance()</h5><p>通过调用Class对象的newInstance()方法，就能创建一个这个Class对应类型的实例，调用的是这个类型的默认构造函数，如果没有默认构造函数则抛出异常。<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Class下newInstance()方法的定义</span></span><br><span class="line">public T <span class="function"><span class="title">newInstance</span><span class="params">()</span></span></span><br></pre></td></tr></table></figure></p>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="label">Class</span> <span class="literal">c1</span> = Test01.class<span class="comment">;</span></span><br><span class="line"><span class="label">Test01</span> t01 = (Test01)<span class="literal">c1</span>.newInstance()<span class="comment">;</span></span><br></pre></td></tr></table></figure>
+<h5 id="getFields_28_29_2C_getMethods_28_29_2C_getConstructors_28_29"><a href="#getFields_28_29_2C_getMethods_28_29_2C_getConstructors_28_29" class="headerlink" title="getFields(), getMethods(), getConstructors()"></a>getFields(), getMethods(), getConstructors()</h5><p>返回类以及超类提供的public域数组，public方法数组，public构造器数组。<br><figure class="highlight oxygene"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Class</span> c1 = Test01.<span class="keyword">class</span>;</span><br><span class="line">Field fields[] = c1.getFields();</span><br><span class="line"><span class="function"><span class="keyword">Method</span> <span class="title">methods</span>[] = <span class="title">c1</span>.<span class="title">getMethods</span><span class="params">()</span>;</span></span><br><span class="line"><span class="function"><span class="keyword">Constructor</span> <span class="title">constructors</span>[] = <span class="title">c1</span>.<span class="title">getConstructors</span><span class="params">()</span>;</span></span><br></pre></td></tr></table></figure></p>
+<h5 id="getField_28String_name_29_2C_getMethod_28String_name_2C_Class_26lt_3B_3F_26gt_3B_u2026_parameterTypes_29_2C_getConstructor_28Class_26lt_3B_3F_26gt_3B_u2026_parameterTypes_29"><a href="#getField_28String_name_29_2C_getMethod_28String_name_2C_Class_26lt_3B_3F_26gt_3B_u2026_parameterTypes_29_2C_getConstructor_28Class_26lt_3B_3F_26gt_3B_u2026_parameterTypes_29" class="headerlink" title="getField(String name), getMethod(String name, Class&lt;?&gt;… parameterTypes), getConstructor(Class&lt;?&gt;… parameterTypes)"></a>getField(String name), getMethod(String name, Class&lt;?&gt;… parameterTypes), getConstructor(Class&lt;?&gt;… parameterTypes)</h5><p>返回类以及超类中指定相关参数的域，方法，构造器。<br><figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title">Test01</span>&#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">int</span> j;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">Test01</span>(<span class="params">String str, <span class="keyword">int</span> i</span>)</span>&#123;</span><br><span class="line">	</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">printPublic</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">		System.<span class="keyword">out</span>.println(<span class="string">"hello world"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">printPublic</span>(<span class="params">String str</span>)</span>&#123;</span><br><span class="line">		System.<span class="keyword">out</span>.println(<span class="string">"hello world"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="label">Class</span> <span class="literal">c1</span> = Test01.class<span class="comment">;</span></span><br><span class="line"><span class="label">Field</span> <span class="preprocessor">field</span> = <span class="literal">c1</span>.getField(<span class="string">"j"</span>)<span class="comment">;</span></span><br><span class="line"><span class="label">Method</span> method1 = <span class="literal">c1</span>.getMethod(<span class="string">"printPublic"</span>)<span class="comment">;</span></span><br><span class="line"><span class="label">Method</span> method2 = <span class="literal">c1</span>.getMethod(<span class="string">"printPublic"</span>, <span class="keyword">String.class);</span><br><span class="line"></span><span class="label">Constructor</span> constructor1 = <span class="literal">c1</span>.getConstructor()<span class="comment">;</span></span><br><span class="line"><span class="label">Constructor</span> constructor2 = <span class="literal">c1</span>.getConstructor(<span class="keyword">String.class, </span>int.class)<span class="comment">;</span></span><br></pre></td></tr></table></figure>
+<h5 id="getDeclaredFields_28_29_2C_getDeclaredMethods_28_29_2C_getDeclaredConstructors_28_29"><a href="#getDeclaredFields_28_29_2C_getDeclaredMethods_28_29_2C_getDeclaredConstructors_28_29" class="headerlink" title="getDeclaredFields(), getDeclaredMethods(), getDeclaredConstructors()"></a>getDeclaredFields(), getDeclaredMethods(), getDeclaredConstructors()</h5><p>返回类（不包括超类）中声明的全部域，方法和构造器<br><figure class="highlight oxygene"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Class</span> c1 = Test01.<span class="keyword">class</span>;</span><br><span class="line">Field fields[] = c1.getDeclaredFields();</span><br><span class="line"><span class="function"><span class="keyword">Method</span> <span class="title">methods</span>[] = <span class="title">c1</span>.<span class="title">getDeclaredMethods</span><span class="params">()</span>;</span></span><br><span class="line"><span class="function"><span class="keyword">Constructor</span> <span class="title">constructors</span>[] = <span class="title">c1</span>.<span class="title">getDeclaredConstructors</span><span class="params">()</span>;</span></span><br></pre></td></tr></table></figure></p>
+<h5 id="getDeclaredField_28_29_2C_getDeclaredMethod_28_29_2C_getDeclaredConstructor_28_29"><a href="#getDeclaredField_28_29_2C_getDeclaredMethod_28_29_2C_getDeclaredConstructor_28_29" class="headerlink" title="getDeclaredField(), getDeclaredMethod(), getDeclaredConstructor()"></a>getDeclaredField(), getDeclaredMethod(), getDeclaredConstructor()</h5><p>返回类（不包括超类）中指定的声明的域，方法和构造器<br><figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title">Test01</span>&#123;</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">int</span> j;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">private</span> <span class="title">Test01</span>(<span class="params">String str, <span class="keyword">int</span> i</span>)</span>&#123;</span><br><span class="line">	</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">printPublic</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">		System.<span class="keyword">out</span>.println(<span class="string">"hello world"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">printPublic</span>(<span class="params">String str</span>)</span>&#123;</span><br><span class="line">		System.<span class="keyword">out</span>.println(<span class="string">"hello world"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="label">Class</span> <span class="literal">c1</span> = Test01.class<span class="comment">;</span></span><br><span class="line"><span class="label">Field</span> <span class="preprocessor">field</span> = <span class="literal">c1</span>.getDeclaredField(<span class="string">"j"</span>)<span class="comment">;</span></span><br><span class="line"><span class="label">Method</span> method1 = <span class="literal">c1</span>.getDeclaredMethod(<span class="string">"printPublic"</span>)<span class="comment">;</span></span><br><span class="line"><span class="label">Method</span> method2 = <span class="literal">c1</span>.getDeclaredMethod(<span class="string">"printPublic"</span>, <span class="keyword">String.class);</span><br><span class="line"></span><span class="label">Constructor</span> constructor1 = <span class="literal">c1</span>.getDeclaredConstructor()<span class="comment">;</span></span><br><span class="line"><span class="label">Constructor</span> constructor2 = <span class="literal">c1</span>.getDeclaredConstructor(<span class="keyword">String.class, </span>int.class)<span class="comment">;</span></span><br></pre></td></tr></table></figure>
+<h3 id="Modifier"><a href="#Modifier" class="headerlink" title="Modifier"></a>Modifier</h3><h4 id="u65B9_u6CD5-1"><a href="#u65B9_u6CD5-1" class="headerlink" title="方法"></a>方法</h4><h5 id="toString_28_29"><a href="#toString_28_29" class="headerlink" title="toString()"></a>toString()</h5><figure class="highlight vbnet"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 通过传入的整形，判断是修饰符</span><br><span class="line"> * 例<span class="keyword">mod</span> = <span class="number">1</span>,则返回<span class="keyword">public</span>；<span class="keyword">mod</span> = <span class="number">2</span>，则返回<span class="keyword">private</span>；<span class="keyword">mod</span> = <span class="number">4</span>，则返回<span class="keyword">protected</span></span><br><span class="line"> */</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="built_in">String</span> toString(int <span class="keyword">mod</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="Field"><a href="#Field" class="headerlink" title="Field"></a>Field</h3><h4 id="getModifiers_28_29"><a href="#getModifiers_28_29" class="headerlink" title="getModifiers()"></a>getModifiers()</h4><p>用于返回修饰符<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public int <span class="function"><span class="title">getModifiers</span><span class="params">()</span></span></span><br></pre></td></tr></table></figure></p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//可以使用Modifier的toString(int i)，将i与对应修饰符进行匹配</span></span><br><span class="line">Modifier.<span class="function"><span class="title">toString</span><span class="params">(field.getModifiers()</span></span>)</span><br></pre></td></tr></table></figure>
+<h4 id="getName_28_29"><a href="#getName_28_29" class="headerlink" title="getName()"></a>getName()</h4><p>用于返回域的名。如：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">String <span class="function"><span class="title">getName</span><span class="params">()</span></span></span><br></pre></td></tr></table></figure></p>
+<figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> i;</span><br></pre></td></tr></table></figure>
+<p>则相应的会返回i</p>
+<h4 id="setAccessible"><a href="#setAccessible" class="headerlink" title="setAccessible"></a>setAccessible</h4><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">void <span class="function"><span class="title">setAccessible</span><span class="params">(boolean flag)</span></span></span><br></pre></td></tr></table></figure>
+<p>为反射对象设置可访问标志。flag为true表明屏蔽Java语言的访问检查，使得对象的私有属性也可以被查询与设置。</p>
+<h4 id="get"><a href="#get" class="headerlink" title="get"></a>get</h4><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Object</span> <span class="literal">get</span>(<span class="built_in">Object</span> obj)</span><br></pre></td></tr></table></figure>
+<p>返回obj对象中用Field对象表示的域值</p>
+<h4 id="set"><a href="#set" class="headerlink" title="set"></a>set</h4><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> <span class="literal">set</span>(<span class="built_in">Object</span> obj, <span class="built_in">Object</span> newValue)</span><br></pre></td></tr></table></figure>
+<p>用一个新值设置obj对象中field对象表示的域。如：<br><figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">String</span> <span class="built_in">str</span> = <span class="keyword">new</span> <span class="keyword">String</span>(<span class="string">"hello"</span>);</span><br><span class="line"><span class="keyword">String</span> strOriginal = <span class="built_in">str</span>;</span><br><span class="line">Class c1 = <span class="keyword">String</span>.class;</span><br><span class="line">Field field = c1.getDeclaredField(<span class="string">"value"</span>);</span><br><span class="line">field.setAccessible(<span class="keyword">true</span>);</span><br><span class="line"><span class="built_in">char</span> temp[] = &#123;<span class="string">'a'</span>, <span class="string">'b'</span>&#125;;</span><br><span class="line">field.<span class="built_in">set</span>(<span class="built_in">str</span>, temp);</span><br><span class="line">System.out.<span class="built_in">println</span>(<span class="built_in">str</span>+<span class="string">"\t"</span>+strOriginal);</span><br></pre></td></tr></table></figure></p>
+<h3 id="Method"><a href="#Method" class="headerlink" title="Method"></a>Method</h3><h4 id="getModifiers_28_29-1"><a href="#getModifiers_28_29-1" class="headerlink" title="getModifiers()"></a>getModifiers()</h4><p>用于返回修饰符<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public int <span class="function"><span class="title">getModifiers</span><span class="params">()</span></span></span><br></pre></td></tr></table></figure></p>
+<figure class="highlight oxygene"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//可以使用Modifier的toString(int i)，将i与对应修饰符进行匹配</span></span><br><span class="line">Modifier.toString(<span class="function"><span class="keyword">method</span>.<span class="title">getModifiers</span><span class="params">()</span>)</span></span><br></pre></td></tr></table></figure>
+<h4 id="getName_28_29-1"><a href="#getName_28_29-1" class="headerlink" title="getName()"></a>getName()</h4><p>用于返回方法名。如：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">String <span class="function"><span class="title">getName</span><span class="params">()</span></span></span><br></pre></td></tr></table></figure></p>
+<figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> i;</span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">void</span> <span class="title">print</span><span class="params">()</span></span>;</span><br></pre></td></tr></table></figure>
+<p>则相应的会返回i, print</p>
+<h4 id="getParameterTypes_28_29"><a href="#getParameterTypes_28_29" class="headerlink" title="getParameterTypes()"></a>getParameterTypes()</h4><p>用于返回参数类型<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Class[] <span class="function"><span class="title">getParameterTypes</span><span class="params">()</span></span></span><br></pre></td></tr></table></figure></p>
+<h4 id="getReturnType_28_29"><a href="#getReturnType_28_29" class="headerlink" title="getReturnType()"></a>getReturnType()</h4><p>用于返回返回值类型<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Class <span class="function"><span class="title">getReturnType</span><span class="params">()</span></span></span><br></pre></td></tr></table></figure></p>
+<h4 id="invoke"><a href="#invoke" class="headerlink" title="invoke"></a>invoke</h4><figure class="highlight delphi"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">Object</span> invoke(<span class="keyword">Object</span> implicitParameter, <span class="keyword">Object</span> explicitParameters[])</span><br></pre></td></tr></table></figure>
+<p>如果静态函数，则implicitParameter就不填，如果不是静态函数，则implicitParameter是类的一个实例。<br><figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">class <span class="type">Test01</span>&#123;</span><br><span class="line">    <span class="type">int</span> j=<span class="number">1</span>;</span><br><span class="line">    public <span class="type">void</span> print(<span class="type">int</span> i)&#123;</span><br><span class="line">        <span class="type">System</span>.<span class="keyword">out</span>.println(i+<span class="string">"\t"</span>+k);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">public class <span class="type">Test</span>&#123;</span><br><span class="line">    public <span class="keyword">static</span> <span class="type">void</span> main(<span class="type">String</span> args[])&#123;</span><br><span class="line">        <span class="type">Test01</span> t1 = new <span class="type">Test01</span>();</span><br><span class="line">        <span class="type">Class</span> c1 = <span class="type">Test01</span>.class;</span><br><span class="line">        <span class="type">Method</span> <span class="keyword">method</span> = c1.getMethod(<span class="string">"print"</span>, <span class="type">int</span>.class);</span><br><span class="line">        //这里输出：<span class="number">1</span>   <span class="number">1</span></span><br><span class="line">        <span class="keyword">method</span>.invoke(t1, <span class="number">1</span>);</span><br><span class="line">        </span><br><span class="line">        <span class="type">Test01</span> t2 = new <span class="type">Test01</span>();</span><br><span class="line">        t2.j = <span class="number">3</span>;</span><br><span class="line">        //这里输出：<span class="number">3</span>   <span class="number">5</span></span><br><span class="line">        <span class="keyword">method</span>.invoke(t2, <span class="number">5</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="Constructor"><a href="#Constructor" class="headerlink" title="Constructor"></a>Constructor</h3><h4 id="getModifiers_28_29-2"><a href="#getModifiers_28_29-2" class="headerlink" title="getModifiers()"></a>getModifiers()</h4><p>用于返回修饰符<br><figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title">Test011</span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Test011</span>(<span class="params"></span>)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight delphi"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//可以使用Modifier的toString(int i)，将i与对应修饰符进行匹配</span></span><br><span class="line">Modifier.toString(<span class="function"><span class="keyword">constructor</span>.<span class="title">getModifiers</span><span class="params">()</span>)</span></span><br></pre></td></tr></table></figure>
+<h4 id="getName_28_29-2"><a href="#getName_28_29-2" class="headerlink" title="getName()"></a>getName()</h4><p>用于构造器的名。如：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">String <span class="function"><span class="title">getName</span><span class="params">()</span></span></span><br></pre></td></tr></table></figure></p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title">Test011</span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Test011</span>(<span class="params"></span>)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>则相应的会返回Test011</p>
+<h4 id="getParameterTypes_28_29-1"><a href="#getParameterTypes_28_29-1" class="headerlink" title="getParameterTypes()"></a>getParameterTypes()</h4><p>用于返回参数类型<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Class[] <span class="function"><span class="title">getParameterTypes</span><span class="params">()</span></span></span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/java/" rel="tag">#java</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/06/11/javaSourceCode/javax.servlet/ServletConfig/" rel="next" title="Servlet源码之ServletConfig">
+                <i class="fa fa-chevron-left"></i> Servlet源码之ServletConfig
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/06/12/javaSourceCode/javax.servlet/Servlet/" rel="prev" title="Servlet源码之Servlet">
+                Servlet源码之Servlet <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2015/06/12/java/浅谈java中的反射机制/"
+           data-title="浅谈java中的反射机制" data-url="http://jinpingwang.github.io/2015/06/12/java/浅谈java中的反射机制/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/headImage.jpg"
+               alt="王谨平" />
+          <p class="site-author-name" itemprop="name">王谨平</p>
+          <p class="site-description motion-element" itemprop="description">Waiting for wind</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">117</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">28</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/jinpingwang" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/@349268138Jin" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/1848729614" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.zhihu.com/people/wang-jin-ping-1-68" target="_blank" title="Zhihu">
+                  
+                    <i class="fa fa-globe"></i>
+                  
+                  Zhihu
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#u53CD_u5C04"><span class="nav-number">1.</span> <span class="nav-text">反射</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#u5B9A_u4E49"><span class="nav-number">1.1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#u4F5C_u7528"><span class="nav-number">1.2.</span> <span class="nav-text">作用</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Class_u7C7B"><span class="nav-number">2.</span> <span class="nav-text">Class类</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#u521B_u5EFA"><span class="nav-number">2.1.</span> <span class="nav-text">创建</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Object_u7C7B_u7684getClass_28_29_u65B9_u6CD5"><span class="nav-number">2.1.1.</span> <span class="nav-text">Object类的getClass()方法</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Class_u7C7B_u7684_u9759_u6001_u65B9_u6CD5"><span class="nav-number">2.1.2.</span> <span class="nav-text">Class类的静态方法</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#T-class"><span class="nav-number">2.1.3.</span> <span class="nav-text">T.class</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#u65B9_u6CD5"><span class="nav-number">2.2.</span> <span class="nav-text">方法</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#newInstance_28_29"><span class="nav-number">2.2.1.</span> <span class="nav-text">newInstance()</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#getFields_28_29_2C_getMethods_28_29_2C_getConstructors_28_29"><span class="nav-number">2.2.2.</span> <span class="nav-text">getFields(), getMethods(), getConstructors()</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#getField_28String_name_29_2C_getMethod_28String_name_2C_Class_26lt_3B_3F_26gt_3B_u2026_parameterTypes_29_2C_getConstructor_28Class_26lt_3B_3F_26gt_3B_u2026_parameterTypes_29"><span class="nav-number">2.2.3.</span> <span class="nav-text">getField(String name), getMethod(String name, Class<?>… parameterTypes), getConstructor(Class<?>… parameterTypes)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#getDeclaredFields_28_29_2C_getDeclaredMethods_28_29_2C_getDeclaredConstructors_28_29"><span class="nav-number">2.2.4.</span> <span class="nav-text">getDeclaredFields(), getDeclaredMethods(), getDeclaredConstructors()</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#getDeclaredField_28_29_2C_getDeclaredMethod_28_29_2C_getDeclaredConstructor_28_29"><span class="nav-number">2.2.5.</span> <span class="nav-text">getDeclaredField(), getDeclaredMethod(), getDeclaredConstructor()</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Modifier"><span class="nav-number">3.</span> <span class="nav-text">Modifier</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#u65B9_u6CD5-1"><span class="nav-number">3.1.</span> <span class="nav-text">方法</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#toString_28_29"><span class="nav-number">3.1.1.</span> <span class="nav-text">toString()</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Field"><span class="nav-number">4.</span> <span class="nav-text">Field</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#getModifiers_28_29"><span class="nav-number">4.1.</span> <span class="nav-text">getModifiers()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#getName_28_29"><span class="nav-number">4.2.</span> <span class="nav-text">getName()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#setAccessible"><span class="nav-number">4.3.</span> <span class="nav-text">setAccessible</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#get"><span class="nav-number">4.4.</span> <span class="nav-text">get</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#set"><span class="nav-number">4.5.</span> <span class="nav-text">set</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Method"><span class="nav-number">5.</span> <span class="nav-text">Method</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#getModifiers_28_29-1"><span class="nav-number">5.1.</span> <span class="nav-text">getModifiers()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#getName_28_29-1"><span class="nav-number">5.2.</span> <span class="nav-text">getName()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#getParameterTypes_28_29"><span class="nav-number">5.3.</span> <span class="nav-text">getParameterTypes()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#getReturnType_28_29"><span class="nav-number">5.4.</span> <span class="nav-text">getReturnType()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#invoke"><span class="nav-number">5.5.</span> <span class="nav-text">invoke</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Constructor"><span class="nav-number">6.</span> <span class="nav-text">Constructor</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#getModifiers_28_29-2"><span class="nav-number">6.1.</span> <span class="nav-text">getModifiers()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#getName_28_29-2"><span class="nav-number">6.2.</span> <span class="nav-text">getName()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#getParameterTypes_28_29-1"><span class="nav-number">6.3.</span> <span class="nav-text">getParameterTypes()</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2014 - 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">王谨平</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"wangjinping"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+  
+
+
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>
