@@ -64,7 +64,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="java," />
+  <meta name="keywords" content="leetcodeDatabase," />
 
 
 
@@ -82,16 +82,16 @@
 
 
 
-<meta name="description" content="XML的全称是可扩展标记语言，即Extensible Markup Language，可以用来标记数据，定义数据类型，是一种允许用户对自己的标记语言进行定义。XML提供统一的方法来描述和交换独立于应用程序或供应商的结构化数据，非常适合Web传输。">
+<meta name="description" content="题目DescribeWrite a SQL query to find all numbers that appear at least three times consecutively.1234567891011+----+-----+| Id | Num |+----+-----+| 1  |  1  || 2  |  1  || 3  |  1  || 4  |  2  || 5  |">
 <meta property="og:type" content="article">
-<meta property="og:title" content="基于xml的序列化与反序列化">
-<meta property="og:url" content="http://jinpingwang.github.io/2016/04/23/java/基于xml的序列化与反序列化/index.html">
+<meta property="og:title" content="Consecutive Numbers">
+<meta property="og:url" content="http://jinpingwang.github.io/2015/05/14/leetcodeDatabase/ConsecutiveNumbers/index.html">
 <meta property="og:site_name" content="Quick notes">
-<meta property="og:description" content="XML的全称是可扩展标记语言，即Extensible Markup Language，可以用来标记数据，定义数据类型，是一种允许用户对自己的标记语言进行定义。XML提供统一的方法来描述和交换独立于应用程序或供应商的结构化数据，非常适合Web传输。">
-<meta property="og:updated_time" content="2016-05-24T02:07:27.854Z">
+<meta property="og:description" content="题目DescribeWrite a SQL query to find all numbers that appear at least three times consecutively.1234567891011+----+-----+| Id | Num |+----+-----+| 1  |  1  || 2  |  1  || 3  |  1  || 4  |  2  || 5  |">
+<meta property="og:updated_time" content="2016-05-25T02:28:42.718Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="基于xml的序列化与反序列化">
-<meta name="twitter:description" content="XML的全称是可扩展标记语言，即Extensible Markup Language，可以用来标记数据，定义数据类型，是一种允许用户对自己的标记语言进行定义。XML提供统一的方法来描述和交换独立于应用程序或供应商的结构化数据，非常适合Web传输。">
+<meta name="twitter:title" content="Consecutive Numbers">
+<meta name="twitter:description" content="题目DescribeWrite a SQL query to find all numbers that appear at least three times consecutively.1234567891011+----+-----+| Id | Num |+----+-----+| 1  |  1  || 2  |  1  || 3  |  1  || 4  |  2  || 5  |">
 
 
 
@@ -109,7 +109,7 @@
   };
 </script>
 
-  <title> 基于xml的序列化与反序列化 | Quick notes </title>
+  <title> Consecutive Numbers | Quick notes </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -279,7 +279,7 @@
             
             
               
-                基于xml的序列化与反序列化
+                Consecutive Numbers
               
             
           </h1>
@@ -291,8 +291,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-04-23T20:18:26+08:00" content="2016-04-23">
-              2016-04-23
+            <time itemprop="dateCreated" datetime="2015-05-14T19:08:36+08:00" content="2015-05-14">
+              2015-05-14
             </time>
           </span>
 
@@ -305,8 +305,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/java/" itemprop="url" rel="index">
-                    <span itemprop="name">java</span>
+                  <a href="/categories/leetcode/" itemprop="url" rel="index">
+                    <span itemprop="name">leetcode</span>
                   </a>
                 </span>
 
@@ -321,8 +321,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/04/23/java/基于xml的序列化与反序列化/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/23/java/基于xml的序列化与反序列化/" itemprop="commentsCount"></span>
+                <a href="/2015/05/14/leetcodeDatabase/ConsecutiveNumbers/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/14/leetcodeDatabase/ConsecutiveNumbers/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -345,12 +345,11 @@
       
 
       
-        <p>XML的全称是可扩展标记语言，即Extensible Markup Language，可以用来标记数据，定义数据类型，是一种允许用户对自己的标记语言进行定义。XML提供统一的方法来描述和交换独立于应用程序或供应商的结构化数据，非常适合Web传输。<br><a id="more"></a></p>
-<h3 id="u6E90_u7801"><a href="#u6E90_u7801" class="headerlink" title="源码"></a>源码</h3><h4 id="Maven"><a href="#Maven" class="headerlink" title="Maven"></a>Maven</h4><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">groupId</span>&gt;</span>com.thoughtworks.xstream<span class="tag">&lt;/<span class="title">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">artifactId</span>&gt;</span>xstream<span class="tag">&lt;/<span class="title">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">version</span>&gt;</span>1.4.9<span class="tag">&lt;/<span class="title">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<h4 id="POJO"><a href="#POJO" class="headerlink" title="POJO"></a>POJO</h4><figure class="highlight fortran"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> Person&#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="built_in">int</span> id;</span><br><span class="line">	<span class="keyword">public</span> String <span class="keyword">name</span>;</span><br><span class="line">	<span class="keyword">public</span> List&lt;<span class="type">Integer</span>&gt; hobby;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">public</span> Person(<span class="built_in">int</span> id, String <span class="keyword">name</span>, List&lt;<span class="type">Integer</span>&gt; hobby)&#123;</span><br><span class="line">		this.id = id;</span><br><span class="line">		this.<span class="keyword">name</span> = <span class="keyword">name</span>;</span><br><span class="line">		this.hobby = hobby;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="u4E3B_u7A0B_u5E8F"><a href="#u4E3B_u7A0B_u5E8F" class="headerlink" title="主程序"></a>主程序</h4><figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.uestc.xml;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.thoughtworks.xstream.XStream;</span><br><span class="line"><span class="keyword">import</span> com.thoughtworks.xstream.io.xml.DomDriver;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> class Test02 &#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> main(<span class="keyword">String</span>[] args) &#123;</span><br><span class="line">		<span class="comment">// TODO Auto-generated method stub</span></span><br><span class="line">		List&lt;Integer&gt; hobby = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</span><br><span class="line">		hobby.<span class="built_in">add</span>(<span class="number">3</span>);</span><br><span class="line">		hobby.<span class="built_in">add</span>(<span class="number">4</span>);</span><br><span class="line">		Person person = <span class="keyword">new</span> Person(<span class="number">1</span>, <span class="string">"kitty"</span>, hobby);</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">String</span> personXml = <span class="keyword">null</span>;</span><br><span class="line">		XStream xStream = <span class="keyword">new</span> XStream(<span class="keyword">new</span> DomDriver());</span><br><span class="line">		xStream.alias(<span class="string">"person"</span>, Person.class);</span><br><span class="line">		personXml = xStream.toXML(person);</span><br><span class="line">		</span><br><span class="line">		System.out.<span class="built_in">println</span>(personXml);</span><br><span class="line">		</span><br><span class="line">		Person personResult = (Person)xStream.fromXML(personXml);</span><br><span class="line">		System.out.<span class="built_in">println</span>(personResult.id+<span class="string">"\t"</span>+personResult.name+<span class="string">"\t"</span>+personResult.hobby);		</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">输出结果：</span><br><span class="line"><span class="tag">&lt;<span class="title">person</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">id</span>&gt;</span>1<span class="tag">&lt;/<span class="title">id</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">name</span>&gt;</span>kitty<span class="tag">&lt;/<span class="title">name</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">hobby</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">int</span>&gt;</span>3<span class="tag">&lt;/<span class="title">int</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">int</span>&gt;</span>4<span class="tag">&lt;/<span class="title">int</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="title">hobby</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">person</span>&gt;</span></span><br><span class="line">1	kitty	[3, 4]</span><br></pre></td></tr></table></figure>
-<h3 id="u89E3_u6790"><a href="#u89E3_u6790" class="headerlink" title="解析"></a>解析</h3><p>与json序列化不同，xml序列化可以不考虑域是否是public，是否有默认构造函数。</p>
+        <h3 id="u9898_u76EE"><a href="#u9898_u76EE" class="headerlink" title="题目"></a>题目</h3><h4 id="Describe"><a href="#Describe" class="headerlink" title="Describe"></a>Describe</h4><p>Write a SQL query to find all numbers that appear at least three times consecutively.<br><figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">+----+-----+</span><br><span class="line">|<span class="string"> Id </span>|<span class="string"> Num </span>|</span><br><span class="line">+----+-----+</span><br><span class="line">|<span class="string"> 1  </span>|<span class="string">  1  </span>|</span><br><span class="line">|<span class="string"> 2  </span>|<span class="string">  1  </span>|</span><br><span class="line">|<span class="string"> 3  </span>|<span class="string">  1  </span>|</span><br><span class="line">|<span class="string"> 4  </span>|<span class="string">  2  </span>|</span><br><span class="line">|<span class="string"> 5  </span>|<span class="string">  1  </span>|</span><br><span class="line">|<span class="string"> 6  </span>|<span class="string">  2  </span>|</span><br><span class="line">|<span class="string"> 7  </span>|<span class="string">  2  </span>|</span><br><span class="line">+----+-----+</span><br></pre></td></tr></table></figure></p>
+<h4 id="example"><a href="#example" class="headerlink" title="example"></a>example</h4><p>given the above Logs table, 1 is the only number that appears consecutively for at least three times.</p>
+<h3 id="CODE"><a href="#CODE" class="headerlink" title="CODE"></a>CODE</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">select</span> <span class="keyword">distinct</span>(Logs1.<span class="keyword">Num</span>) <span class="keyword">as</span> ConsecutiveNums</span><br><span class="line"><span class="keyword">from</span> <span class="keyword">Logs</span> Logs1, <span class="keyword">Logs</span> Logs2, <span class="keyword">Logs</span> Logs3</span><br><span class="line"><span class="keyword">where</span></span><br><span class="line">Logs1.<span class="keyword">Id</span> = Logs2.<span class="keyword">Id</span>-<span class="number">1</span> <span class="keyword">and</span> Logs2.<span class="keyword">Id</span> = Logs3.<span class="keyword">Id</span> -<span class="number">1</span> <span class="keyword">and</span> Logs1.<span class="keyword">Num</span> = Logs2.<span class="keyword">Num</span> <span class="keyword">and</span> Logs2.<span class="keyword">Num</span> = Logs3.<span class="keyword">Num</span>;</span></span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<h3 id="u89E3_u6790"><a href="#u89E3_u6790" class="headerlink" title="解析"></a>解析</h3><p>使用三个表根据相邻Id进行相连，然后判断相邻三个的Num相等，最后通过distinct得到非重复的列。</p>
 
       
     </div>
@@ -371,7 +370,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/java/" rel="tag">#java</a>
+            <a href="/tags/leetcodeDatabase/" rel="tag">#leetcodeDatabase</a>
           
         </div>
       
@@ -380,16 +379,16 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/04/23/java/基于json的序列化与反序列化/" rel="next" title="基于json的序列化与反序列化">
-                <i class="fa fa-chevron-left"></i> 基于json的序列化与反序列化
+              <a href="/2015/05/14/leetcode/ReverseLinkedList/" rel="next" title="Reverse Linked List">
+                <i class="fa fa-chevron-left"></i> Reverse Linked List
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2016/04/23/web/细细品酌HTTPS安全篇/" rel="prev" title="细细品酌HTTPS安全篇">
-                细细品酌HTTPS安全篇 <i class="fa fa-chevron-right"></i>
+              <a href="/2015/05/18/java/基于java中自带的序列化反序列化/" rel="prev" title="基于java中自带的序列化反序列化">
+                基于java中自带的序列化反序列化 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -416,8 +415,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/04/23/java/基于xml的序列化与反序列化/"
-           data-title="基于xml的序列化与反序列化" data-url="http://jinpingwang.github.io/2016/04/23/java/基于xml的序列化与反序列化/">
+      <div class="ds-thread" data-thread-key="2015/05/14/leetcodeDatabase/ConsecutiveNumbers/"
+           data-title="Consecutive Numbers" data-url="http://jinpingwang.github.io/2015/05/14/leetcodeDatabase/ConsecutiveNumbers/">
       </div>
     
   </div>
@@ -462,7 +461,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">117</span>
+              <span class="site-state-item-count">121</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -553,7 +552,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#u6E90_u7801"><span class="nav-number">1.</span> <span class="nav-text">源码</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Maven"><span class="nav-number">1.1.</span> <span class="nav-text">Maven</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#POJO"><span class="nav-number">1.2.</span> <span class="nav-text">POJO</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#u4E3B_u7A0B_u5E8F"><span class="nav-number">1.3.</span> <span class="nav-text">主程序</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#u89E3_u6790"><span class="nav-number">2.</span> <span class="nav-text">解析</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#u9898_u76EE"><span class="nav-number">1.</span> <span class="nav-text">题目</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Describe"><span class="nav-number">1.1.</span> <span class="nav-text">Describe</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#example"><span class="nav-number">1.2.</span> <span class="nav-text">example</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CODE"><span class="nav-number">2.</span> <span class="nav-text">CODE</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#u89E3_u6790"><span class="nav-number">3.</span> <span class="nav-text">解析</span></a></li></ol></div>
             
           </div>
         </section>
