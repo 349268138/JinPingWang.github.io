@@ -281,8 +281,8 @@
             
               
                 
-                <a class="post-title-link" href="/2015/01/20/leetcode/RemoveNthNodeFromEndOfList/" itemprop="url">
-                  Remove Nth Node From End of List
+                <a class="post-title-link" href="/2015/05/11/java/java输入输出以及中文乱码处理/" itemprop="url">
+                  java输入输出以及中文乱码处理
                 </a>
               
             
@@ -295,8 +295,255 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-01-20T19:10:12+08:00" content="2015-01-20">
-              2015-01-20
+            <time itemprop="dateCreated" datetime="2015-05-11T09:18:06+08:00" content="2015-05-11">
+              2015-05-11
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/05/11/java/java输入输出以及中文乱码处理/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/11/java/java输入输出以及中文乱码处理/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="u8F93_u5165"><a href="#u8F93_u5165" class="headerlink" title="输入"></a>输入</h3><h4 id="u65B9_u5F0F_u4E00"><a href="#u65B9_u5F0F_u4E00" class="headerlink" title="方式一"></a>方式一</h4><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">String filePath = <span class="string">"你的文件路径，路径格式/../..或（windows文件则\\..\\..）"</span>;</span><br><span class="line"><span class="keyword">File</span> txtRead=new <span class="keyword">File</span>(filePath);</span><br><span class="line"><span class="comment">/**</span><br><span class="line"> * 如果txtRead的存储格式非UTF-8，假设为Unicode则需要使用用以下格式</span><br><span class="line"> * Scanner sc = new Scanner(txtRead, "Unicode");</span><br><span class="line"> */</span></span><br><span class="line">Scanner <span class="keyword">sc</span> = null;</span><br><span class="line">try&#123;</span><br><span class="line">    <span class="keyword">sc</span> = new Scanner(txtRead);</span><br><span class="line">&#125;catch (FileNotFoundException <span class="keyword">e</span>) &#123;</span><br><span class="line">	<span class="comment">// TODO Auto-generated catch block</span></span><br><span class="line">	<span class="keyword">e</span>.printStackTrace();</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">while</span>(<span class="keyword">sc</span>.hasNextLine())&#123;</span><br><span class="line">    System.<span class="keyword">out</span>.println(<span class="keyword">sc</span>.nextLine());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="u65B9_u5F0F_u4E8C"><a href="#u65B9_u5F0F_u4E8C" class="headerlink" title="方式二"></a>方式二</h4><figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">String</span> filePath = <span class="string">"你的文件路径，路径格式/../..或（windows文件则\\..\\..）"</span>;</span><br><span class="line">File txtRead=<span class="keyword">new</span> File(filePath);</span><br><span class="line"><span class="comment">//这里UTF-8根据你的文件实际存储格式进行相应修改</span></span><br><span class="line">InputStreamReader isr = <span class="keyword">new</span> InputStreamReader(<span class="keyword">new</span> FileInputStream(txtRead), <span class="string">"UTF-8"</span>);	</span><br><span class="line"><span class="keyword">BufferedReader</span> br = <span class="keyword">new</span> <span class="keyword">BufferedReader</span>(isr);</span><br><span class="line"><span class="keyword">String</span> <span class="built_in">line</span>;</span><br><span class="line"><span class="keyword">while</span>((<span class="built_in">line</span>=br.readLine())!=<span class="keyword">null</span>)&#123;</span><br><span class="line">    System.out.<span class="built_in">println</span>(<span class="built_in">line</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="u8F93_u51FA"><a href="#u8F93_u51FA" class="headerlink" title="输出"></a>输出</h3><h4 id="u65B9_u5F0F_u4E00-1"><a href="#u65B9_u5F0F_u4E00-1" class="headerlink" title="方式一"></a>方式一</h4><p>默认输出存储格式为UTF-8<br><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">File</span> txtWrite=<span class="keyword">new</span> <span class="keyword">File</span>(<span class="string">"你的文件路径，路径格式/../..或（windows文件则\\..\\..）,如果不存在则自动创建"</span>);</span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">	BufferedWriter bw=<span class="keyword">new</span> BufferedWriter(<span class="keyword">new</span> FileWriter(txtWrite));</span><br><span class="line">	bw.<span class="keyword">write</span>(<span class="string">"红包"</span>);</span><br><span class="line">	bw.close();</span><br><span class="line">&#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">	<span class="comment">// TODO Auto-generated catch block</span></span><br><span class="line">	e.printStackTrace();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="txt_u6587_u4EF6_u8BFB_u5165_u4E71_u7801"><a href="#txt_u6587_u4EF6_u8BFB_u5165_u4E71_u7801" class="headerlink" title="txt文件读入乱码"></a>txt文件读入乱码</h3><h4 id="u6587_u4EF6_u5B58_u50A8_u683C_u5F0F_u4E3AANSI"><a href="#u6587_u4EF6_u5B58_u50A8_u683C_u5F0F_u4E3AANSI" class="headerlink" title="文件存储格式为ANSI"></a>文件存储格式为ANSI</h4><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//方式一</span></span><br><span class="line">Scanner sc = <span class="keyword">new</span> Scanner(txtRead, <span class="string">"GBK"</span>);</span><br><span class="line"><span class="comment">//方式二</span></span><br><span class="line">InputStreamReader isr = <span class="keyword">new</span> InputStreamReader(<span class="keyword">new</span> FileInputStream(txtRead), <span class="string">"GBK"</span>);</span><br></pre></td></tr></table></figure>
+<h4 id="u6587_u4EF6_u5B58_u50A8_u683C_u5F0F_u4E3AUTF-8"><a href="#u6587_u4EF6_u5B58_u50A8_u683C_u5F0F_u4E3AUTF-8" class="headerlink" title="文件存储格式为UTF-8"></a>文件存储格式为UTF-8</h4><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//方式一</span></span><br><span class="line">Scanner sc = <span class="keyword">new</span> Scanner(txtRead, <span class="string">"UTF-8"</span>);</span><br><span class="line"><span class="comment">//方式二</span></span><br><span class="line">InputStreamReader isr = <span class="keyword">new</span> InputStreamReader(<span class="keyword">new</span> FileInputStream(txtRead), <span class="string">"UTF-8"</span>);</span><br></pre></td></tr></table></figure>
+<h4 id="u6587_u4EF6_u5B58_u50A8_u683C_u5F0F_u4E3AUnicode"><a href="#u6587_u4EF6_u5B58_u50A8_u683C_u5F0F_u4E3AUnicode" class="headerlink" title="文件存储格式为Unicode"></a>文件存储格式为Unicode</h4><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//方式一</span></span><br><span class="line">Scanner sc = <span class="keyword">new</span> Scanner(txtRead, <span class="string">"Unicode"</span>);</span><br><span class="line"><span class="comment">//方式二</span></span><br><span class="line">InputStreamReader isr = <span class="keyword">new</span> InputStreamReader(<span class="keyword">new</span> FileInputStream(txtRead), <span class="string">"Unicode"</span>);</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/05/10/network/分析wget www.taobao.com过程/" itemprop="url">
+                  分析wget www.taobao.com过程
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-05-10T14:22:18+08:00" content="2015-05-10">
+              2015-05-10
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/计算机网络/" itemprop="url" rel="index">
+                    <span itemprop="name">计算机网络</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/05/10/network/分析wget www.taobao.com过程/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/10/network/分析wget www.taobao.com过程/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>本文介绍了通过wget命令访问一个网址时所发生的一些环节，如：DNS缓存，ARP缓存，ARP请求与响应，DNS报文以及查询方式等<br>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/05/10/network/分析wget www.taobao.com过程/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+    
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/05/08/leetcode/FactorialTrailingZeroes/" itemprop="url">
+                  Factorial Trailing Zeroes
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-05-08T23:15:58+08:00" content="2015-05-08">
+              2015-05-08
             </time>
           </span>
 
@@ -325,8 +572,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2015/01/20/leetcode/RemoveNthNodeFromEndOfList/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/01/20/leetcode/RemoveNthNodeFromEndOfList/" itemprop="commentsCount"></span>
+                <a href="/2015/05/08/leetcode/FactorialTrailingZeroes/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/08/leetcode/FactorialTrailingZeroes/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -350,10 +597,10 @@
 
       
         
-          <h3 id="u9898_u76EE"><a href="#u9898_u76EE" class="headerlink" title="题目"></a>题目</h3><h4 id="Describe"><a href="#Describe" class="headerlink" title="Describe"></a>Describe</h4><p>Given a linked list, remove the nth node from the end of list and return its head.</p>
-<h4 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Given linked <span class="built_in">list</span>: <span class="number">1</span>-&gt;<span class="number">2</span>-&gt;<span class="number">3</span>-&gt;<span class="number">4</span>-&gt;<span class="number">5</span>, and n = <span class="number">2.</span></span><br><span class="line">After removing the second node from the end, the linked <span class="built_in">list</span> becomes <span class="number">1</span>-&gt;<span class="number">2</span>-&gt;<span class="number">3</span>-&gt;<span class="number">5.</span></span><br></pre></td></tr></table></figure>
+          <h3 id="u9898_u76EE"><a href="#u9898_u76EE" class="headerlink" title="题目"></a>题目</h3><h4 id="Describe"><a href="#Describe" class="headerlink" title="Describe"></a>Describe</h4><p>Given an integer n, return the number of trailing zeroes in n!.</p>
+<h4 id="Note"><a href="#Note" class="headerlink" title="Note"></a>Note</h4><p>Your solution should be in logarithmic time complexity.</p>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2015/01/20/leetcode/RemoveNthNodeFromEndOfList/#more" rel="contents">
+            <a class="btn" href="/2015/05/08/leetcode/FactorialTrailingZeroes/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -404,8 +651,8 @@
             
               
                 
-                <a class="post-title-link" href="/2015/01/20/leetcode/LongestCommonPrefix/" itemprop="url">
-                  Longest Common Prefix
+                <a class="post-title-link" href="/2015/05/08/leetcode/ExcelSheetColumnNumber/" itemprop="url">
+                  Excel Sheet Column Number
                 </a>
               
             
@@ -418,8 +665,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-01-20T11:23:10+08:00" content="2015-01-20">
-              2015-01-20
+            <time itemprop="dateCreated" datetime="2015-05-08T07:12:54+08:00" content="2015-05-08">
+              2015-05-08
             </time>
           </span>
 
@@ -448,8 +695,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2015/01/20/leetcode/LongestCommonPrefix/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/01/20/leetcode/LongestCommonPrefix/" itemprop="commentsCount"></span>
+                <a href="/2015/05/08/leetcode/ExcelSheetColumnNumber/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/08/leetcode/ExcelSheetColumnNumber/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -473,9 +720,10 @@
 
       
         
-          <h3 id="u9898_u76EE"><a href="#u9898_u76EE" class="headerlink" title="题目"></a>题目</h3><h4 id="Describe"><a href="#Describe" class="headerlink" title="Describe"></a>Describe</h4><p>Write a function to find the longest common prefix string amongst an array of strings.</p>
+          <h3 id="u9898_u76EE"><a href="#u9898_u76EE" class="headerlink" title="题目"></a>题目</h3><h4 id="Describe"><a href="#Describe" class="headerlink" title="Describe"></a>Describe</h4><p>Related to question Excel Sheet Column Title<br>Given a column title as appear in an Excel sheet, return its corresponding column number.</p>
+<h4 id="example_3A"><a href="#example_3A" class="headerlink" title="example:"></a>example:</h4><figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">A <span class="subst">-&gt; </span><span class="number">1</span></span><br><span class="line">B <span class="subst">-&gt; </span><span class="number">2</span></span><br><span class="line">C <span class="subst">-&gt; </span><span class="number">3</span></span><br><span class="line"><span class="attribute">...</span></span><br><span class="line">Z <span class="subst">-&gt; </span><span class="number">26</span></span><br><span class="line">AA <span class="subst">-&gt; </span><span class="number">27</span></span><br><span class="line">AB <span class="subst">-&gt; </span><span class="number">28</span></span><br></pre></td></tr></table></figure>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2015/01/20/leetcode/LongestCommonPrefix/#more" rel="contents">
+            <a class="btn" href="/2015/05/08/leetcode/ExcelSheetColumnNumber/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -526,8 +774,8 @@
             
               
                 
-                <a class="post-title-link" href="/2015/01/18/leetcode/RomanToInteger/" itemprop="url">
-                  Roman to Integer
+                <a class="post-title-link" href="/2015/05/07/leetcode/ExcelSheetColumnTitle/" itemprop="url">
+                  Excel Sheet Column Title
                 </a>
               
             
@@ -540,8 +788,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-01-18T22:16:47+08:00" content="2015-01-18">
-              2015-01-18
+            <time itemprop="dateCreated" datetime="2015-05-07T16:21:19+08:00" content="2015-05-07">
+              2015-05-07
             </time>
           </span>
 
@@ -570,8 +818,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2015/01/18/leetcode/RomanToInteger/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/01/18/leetcode/RomanToInteger/" itemprop="commentsCount"></span>
+                <a href="/2015/05/07/leetcode/ExcelSheetColumnTitle/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/07/leetcode/ExcelSheetColumnTitle/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -595,10 +843,10 @@
 
       
         
-          <h3 id="u9898_u76EE"><a href="#u9898_u76EE" class="headerlink" title="题目"></a>题目</h3><h4 id="Describe"><a href="#Describe" class="headerlink" title="Describe"></a>Describe</h4><p>Given a roman numeral, convert it to an integer.<br>Input is guaranteed to be within the range from 1 to 3999.</p>
-<h4 id="u7F57_u9A6C_u6570_u5B57_u7684_u89C4_u5219"><a href="#u7F57_u9A6C_u6570_u5B57_u7684_u89C4_u5219" class="headerlink" title="罗马数字的规则"></a>罗马数字的规则</h4><p>1， 罗马数字共有7个，即I（1）、V（5）、X（10）、L（50）、C（100）、D（500）和M（1000）。<br>罗马数字中没有“0”。<br>2， 重复次数：一个罗马数字最多重复3次。<br>3， 右加左减：<br>在较大的罗马数字的右边记上较小的罗马数字，表示大数字加小数字。<br>在较大的罗马数字的左边记上较小的罗马数字，表示大数字减小数字。<br>4， 左减的数字有限制，仅限于I、X、C，且放在大数的左边只能用一个。<br> V 和 X 左边的小数字只能用Ⅰ。<br> L 和 C 左边的小数字只能用X。<br> D 和 M 左 边的小数字只能用C。<br>
+          <h3 id="u9898_u76EE"><a href="#u9898_u76EE" class="headerlink" title="题目"></a>题目</h3><h4 id="Describe"><a href="#Describe" class="headerlink" title="Describe"></a>Describe</h4><p>Given a positive integer, return its corresponding column title as appear in an Excel sheet.</p>
+<h4 id="example"><a href="#example" class="headerlink" title="example"></a>example</h4><figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span> <span class="subst">-&gt; </span>A</span><br><span class="line"><span class="number">2</span> <span class="subst">-&gt; </span>B</span><br><span class="line"><span class="number">3</span> <span class="subst">-&gt; </span>C</span><br><span class="line"><span class="attribute">...</span></span><br><span class="line"><span class="number">26</span> <span class="subst">-&gt; </span>Z</span><br><span class="line"><span class="number">27</span> <span class="subst">-&gt; </span>AA</span><br><span class="line"><span class="number">28</span> <span class="subst">-&gt; </span>AB</span><br></pre></td></tr></table></figure>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2015/01/18/leetcode/RomanToInteger/#more" rel="contents">
+            <a class="btn" href="/2015/05/07/leetcode/ExcelSheetColumnTitle/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -649,8 +897,8 @@
             
               
                 
-                <a class="post-title-link" href="/2015/01/18/leetcode/PalindromeNumber/" itemprop="url">
-                  Palindrome Number
+                <a class="post-title-link" href="/2015/05/07/leetcode/MajorityElement/" itemprop="url">
+                  Majority Element
                 </a>
               
             
@@ -663,8 +911,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-01-18T18:55:32+08:00" content="2015-01-18">
-              2015-01-18
+            <time itemprop="dateCreated" datetime="2015-05-07T16:21:19+08:00" content="2015-05-07">
+              2015-05-07
             </time>
           </span>
 
@@ -693,8 +941,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2015/01/18/leetcode/PalindromeNumber/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/01/18/leetcode/PalindromeNumber/" itemprop="commentsCount"></span>
+                <a href="/2015/05/07/leetcode/MajorityElement/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/07/leetcode/MajorityElement/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -718,9 +966,9 @@
 
       
         
-          <h3 id="u9898_u76EE"><a href="#u9898_u76EE" class="headerlink" title="题目"></a>题目</h3><h4 id="Describe"><a href="#Describe" class="headerlink" title="Describe"></a>Describe</h4><p>Determine whether an integer is a palindrome. Do this without extra space.</p>
+          <h3 id="u9898_u76EE"><a href="#u9898_u76EE" class="headerlink" title="题目"></a>题目</h3><h4 id="Describe"><a href="#Describe" class="headerlink" title="Describe"></a>Describe</h4><p>Given an array of size n, find the majority element. The majority element is the element that appears more than ⌊ n/2 ⌋ times.<br>You may assume that the array is non-empty and the majority element always exist in the array.</p>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2015/01/18/leetcode/PalindromeNumber/#more" rel="contents">
+            <a class="btn" href="/2015/05/07/leetcode/MajorityElement/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -771,8 +1019,8 @@
             
               
                 
-                <a class="post-title-link" href="/2015/01/18/leetcode/StringtoIntegeratoi/" itemprop="url">
-                  String to Integer (atoi)
+                <a class="post-title-link" href="/2015/05/06/leetcode/CompareVersionNumbers/" itemprop="url">
+                  Compare Version Numbers
                 </a>
               
             
@@ -785,8 +1033,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-01-18T14:24:21+08:00" content="2015-01-18">
-              2015-01-18
+            <time itemprop="dateCreated" datetime="2015-05-06T15:48:26+08:00" content="2015-05-06">
+              2015-05-06
             </time>
           </span>
 
@@ -815,8 +1063,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2015/01/18/leetcode/StringtoIntegeratoi/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/01/18/leetcode/StringtoIntegeratoi/" itemprop="commentsCount"></span>
+                <a href="/2015/05/06/leetcode/CompareVersionNumbers/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/06/leetcode/CompareVersionNumbers/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -840,9 +1088,10 @@
 
       
         
-          <h3 id="u9898_u76EE"><a href="#u9898_u76EE" class="headerlink" title="题目"></a>题目</h3><h4 id="Describe"><a href="#Describe" class="headerlink" title="Describe"></a>Describe</h4><p>Implement atoi to convert a string to an integer.</p>
+          <h3 id="u9898_u76EE"><a href="#u9898_u76EE" class="headerlink" title="题目"></a>题目</h3><h4 id="Describe"><a href="#Describe" class="headerlink" title="Describe"></a>Describe</h4><p>Compare two version numbers version1 and version2.<br>If version1 &gt; version2 return 1, if version1 &lt; version2 return -1, otherwise return 0.<br>You may assume that the version strings are non-empty and contain only digits and the . character.<br>The . character does not represent a decimal point and is used to separate number sequences.</p>
+<h4 id="example"><a href="#example" class="headerlink" title="example"></a>example</h4><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">2.5</span> <span class="keyword">is</span> <span class="keyword">not</span> <span class="string">"two and a half"</span> <span class="keyword">or</span> <span class="string">"half way to version three"</span>, <span class="keyword">it</span> <span class="keyword">is</span> <span class="keyword">the</span> <span class="keyword">fifth</span> <span class="keyword">second</span>-level revision <span class="keyword">of</span> <span class="keyword">the</span> <span class="keyword">second</span> <span class="keyword">first</span>-level revision.</span><br><span class="line"></span><br><span class="line">Here <span class="keyword">is</span> an example <span class="keyword">of</span> <span class="property">version</span> numbers ordering:</span><br><span class="line"></span><br><span class="line"><span class="number">0.1</span> &lt; <span class="number">1.1</span> &lt; <span class="number">1.2</span> &lt; <span class="number">13.37</span></span><br></pre></td></tr></table></figure>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2015/01/18/leetcode/StringtoIntegeratoi/#more" rel="contents">
+            <a class="btn" href="/2015/05/06/leetcode/CompareVersionNumbers/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -893,8 +1142,8 @@
             
               
                 
-                <a class="post-title-link" href="/2015/01/15/leetcode/ReverseInteger/" itemprop="url">
-                  Reverse Integer
+                <a class="post-title-link" href="/2015/05/06/leetcode/IntersectionOfTwoLinkedLists/" itemprop="url">
+                  Intersection of Two Linked Lists
                 </a>
               
             
@@ -907,8 +1156,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-01-15T18:24:36+08:00" content="2015-01-15">
-              2015-01-15
+            <time itemprop="dateCreated" datetime="2015-05-06T11:30:59+08:00" content="2015-05-06">
+              2015-05-06
             </time>
           </span>
 
@@ -937,8 +1186,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2015/01/15/leetcode/ReverseInteger/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/01/15/leetcode/ReverseInteger/" itemprop="commentsCount"></span>
+                <a href="/2015/05/06/leetcode/IntersectionOfTwoLinkedLists/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/06/leetcode/IntersectionOfTwoLinkedLists/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -962,10 +1211,11 @@
 
       
         
-          <h3 id="u9898_u76EE"><a href="#u9898_u76EE" class="headerlink" title="题目"></a>题目</h3><h4 id="Describe"><a href="#Describe" class="headerlink" title="Describe"></a>Describe</h4><p>Reverse digits of an integer.</p>
-<h4 id="example"><a href="#example" class="headerlink" title="example"></a>example</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Example1: x = <span class="number">123</span>, <span class="keyword">return</span> <span class="number">321</span></span><br><span class="line">Example2: x = -<span class="number">123</span>, <span class="keyword">return</span> -<span class="number">321</span></span><br></pre></td></tr></table></figure>
+          <h3 id="u9898_u76EE"><a href="#u9898_u76EE" class="headerlink" title="题目"></a>题目</h3><h4 id="Describe"><a href="#Describe" class="headerlink" title="Describe"></a>Describe</h4><p>Write a program to find the node at which the intersection of two singly linked lists begins.</p>
+<h4 id="example"><a href="#example" class="headerlink" title="example"></a>example</h4><figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="label">the</span> following two linked lists:</span><br><span class="line">A:          <span class="literal">a1</span> → <span class="literal">a2</span></span><br><span class="line">                   ↘</span><br><span class="line">                     <span class="literal">c1</span> → <span class="literal">c2</span> → <span class="literal">c3</span></span><br><span class="line">                   ↗            </span><br><span class="line"><span class="keyword">B: </span>    <span class="keyword">b1 </span>→ <span class="keyword">b2 </span>→ <span class="keyword">b3</span><br><span class="line"></span><span class="keyword">begin </span>to intersect at node <span class="literal">c1</span>.</span><br></pre></td></tr></table></figure>
+<h4 id="Notes"><a href="#Notes" class="headerlink" title="Notes"></a>Notes</h4><p>If the two linked lists have no intersection at all, return null.<br>The linked lists must retain their original structure after the function returns.<br>You may assume there are no cycles anywhere in the entire linked structure.<br>Your code should preferably run in O(n) time and use only O(1) memory.</p>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2015/01/15/leetcode/ReverseInteger/#more" rel="contents">
+            <a class="btn" href="/2015/05/06/leetcode/IntersectionOfTwoLinkedLists/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1016,8 +1266,8 @@
             
               
                 
-                <a class="post-title-link" href="/2015/01/15/bootstrap/14:bootstrap源码之Glyphicons/" itemprop="url">
-                  bootstrap源码之Glyphicons
+                <a class="post-title-link" href="/2015/05/06/leetcode/MinStack/" itemprop="url">
+                  Min Stack
                 </a>
               
             
@@ -1030,130 +1280,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-01-15T16:03:14+08:00" content="2015-01-15">
-              2015-01-15
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/bootstrap/" itemprop="url" rel="index">
-                    <span itemprop="name">bootstrap</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/01/15/bootstrap/14:bootstrap源码之Glyphicons/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/01/15/bootstrap/14:bootstrap源码之Glyphicons/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>介绍了bootstrap中Glyphicons。简要介绍Glyphicons的实现原理与使用方式。<br>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/01/15/bootstrap/14:bootstrap源码之Glyphicons/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-    
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/01/15/leetcode/ZigZagConversion/" itemprop="url">
-                  ZigZag Conversion
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-01-15T15:12:35+08:00" content="2015-01-15">
-              2015-01-15
+            <time itemprop="dateCreated" datetime="2015-05-06T08:22:47+08:00" content="2015-05-06">
+              2015-05-06
             </time>
           </span>
 
@@ -1182,8 +1310,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2015/01/15/leetcode/ZigZagConversion/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/01/15/leetcode/ZigZagConversion/" itemprop="commentsCount"></span>
+                <a href="/2015/05/06/leetcode/MinStack/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/06/leetcode/MinStack/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -1207,12 +1335,9 @@
 
       
         
-          <h3 id="u9898_u76EE"><a href="#u9898_u76EE" class="headerlink" title="题目"></a>题目</h3><h4 id="Describe"><a href="#Describe" class="headerlink" title="Describe"></a>Describe</h4><p>The string “PAYPALISHIRING” is written in a zigzag pattern on a given number of rows like this: (you may want to display this pattern in a fixed font for better legibility)</p>
-<h4 id="example"><a href="#example" class="headerlink" title="example"></a>example</h4><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">P   A   <span class="keyword">H</span>   <span class="keyword">N</span></span><br><span class="line">A P <span class="keyword">L</span> S I I <span class="keyword">G</span></span><br><span class="line">Y   I   <span class="literal">R</span></span><br></pre></td></tr></table></figure>
-<p>And then read line by line: “PAHNAPLSIIGYIR”<br>Write the code that will take a string and make this conversion given a number of rows:</p>
-<p>string convert(string text, int nRows);<br>convert(“PAYPALISHIRING”, 3) should return “PAHNAPLSIIGYIR”.<br>
+          <h3 id="u9898_u76EE"><a href="#u9898_u76EE" class="headerlink" title="题目"></a>题目</h3><h4 id="Describe"><a href="#Describe" class="headerlink" title="Describe"></a>Describe</h4><p>Design a stack that supports push, pop, top, and retrieving the minimum element in constant time.<br>push(x) – Push element x onto stack.<br>pop() – Removes the element on top of the stack.<br>top() – Get the top element.<br>getMin() – Retrieve the minimum element in the stack.</p>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2015/01/15/leetcode/ZigZagConversion/#more" rel="contents">
+            <a class="btn" href="/2015/05/06/leetcode/MinStack/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1263,8 +1388,8 @@
             
               
                 
-                <a class="post-title-link" href="/2015/01/15/leetcode/TwoSum/" itemprop="url">
-                  Two Sum
+                <a class="post-title-link" href="/2015/05/05/leetcode/ValidPalindrome/" itemprop="url">
+                  Valid Palindrome
                 </a>
               
             
@@ -1277,8 +1402,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-01-15T10:14:27+08:00" content="2015-01-15">
-              2015-01-15
+            <time itemprop="dateCreated" datetime="2015-05-05T22:14:27+08:00" content="2015-05-05">
+              2015-05-05
             </time>
           </span>
 
@@ -1307,8 +1432,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2015/01/15/leetcode/TwoSum/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/01/15/leetcode/TwoSum/" itemprop="commentsCount"></span>
+                <a href="/2015/05/05/leetcode/ValidPalindrome/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/05/leetcode/ValidPalindrome/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -1332,10 +1457,11 @@
 
       
         
-          <h3 id="u9898_u76EE"><a href="#u9898_u76EE" class="headerlink" title="题目"></a>题目</h3><h4 id="Describe"><a href="#Describe" class="headerlink" title="Describe"></a>Describe</h4><p>Given an array of integers, return indices of the two numbers such that they add up to a specific target.You may assume that each input would have exactly one solution.</p>
-<h4 id="example"><a href="#example" class="headerlink" title="example"></a>example</h4><p>Given nums = [2, 7, 11, 15], target = 9,<br>Because nums[0] + nums[1] = 2 + 7 = 9,<br>return [0, 1].<br>
+          <h3 id="u9898_u76EE"><a href="#u9898_u76EE" class="headerlink" title="题目"></a>题目</h3><h4 id="Describe"><a href="#Describe" class="headerlink" title="Describe"></a>Describe</h4><p>Given a string, determine if it is a palindrome, considering only alphanumeric characters and ignoring cases.</p>
+<h4 id="example"><a href="#example" class="headerlink" title="example"></a>example</h4><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"A man, a plan, a canal: Panama"</span> is <span class="tag">a</span> palindrome.</span><br><span class="line"><span class="string">"race a car"</span> is not <span class="tag">a</span> palindrome.</span><br></pre></td></tr></table></figure>
+<h4 id="Note"><a href="#Note" class="headerlink" title="Note"></a>Note</h4><p>Have you consider that the string might be empty? This is a good question to ask during an interview.<br>For the purpose of this problem, we define empty string as valid palindrome.</p>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2015/01/15/leetcode/TwoSum/#more" rel="contents">
+            <a class="btn" href="/2015/05/05/leetcode/ValidPalindrome/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1386,8 +1512,8 @@
             
               
                 
-                <a class="post-title-link" href="/2015/01/14/bootstrap/13:bootstrap源码之ResponsiveUtilities/" itemprop="url">
-                  bootstrap源码之ResponsiveUtilities
+                <a class="post-title-link" href="/2015/05/05/leetcode/PascalsTriangleII/" itemprop="url">
+                  Pascal's Triangle II
                 </a>
               
             
@@ -1400,8 +1526,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-01-14T14:53:46+08:00" content="2015-01-14">
-              2015-01-14
+            <time itemprop="dateCreated" datetime="2015-05-05T15:37:28+08:00" content="2015-05-05">
+              2015-05-05
             </time>
           </span>
 
@@ -1414,8 +1540,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/bootstrap/" itemprop="url" rel="index">
-                    <span itemprop="name">bootstrap</span>
+                  <a href="/categories/leetcode/" itemprop="url" rel="index">
+                    <span itemprop="name">leetcode</span>
                   </a>
                 </span>
 
@@ -1430,8 +1556,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2015/01/14/bootstrap/13:bootstrap源码之ResponsiveUtilities/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/01/14/bootstrap/13:bootstrap源码之ResponsiveUtilities/" itemprop="commentsCount"></span>
+                <a href="/2015/05/05/leetcode/PascalsTriangleII/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/05/leetcode/PascalsTriangleII/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -1455,9 +1581,10 @@
 
       
         
-          <p>介绍了bootstrap中Responsive utilities。简单介绍有Available classes，Print classes。<br>
+          <h3 id="u9898_u76EE"><a href="#u9898_u76EE" class="headerlink" title="题目"></a>题目</h3><h4 id="Describe"><a href="#Describe" class="headerlink" title="Describe"></a>Describe</h4><p>Given an index k, return the kth row of the Pascal’s triangle.</p>
+<h4 id="example"><a href="#example" class="headerlink" title="example"></a>example</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">given k = <span class="number">3</span>,</span><br><span class="line">Return [<span class="number">1</span>,<span class="number">3</span>,<span class="number">3</span>,<span class="number">1</span>].</span><br></pre></td></tr></table></figure>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2015/01/14/bootstrap/13:bootstrap源码之ResponsiveUtilities/#more" rel="contents">
+            <a class="btn" href="/2015/05/05/leetcode/PascalsTriangleII/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1508,8 +1635,8 @@
             
               
                 
-                <a class="post-title-link" href="/2015/01/14/bootstrap/12:bootstrap源码之HelperClasses/" itemprop="url">
-                  bootstrap源码之HelperClasses
+                <a class="post-title-link" href="/2015/05/05/leetcode/BestTimeToBuyAndSellStock/" itemprop="url">
+                  Best Time to Buy and Sell Stock
                 </a>
               
             
@@ -1522,8 +1649,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-01-14T10:36:12+08:00" content="2015-01-14">
-              2015-01-14
+            <time itemprop="dateCreated" datetime="2015-05-05T15:37:28+08:00" content="2015-05-05">
+              2015-05-05
             </time>
           </span>
 
@@ -1536,8 +1663,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/bootstrap/" itemprop="url" rel="index">
-                    <span itemprop="name">bootstrap</span>
+                  <a href="/categories/leetcode/" itemprop="url" rel="index">
+                    <span itemprop="name">leetcode</span>
                   </a>
                 </span>
 
@@ -1552,8 +1679,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2015/01/14/bootstrap/12:bootstrap源码之HelperClasses/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/01/14/bootstrap/12:bootstrap源码之HelperClasses/" itemprop="commentsCount"></span>
+                <a href="/2015/05/05/leetcode/BestTimeToBuyAndSellStock/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/05/leetcode/BestTimeToBuyAndSellStock/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -1577,9 +1704,9 @@
 
       
         
-          <p>介绍了bootstrap中Helper Classes。简单介绍有关Contextual colors，Contextual backgrounds，Close icon，Carets，Quick floats，Center content blocks，Showing and hiding content，Screen reader and keyboard navigation content，Image replacement。<br>
+          <h3 id="u9898_u76EE"><a href="#u9898_u76EE" class="headerlink" title="题目"></a>题目</h3><h4 id="Describe"><a href="#Describe" class="headerlink" title="Describe"></a>Describe</h4><p>Say you have an array for which the ith element is the price of a given stock on day i.<br>If you were only permitted to complete at most one transaction (ie, buy one and sell one share of the stock), design an algorithm to find the maximum profit.</p>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2015/01/14/bootstrap/12:bootstrap源码之HelperClasses/#more" rel="contents">
+            <a class="btn" href="/2015/05/05/leetcode/BestTimeToBuyAndSellStock/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1630,8 +1757,8 @@
             
               
                 
-                <a class="post-title-link" href="/2015/01/12/bootstrap/10:bootstrap源码之Buttons/" itemprop="url">
-                  bootstrap源码之Buttons
+                <a class="post-title-link" href="/2015/05/05/leetcode/PascalsTriangle/" itemprop="url">
+                  Pascal's Triangle
                 </a>
               
             
@@ -1644,8 +1771,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-01-12T17:03:24+08:00" content="2015-01-12">
-              2015-01-12
+            <time itemprop="dateCreated" datetime="2015-05-05T14:58:06+08:00" content="2015-05-05">
+              2015-05-05
             </time>
           </span>
 
@@ -1658,8 +1785,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/bootstrap/" itemprop="url" rel="index">
-                    <span itemprop="name">bootstrap</span>
+                  <a href="/categories/leetcode/" itemprop="url" rel="index">
+                    <span itemprop="name">leetcode</span>
                   </a>
                 </span>
 
@@ -1674,8 +1801,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2015/01/12/bootstrap/10:bootstrap源码之Buttons/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/01/12/bootstrap/10:bootstrap源码之Buttons/" itemprop="commentsCount"></span>
+                <a href="/2015/05/05/leetcode/PascalsTriangle/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/05/leetcode/PascalsTriangle/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -1699,9 +1826,10 @@
 
       
         
-          <p>介绍了bootstrap中Buttons。简单介绍有关Button tags，Options，Sizes，Active state，Disabled state。<br>
+          <h3 id="u9898_u76EE"><a href="#u9898_u76EE" class="headerlink" title="题目"></a>题目</h3><h4 id="Describe"><a href="#Describe" class="headerlink" title="Describe"></a>Describe</h4><p>Given numRows, generate the first numRows of Pascal’s triangle.</p>
+<h4 id="example"><a href="#example" class="headerlink" title="example"></a>example</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">given numRows = <span class="number">5</span>,</span><br><span class="line">Return</span><br><span class="line"></span><br><span class="line">[</span><br><span class="line">     [<span class="number">1</span>],</span><br><span class="line">    [<span class="number">1</span>,<span class="number">1</span>],</span><br><span class="line">   [<span class="number">1</span>,<span class="number">2</span>,<span class="number">1</span>],</span><br><span class="line">  [<span class="number">1</span>,<span class="number">3</span>,<span class="number">3</span>,<span class="number">1</span>],</span><br><span class="line"> [<span class="number">1</span>,<span class="number">4</span>,<span class="number">6</span>,<span class="number">4</span>,<span class="number">1</span>]</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2015/01/12/bootstrap/10:bootstrap源码之Buttons/#more" rel="contents">
+            <a class="btn" href="/2015/05/05/leetcode/PascalsTriangle/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1752,8 +1880,8 @@
             
               
                 
-                <a class="post-title-link" href="/2015/01/12/bootstrap/9:bootstrap源码之Forms/" itemprop="url">
-                  bootstrap源码之Forms
+                <a class="post-title-link" href="/2015/05/05/leetcode/PathSum/" itemprop="url">
+                  Path Sum
                 </a>
               
             
@@ -1766,8 +1894,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-01-12T09:24:11+08:00" content="2015-01-12">
-              2015-01-12
+            <time itemprop="dateCreated" datetime="2015-05-05T10:16:28+08:00" content="2015-05-05">
+              2015-05-05
             </time>
           </span>
 
@@ -1780,8 +1908,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/bootstrap/" itemprop="url" rel="index">
-                    <span itemprop="name">bootstrap</span>
+                  <a href="/categories/leetcode/" itemprop="url" rel="index">
+                    <span itemprop="name">leetcode</span>
                   </a>
                 </span>
 
@@ -1796,8 +1924,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2015/01/12/bootstrap/9:bootstrap源码之Forms/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/01/12/bootstrap/9:bootstrap源码之Forms/" itemprop="commentsCount"></span>
+                <a href="/2015/05/05/leetcode/PathSum/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/05/leetcode/PathSum/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -1821,9 +1949,10 @@
 
       
         
-          <p>介绍了bootstrap中Form。简单介绍有关表单的样式。包含了Basic example，Inline form，Horizontal form，Supported controls，Static control，Disabled state，Readonly state，Help text，Validation states，Control sizing。<br>
+          <h3 id="u9898_u76EE"><a href="#u9898_u76EE" class="headerlink" title="题目"></a>题目</h3><h4 id="Describe"><a href="#Describe" class="headerlink" title="Describe"></a>Describe</h4><p>Given a binary tree and a sum, determine if the tree has a root-to-leaf path such that adding up all the values along the path equals the given sum.</p>
+<h4 id="example"><a href="#example" class="headerlink" title="example"></a>example</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Given the below binary tree and sum = <span class="number">22</span>,</span><br><span class="line">              <span class="number">5</span></span><br><span class="line">             / \</span><br><span class="line">            <span class="number">4</span>   <span class="number">8</span></span><br><span class="line">           /   / \</span><br><span class="line">          <span class="number">11</span>  <span class="number">13</span>  <span class="number">4</span></span><br><span class="line">         /  \      \</span><br><span class="line">        <span class="number">7</span>    <span class="number">2</span>      <span class="number">1</span></span><br><span class="line"><span class="keyword">return</span> <span class="literal">true</span>, as there exist a root-to-leaf path <span class="number">5</span>-&gt;<span class="number">4</span>-&gt;<span class="number">11</span>-&gt;<span class="number">2</span> which sum is <span class="number">22.</span></span><br></pre></td></tr></table></figure>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2015/01/12/bootstrap/9:bootstrap源码之Forms/#more" rel="contents">
+            <a class="btn" href="/2015/05/05/leetcode/PathSum/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1874,8 +2003,8 @@
             
               
                 
-                <a class="post-title-link" href="/2015/01/11/bootstrap/8:bootstrap源码之Tables/" itemprop="url">
-                  bootstrap源码之Tables
+                <a class="post-title-link" href="/2015/05/05/leetcode/MinimumDepthOfBinaryTree/" itemprop="url">
+                  Minimum Depth of Binary Tree
                 </a>
               
             
@@ -1888,8 +2017,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-01-11T17:14:31+08:00" content="2015-01-11">
-              2015-01-11
+            <time itemprop="dateCreated" datetime="2015-05-05T08:36:27+08:00" content="2015-05-05">
+              2015-05-05
             </time>
           </span>
 
@@ -1902,8 +2031,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/bootstrap/" itemprop="url" rel="index">
-                    <span itemprop="name">bootstrap</span>
+                  <a href="/categories/leetcode/" itemprop="url" rel="index">
+                    <span itemprop="name">leetcode</span>
                   </a>
                 </span>
 
@@ -1918,8 +2047,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2015/01/11/bootstrap/8:bootstrap源码之Tables/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/01/11/bootstrap/8:bootstrap源码之Tables/" itemprop="commentsCount"></span>
+                <a href="/2015/05/05/leetcode/MinimumDepthOfBinaryTree/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/05/leetcode/MinimumDepthOfBinaryTree/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -1943,741 +2072,9 @@
 
       
         
-          <p>介绍了bootstrap中Table。简单介绍其中各个类样式对table的作用。包含了Basic example，Striped rows，Bordered table，Hover rows，Condensed table，Contextual classes。<br>
+          <h3 id="u9898_u76EE"><a href="#u9898_u76EE" class="headerlink" title="题目"></a>题目</h3><h4 id="Describe"><a href="#Describe" class="headerlink" title="Describe"></a>Describe</h4><p>Given a binary tree, find its minimum depth.<br>The minimum depth is the number of nodes along the shortest path from the root node down to the nearest leaf node.</p>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2015/01/11/bootstrap/8:bootstrap源码之Tables/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-    
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/01/11/bootstrap/7:bootstrap源码之Typography-Lists/" itemprop="url">
-                  bootstrap源码之Typography-Lists
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-01-11T15:20:47+08:00" content="2015-01-11">
-              2015-01-11
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/bootstrap/" itemprop="url" rel="index">
-                    <span itemprop="name">bootstrap</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/01/11/bootstrap/7:bootstrap源码之Typography-Lists/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/01/11/bootstrap/7:bootstrap源码之Typography-Lists/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>介绍了bootstrap中Typography-Lists。包括了Unordered，Ordered，Unstyled，lnline，Description。<br>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/01/11/bootstrap/7:bootstrap源码之Typography-Lists/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-    
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/01/11/bootstrap/6:bootstrap源码之Typography-文本对齐、大小写转换、缩略词、地址、引用/" itemprop="url">
-                  bootstrap源码之Typography-文本对齐、大小写转换、缩略词、地址、引用
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-01-11T15:07:52+08:00" content="2015-01-11">
-              2015-01-11
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/bootstrap/" itemprop="url" rel="index">
-                    <span itemprop="name">bootstrap</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/01/11/bootstrap/6:bootstrap源码之Typography-文本对齐、大小写转换、缩略词、地址、引用/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/01/11/bootstrap/6:bootstrap源码之Typography-文本对齐、大小写转换、缩略词、地址、引用/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>介绍了bootstrap中Typography-Alignment classes，Transformation classes，Abbreviations，Addresses，Blockquotes。<br>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/01/11/bootstrap/6:bootstrap源码之Typography-文本对齐、大小写转换、缩略词、地址、引用/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-    
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/01/11/bootstrap/5:bootstrap源码之Typography-InlineTextElements/" itemprop="url">
-                  bootstrap源码之Typography-InlineTextElements
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-01-11T14:42:12+08:00" content="2015-01-11">
-              2015-01-11
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/bootstrap/" itemprop="url" rel="index">
-                    <span itemprop="name">bootstrap</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/01/11/bootstrap/5:bootstrap源码之Typography-InlineTextElements/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/01/11/bootstrap/5:bootstrap源码之Typography-InlineTextElements/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>介绍了bootstrap中Typography-Inline text elements中如small,mark,strong标签元素。<br>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/01/11/bootstrap/5:bootstrap源码之Typography-InlineTextElements/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-    
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/01/11/bootstrap/4:bootstrap源码之Typography-Bodycopy-lead/" itemprop="url">
-                  bootstrap源码之Typography-Bodycopy-lead
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-01-11T14:29:21+08:00" content="2015-01-11">
-              2015-01-11
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/bootstrap/" itemprop="url" rel="index">
-                    <span itemprop="name">bootstrap</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/01/11/bootstrap/4:bootstrap源码之Typography-Bodycopy-lead/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/01/11/bootstrap/4:bootstrap源码之Typography-Bodycopy-lead/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>介绍了bootstrap中Typography-Bodycopy的lead类。<br>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/01/11/bootstrap/4:bootstrap源码之Typography-Bodycopy-lead/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-    
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/01/11/bootstrap/3:bootstrap源码之Typography-Headings/" itemprop="url">
-                  bootstrap源码之Typography-Headings
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-01-11T11:19:21+08:00" content="2015-01-11">
-              2015-01-11
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/bootstrap/" itemprop="url" rel="index">
-                    <span itemprop="name">bootstrap</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/01/11/bootstrap/3:bootstrap源码之Typography-Headings/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/01/11/bootstrap/3:bootstrap源码之Typography-Headings/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>介绍了bootstrap中Typography-Headings。其实就是平常的h*。<br>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/01/11/bootstrap/3:bootstrap源码之Typography-Headings/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-    
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/01/10/bootstrap/2:bootstrap源码之GridSystem与响应式布局/" itemprop="url">
-                  bootstrap源码之Grid system与响应式布局
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-01-10T20:22:21+08:00" content="2015-01-10">
-              2015-01-10
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/bootstrap/" itemprop="url" rel="index">
-                    <span itemprop="name">bootstrap</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/01/10/bootstrap/2:bootstrap源码之GridSystem与响应式布局/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/01/10/bootstrap/2:bootstrap源码之GridSystem与响应式布局/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>介绍了bootstrap中关于Grid system的内容。包括了container,row,col的一些定义与讲解。<br>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/01/10/bootstrap/2:bootstrap源码之GridSystem与响应式布局/#more" rel="contents">
+            <a class="btn" href="/2015/05/05/leetcode/MinimumDepthOfBinaryTree/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -2711,7 +2108,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/5/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/7/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/5/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><a class="extend next" rel="next" href="/page/7/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -2752,7 +2149,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">129</span>
+              <span class="site-state-item-count">142</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
