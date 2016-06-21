@@ -1,0 +1,726 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="java," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Quick notes" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="java中的流分两种：一种是继承于InputStream, OutputStream抽象类，其中让子类实现的read(), write(int b)都是只读或只写一个字节（0~255）；另一种是继承Reader, Writer抽象类，其中让子类实现的read(char cbuf[], int off, int len), void write(char cbuf[], int off, int l">
+<meta property="og:type" content="article">
+<meta property="og:title" content="java中的流">
+<meta property="og:url" content="http://jinpingwang.github.io/2014/01/30/java/java中的流/index.html">
+<meta property="og:site_name" content="Quick notes">
+<meta property="og:description" content="java中的流分两种：一种是继承于InputStream, OutputStream抽象类，其中让子类实现的read(), write(int b)都是只读或只写一个字节（0~255）；另一种是继承Reader, Writer抽象类，其中让子类实现的read(char cbuf[], int off, int len), void write(char cbuf[], int off, int l">
+<meta property="og:image" content="http://img.my.csdn.net/uploads/201208/31/1346384658_6859.jpg">
+<meta property="og:image" content="http://7xrn7f.com1.z0.glb.clouddn.com/16-6-15/69587913.jpg">
+<meta property="og:image" content="http://7xrn7f.com1.z0.glb.clouddn.com/16-6-16/25347289.jpg">
+<meta property="og:updated_time" content="2016-06-21T13:50:14.951Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="java中的流">
+<meta name="twitter:description" content="java中的流分两种：一种是继承于InputStream, OutputStream抽象类，其中让子类实现的read(), write(int b)都是只读或只写一个字节（0~255）；另一种是继承Reader, Writer抽象类，其中让子类实现的read(char cbuf[], int off, int len), void write(char cbuf[], int off, int l">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> java中的流 | Quick notes </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Quick notes</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">等风来</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-th fa-fw"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-user fa-fw"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="st-search-show-outputs">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'Aq7px34mBsH6UhwK43yW','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                java中的流
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2014-01-30T20:06:39+08:00" content="2014-01-30">
+              2014-01-30
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2014/01/30/java/java中的流/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/01/30/java/java中的流/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>java中的流分两种：一种是继承于InputStream, OutputStream抽象类，其中让子类实现的read(), write(int b)都是只读或只写一个字节（0~255）；另一种是继承Reader, Writer抽象类，其中让子类实现的read(char cbuf[], int off, int len), void write(char cbuf[], int off, int len)只读或只写一个字符（java中的一个字符包含两个字节）。这两种流使用时不应该交叉使用，即用OutputStream写，就不提倡使用Reader读，使用Writer写，就不提倡使用InputStream读，因为有可能会出错。此外，InputStream, OutputStream, Reader, Writer等都实现了Closeable接口，所以jdk1.7后的版本都可以使用带资源的try块语句。<br><a id="more"></a></p>
+<h3 id="InputStream_u4E0EOutputStream_u62BD_u8C61_u7C7B"><a href="#InputStream_u4E0EOutputStream_u62BD_u8C61_u7C7B" class="headerlink" title="InputStream与OutputStream抽象类"></a>InputStream与OutputStream抽象类</h3><h4 id="u8F93_u5165_u6D41_u4E0E_u8F93_u51FA_u6D41_u7684_u5C42_u6B21_u7ED3_u6784"><a href="#u8F93_u5165_u6D41_u4E0E_u8F93_u51FA_u6D41_u7684_u5C42_u6B21_u7ED3_u6784" class="headerlink" title="输入流与输出流的层次结构"></a>输入流与输出流的层次结构</h4><p><img src="http://img.my.csdn.net/uploads/201208/31/1346384658_6859.jpg" alt=""></p>
+<h4 id="FilterInputStream"><a href="#FilterInputStream" class="headerlink" title="FilterInputStream"></a>FilterInputStream</h4><p>有多个类继承FilterInputStream类，比如DataInputStream, BufferedInputStream等。可以通过嵌套这些过滤器来添加多重功能。比如流在默认情况下是不被缓冲区缓存的，即每个对read的调用都会请求操作系统再分发一个字节，所以相比之下，请求一个数据块并将其置于缓冲区中会显得更加高效。<br><figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">DataInputStream dataIn = new DataInputStream<span class="list">(</span><br><span class="line">        <span class="keyword">new</span> BufferedInputStream<span class="list">(</span><br><span class="line">                <span class="keyword">new</span> FileInputStream<span class="list">(<span class="string">"text.txt"</span>)</span></span><br><span class="line">            )</span></span><br><span class="line">    )</span><span class="comment">;</span></span><br></pre></td></tr></table></figure></p>
+<h4 id="FileInputStream_u4E0EFileOutputStream"><a href="#FileInputStream_u4E0EFileOutputStream" class="headerlink" title="FileInputStream与FileOutputStream"></a>FileInputStream与FileOutputStream</h4><h4 id="ByteArrayInputStream_u4E0EByteArrayOutputStream"><a href="#ByteArrayInputStream_u4E0EByteArrayOutputStream" class="headerlink" title="ByteArrayInputStream与ByteArrayOutputStream"></a>ByteArrayInputStream与ByteArrayOutputStream</h4><h4 id="ObjectInputStream_u4E0EObjectOutputStream"><a href="#ObjectInputStream_u4E0EObjectOutputStream" class="headerlink" title="ObjectInputStream与ObjectOutputStream"></a>ObjectInputStream与ObjectOutputStream</h4><h5 id="u89E3_u6790"><a href="#u89E3_u6790" class="headerlink" title="解析"></a>解析</h5><p>对于希望在对象流中存储或恢复的所有类实现Serializable接口（一个标识接口）。</p>
+<h5 id="u6E90_u7801"><a href="#u6E90_u7801" class="headerlink" title="源码"></a>源码</h5><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//序列化输出</span></span><br><span class="line"><span class="built_in">List</span>&lt;<span class="built_in">String</span>&gt; listWrite = <span class="keyword">new</span> ArrayList&lt;<span class="built_in">String</span>&gt;();</span><br><span class="line">listWrite.add(<span class="string">"我是中国人"</span>);</span><br><span class="line">listWrite.add(<span class="string">"我爱我的祖国"</span>);</span><br><span class="line"><span class="keyword">try</span>(ObjectOutputStream out = <span class="keyword">new</span> ObjectOutputStream(<span class="keyword">new</span> FileOutputStream(<span class="string">"D:/text1.txt"</span>));)&#123;</span><br><span class="line">	out.writeObject(listWrite);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">catch</span>(Exception e)&#123;</span><br><span class="line">	System.out.println(e.getMessage());</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//反序列</span></span><br><span class="line"><span class="keyword">try</span>(ObjectInputStream <span class="keyword">in</span> = <span class="keyword">new</span> ObjectInputStream(<span class="keyword">new</span> FileInputStream(<span class="string">"D:/text1.txt"</span>));)&#123;</span><br><span class="line">	<span class="built_in">List</span>&lt;<span class="built_in">String</span>&gt; listRead;</span><br><span class="line">	listRead = (<span class="built_in">List</span>&lt;<span class="built_in">String</span>&gt;)<span class="keyword">in</span>.readObject();</span><br><span class="line">	<span class="keyword">for</span>(<span class="built_in">String</span> s : listRead)&#123;</span><br><span class="line">		System.out.println(s);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">catch</span>(Exception e)&#123;</span><br><span class="line">	System.out.println(e.getMessage());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="PipedInputStream_u4E0EPipedOutputStream"><a href="#PipedInputStream_u4E0EPipedOutputStream" class="headerlink" title="PipedInputStream与PipedOutputStream"></a>PipedInputStream与PipedOutputStream</h4><h5 id="u89E3_u6790-1"><a href="#u89E3_u6790-1" class="headerlink" title="解析"></a>解析</h5><p>利用管理可以方便的实现java金线程间的通信。代码中开启了两个线程t1与t2。其中t1定时的往管道中存放数据，t2定时的从管道中读取数据。</p>
+<h5 id="u6E90_u7801-1"><a href="#u6E90_u7801-1" class="headerlink" title="源码"></a>源码</h5><figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line">package test;</span><br><span class="line"></span><br><span class="line">import java.io.IOException;</span><br><span class="line">import java.io.PipedInputStream;</span><br><span class="line">import java.io.PipedOutputStream;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Test04</span> &#123;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span>(<span class="params">String[] args</span>) throws IOException, InterruptedException </span>&#123;</span><br><span class="line">                <span class="comment">// TODO Auto-generated method stub</span></span><br><span class="line">                PipedOutputStream <span class="keyword">out</span> = <span class="keyword">new</span> PipedOutputStream();</span><br><span class="line">                PipedInputStream <span class="keyword">in</span> = <span class="keyword">new</span> PipedInputStream();</span><br><span class="line">                <span class="keyword">out</span>.connect(<span class="keyword">in</span>);</span><br><span class="line">                <span class="comment">//下面这一个也可以，只要是一配一即可</span></span><br><span class="line">                <span class="comment">//in.connect(out);</span></span><br><span class="line">                </span><br><span class="line">                Test041 t041 = <span class="keyword">new</span> Test041(<span class="keyword">out</span>);</span><br><span class="line">                Thread t1 = <span class="keyword">new</span> Thread(t041);</span><br><span class="line">                t1.start();</span><br><span class="line">                </span><br><span class="line">                Test042 t042 = <span class="keyword">new</span> Test042(<span class="keyword">in</span>);</span><br><span class="line">                Thread t2 = <span class="keyword">new</span> Thread(t042);</span><br><span class="line">                t2.start();</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title">Test041</span> <span class="title">implements</span> <span class="title">Runnable</span>&#123;</span><br><span class="line">        <span class="keyword">private</span> PipedOutputStream <span class="keyword">out</span>;</span><br><span class="line">        </span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">Test041</span>(<span class="params">PipedOutputStream <span class="keyword">out</span></span>)</span>&#123;</span><br><span class="line">                <span class="keyword">this</span>.<span class="keyword">out</span> = <span class="keyword">out</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">                <span class="keyword">while</span>(<span class="keyword">true</span>)&#123;</span><br><span class="line">                        <span class="keyword">try</span> &#123;</span><br><span class="line">                                <span class="keyword">out</span>.write(<span class="number">67</span>);</span><br><span class="line">                        &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">                                <span class="comment">// TODO Auto-generated catch block</span></span><br><span class="line">                                e.printStackTrace();</span><br><span class="line">                        &#125;</span><br><span class="line">                        <span class="keyword">try</span> &#123;</span><br><span class="line">                                Thread.sleep(<span class="number">1000</span>);</span><br><span class="line">                        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                                <span class="comment">// TODO Auto-generated catch block</span></span><br><span class="line">                                e.printStackTrace();</span><br><span class="line">                        &#125;</span><br><span class="line">                &#125;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title">Test042</span> <span class="title">implements</span> <span class="title">Runnable</span>&#123;</span><br><span class="line">        <span class="keyword">private</span> PipedInputStream <span class="keyword">in</span>;</span><br><span class="line">        </span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">Test042</span>(<span class="params">PipedInputStream <span class="keyword">in</span></span>)</span>&#123;</span><br><span class="line">                <span class="keyword">this</span>.<span class="keyword">in</span> = <span class="keyword">in</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">                <span class="keyword">while</span>(<span class="keyword">true</span>)&#123;</span><br><span class="line">                        <span class="keyword">try</span> &#123;</span><br><span class="line">                                System.<span class="keyword">out</span>.println(<span class="keyword">in</span>.read());</span><br><span class="line">                        &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">                                <span class="comment">// TODO Auto-generated catch block</span></span><br><span class="line">                                e.printStackTrace();</span><br><span class="line">                        &#125;</span><br><span class="line">                        <span class="keyword">try</span> &#123;</span><br><span class="line">                                Thread.sleep(<span class="number">1000</span>);</span><br><span class="line">                        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                                <span class="comment">// TODO Auto-generated catch block</span></span><br><span class="line">                                e.printStackTrace();</span><br><span class="line">                        &#125;</span><br><span class="line">                &#125;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="BufferedInputStream_u4E0EBufferedOutputStream"><a href="#BufferedInputStream_u4E0EBufferedOutputStream" class="headerlink" title="BufferedInputStream与BufferedOutputStream"></a>BufferedInputStream与BufferedOutputStream</h4><figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line"> * 假如原先text.txt中的内容为12345</span><br><span class="line"> * 在读入1时，打开text.txt，并在1与2之间添加1并保存</span><br><span class="line"> * 则下一个输出是为2而不是1</span><br><span class="line"> * 如果没有BufferedInputStream则输出的是刚添加的1</span><br><span class="line"> */</span></span><br><span class="line"><span class="keyword">try</span>(InputStream <span class="keyword">in</span> = <span class="keyword">new</span> BufferedInputStream(<span class="keyword">new</span> FileInputStream(<span class="string">"D:/text.txt"</span>));)&#123;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> loop=<span class="number">0</span>; loop&lt;<span class="number">5</span>; loop++)&#123;</span><br><span class="line">		System.<span class="keyword">out</span>.println(<span class="keyword">in</span>.read());</span><br><span class="line">		Thread.sleep(<span class="number">5000</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">in</span>.close();</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">catch</span>(Exception e)&#123;</span><br><span class="line">	System.<span class="keyword">out</span>.println(e.getMessage());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Reader_u4E0EWriter_u62BD_u8C61_u7C7B"><a href="#Reader_u4E0EWriter_u62BD_u8C61_u7C7B" class="headerlink" title="Reader与Writer抽象类"></a>Reader与Writer抽象类</h3><h4 id="Reader_u4E0EWriter_u7684_u5C42_u6B21_u7ED3_u6784"><a href="#Reader_u4E0EWriter_u7684_u5C42_u6B21_u7ED3_u6784" class="headerlink" title="Reader与Writer的层次结构"></a>Reader与Writer的层次结构</h4><p><img src="http://7xrn7f.com1.z0.glb.clouddn.com/16-6-15/69587913.jpg" alt=""></p>
+<h4 id="InputStreamReader_u4E0EOutputStreamReader"><a href="#InputStreamReader_u4E0EOutputStreamReader" class="headerlink" title="InputStreamReader与OutputStreamReader"></a>InputStreamReader与OutputStreamReader</h4><h5 id="InputStreamReader"><a href="#InputStreamReader" class="headerlink" title="InputStreamReader"></a>InputStreamReader</h5><p>InputStreamReader类可以将包含字节（用某种字符编码方式表示的字符）的输入流转换为可以产生Unicode码元的读入器。<br><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">InputStreamReader <span class="keyword">in</span> = <span class="keyword">new</span> InputStreamReader(<span class="keyword">new</span> FileInputStream(<span class="string">"text.txt"</span>), <span class="string">"ISO8859_5"</span>);</span><br></pre></td></tr></table></figure></p>
+<h5 id="OutputStreamReader"><a href="#OutputStreamReader" class="headerlink" title="OutputStreamReader"></a>OutputStreamReader</h5><p>OutputStreamReader类可以使用选定的字符编码方式，把Unicode字符流转换为字节流。</p>
+<h4 id="BufferedReader"><a href="#BufferedReader" class="headerlink" title="BufferedReader"></a>BufferedReader</h4><p>可以讲入文本（默认编码为UTF-8）<br><figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">try<span class="list">(<span class="keyword">BufferedReader</span> br = new BufferedReader<span class="list">(<span class="keyword">new</span> FileReader<span class="list">(<span class="string">"D:/text1.txt"</span>)</span>)</span><span class="comment">;)&#123;</span></span><br><span class="line">	System.out.println<span class="list">(<span class="keyword">br</span>.readLine<span class="list">()</span>)</span><span class="comment">;</span></span><br><span class="line">&#125;</span><br><span class="line">catch<span class="list">(<span class="keyword">Exception</span> e)</span>&#123;</span><br><span class="line">	System.out.println<span class="list">(<span class="keyword">e</span>.getMessage<span class="list">()</span>)</span><span class="comment">;</span></span><br><span class="line">&#125;</span></span><br></pre></td></tr></table></figure></p>
+<p>以特定的编码读入文本<br><figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">try<span class="list">(<span class="keyword">BufferedReader</span> br = new BufferedReader<span class="list">(<span class="keyword">new</span> InputStreamReader<span class="list">(<span class="keyword">new</span> FileInputStream<span class="list">(<span class="string">"D:/text1.txt"</span>)</span>, <span class="string">"GBK"</span>)</span>)</span><span class="comment">;)&#123;</span></span><br><span class="line">	System.out.println<span class="list">(<span class="keyword">br</span>.readLine<span class="list">()</span>)</span><span class="comment">;</span></span><br><span class="line">&#125;</span><br><span class="line">catch<span class="list">(<span class="keyword">Exception</span> e)</span>&#123;</span><br><span class="line">	System.out.println<span class="list">(<span class="keyword">e</span>.getMessage<span class="list">()</span>)</span><span class="comment">;</span></span><br><span class="line">&#125;</span></span><br></pre></td></tr></table></figure></p>
+<h4 id="PrintWriter"><a href="#PrintWriter" class="headerlink" title="PrintWriter"></a>PrintWriter</h4><p>可以输出文本(默认编码为UTF-8)<br><figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">try<span class="list">(<span class="keyword">PrintWriter</span> out = new PrintWriter<span class="list">(<span class="keyword">new</span> FileWriter<span class="list">(<span class="string">"D:/text1.txt"</span>)</span>)</span><span class="comment">;)&#123;</span></span><br><span class="line">	out.write<span class="list">(<span class="string">"我是中国人，我爱我的祖国"</span>)</span><span class="comment">;</span></span><br><span class="line">&#125;</span><br><span class="line">catch<span class="list">(<span class="keyword">Exception</span> e)</span>&#123;</span><br><span class="line">	System.out.println<span class="list">(<span class="keyword">e</span>.getMessage<span class="list">()</span>)</span><span class="comment">;</span></span><br><span class="line">&#125;</span></span><br></pre></td></tr></table></figure></p>
+<p>以特定的编码输出文本<br><figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">try<span class="list">(<span class="keyword">PrintWriter</span> out = new PrintWriter<span class="list">(<span class="keyword">new</span> OutputStreamWriter<span class="list">(<span class="keyword">new</span> FileOutputStream<span class="list">(<span class="string">"D:/text1.txt"</span>)</span>, <span class="string">"GBK"</span>)</span>)</span><span class="comment">;)&#123;</span></span><br><span class="line">	out.write<span class="list">(<span class="string">"我是中国人，我爱我的祖国"</span>)</span><span class="comment">;</span></span><br><span class="line">&#125;</span><br><span class="line">catch<span class="list">(<span class="keyword">Exception</span> e)</span>&#123;</span><br><span class="line">	System.out.println<span class="list">(<span class="keyword">e</span>.getMessage<span class="list">()</span>)</span><span class="comment">;</span></span><br><span class="line">&#125;</span></span><br></pre></td></tr></table></figure></p>
+<h4 id="FileReader_u4E0EFileWriter"><a href="#FileReader_u4E0EFileWriter" class="headerlink" title="FileReader与FileWriter"></a>FileReader与FileWriter</h4><h3 id="DataInput_u4E0EDataOutput"><a href="#DataInput_u4E0EDataOutput" class="headerlink" title="DataInput与DataOutput"></a>DataInput与DataOutput</h3><p>DataInput, DataOutput两个接口用于表示读写二进制数据。</p>
+<h4 id="DataInput"><a href="#DataInput" class="headerlink" title="DataInput"></a>DataInput</h4><figure class="highlight ceylon"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//读取一个整形。</span></span><br><span class="line"><span class="keyword">try</span>&#123;</span><br><span class="line">	DataInput <span class="keyword">in</span> = <span class="keyword">new</span> DataInputStream(<span class="keyword">new</span> FileInputStream(<span class="string">"D:/text1.txt"</span>));</span><br><span class="line">	System.<span class="keyword">out</span>.println(<span class="keyword">in</span>.readInt());</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">catch</span>(Exception e)&#123;</span><br><span class="line">	System.<span class="keyword">out</span>.println(e.getMessage());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="DataOutput"><a href="#DataOutput" class="headerlink" title="DataOutput"></a>DataOutput</h4><figure class="highlight ceylon"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span>&#123;</span><br><span class="line">	DataOutput <span class="keyword">out</span> = <span class="keyword">new</span> DataOutputStream(<span class="keyword">new</span> FileOutputStream(<span class="string">"D:/text1.txt"</span>));</span><br><span class="line">	<span class="keyword">out</span>.writeInt(<span class="number">1</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">catch</span>(Exception e)&#123;</span><br><span class="line">	System.<span class="keyword">out</span>.println(e.getMessage());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>以int输出一个整数。因为整数占四个字节，文件大小为四字节，另外因为存储的是1，所以以HX显示为：00 00 00 01<br><img src="http://7xrn7f.com1.z0.glb.clouddn.com/16-6-16/25347289.jpg" alt=""></p>
+<h3 id="ZipInputStream_u4E0EZipOutputStream"><a href="#ZipInputStream_u4E0EZipOutputStream" class="headerlink" title="ZipInputStream与ZipOutputStream"></a>ZipInputStream与ZipOutputStream</h3><h4 id="ZipInputStream"><a href="#ZipInputStream" class="headerlink" title="ZipInputStream"></a>ZipInputStream</h4><figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">try<span class="list">(<span class="keyword">ZipInputStream</span> zin = new ZipInputStream<span class="list">(<span class="keyword">new</span> FileInputStream<span class="list">(<span class="string">"D:/text.zip"</span>)</span>)</span><span class="comment">;)&#123;</span></span><br><span class="line">	ZipEntry entry<span class="comment">;</span></span><br><span class="line">	while<span class="list">(<span class="list">(<span class="keyword">entry</span> = zin.getNextEntry<span class="list">()</span>)</span> != null)</span>&#123;</span><br><span class="line">	    //读入这个文件相关的信息</span><br><span class="line">		System.out.print<span class="list">(<span class="string">"文件名："</span>+entry.getName<span class="list">()</span>+<span class="string">"\t"</span>+<span class="string">"创建时间："</span>+entry.getTime<span class="list">()</span>+<span class="string">"\t"</span>)</span><span class="comment">;</span></span><br><span class="line">		//讲入文件的内容，为测试方便此处只读取一行</span><br><span class="line">		BufferedReader reader = new BufferedReader<span class="list">(<span class="keyword">new</span> InputStreamReader<span class="list">(<span class="keyword">zin</span>)</span>)</span><span class="comment">;</span></span><br><span class="line">		System.out.println<span class="list">(<span class="string">"文件内容："</span>+reader.readLine<span class="list">()</span>)</span><span class="comment">;</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">catch<span class="list">(<span class="keyword">Exception</span> e)</span>&#123;</span><br><span class="line">	System.out.println<span class="list">(<span class="keyword">e</span>.getMessage<span class="list">()</span>)</span><span class="comment">;</span></span><br><span class="line">&#125;</span></span><br></pre></td></tr></table></figure>
+<h4 id="ZipOutputStream"><a href="#ZipOutputStream" class="headerlink" title="ZipOutputStream"></a>ZipOutputStream</h4><figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">try<span class="list">(<span class="keyword">ZipOutputStream</span> zout = new ZipOutputStream<span class="list">(<span class="keyword">new</span> FileOutputStream<span class="list">(<span class="string">"D:/text.zip"</span>)</span>)</span><span class="comment">;)&#123;			</span></span><br><span class="line">	</span><br><span class="line">	//添加第一个文件，自己定义文件名</span><br><span class="line">	ZipEntry ze1 = new ZipEntry<span class="list">(<span class="string">"D:/text1.txt"</span>)</span><span class="comment">;</span></span><br><span class="line">	zout.putNextEntry<span class="list">(<span class="keyword">ze1</span>)</span><span class="comment">;</span></span><br><span class="line">	//使用PrintWriter输出文本到第一个文件</span><br><span class="line">	PrintWriter out = new PrintWriter<span class="list">(<span class="keyword">new</span> OutputStreamWriter<span class="list">(<span class="keyword">zout</span>)</span>)</span><span class="comment">;</span></span><br><span class="line">	out.write<span class="list">(<span class="string">"我是中国人"</span>)</span><span class="comment">;</span></span><br><span class="line">	//记得使用flush将内容输出，否则会为空</span><br><span class="line">	out.flush<span class="list">()</span><span class="comment">;</span></span><br><span class="line">	zout.closeEntry<span class="list">()</span><span class="comment">;</span></span><br><span class="line">	</span><br><span class="line">	//添加第二个文件</span><br><span class="line">	ZipEntry ze2 = new ZipEntry<span class="list">(<span class="string">"D:/text2.txt"</span>)</span><span class="comment">;</span></span><br><span class="line">	zout.putNextEntry<span class="list">(<span class="keyword">ze2</span>)</span><span class="comment">;</span></span><br><span class="line">	//将内容输出到第二个文件</span><br><span class="line">	out.write<span class="list">(<span class="string">"我爱我的祖国"</span>)</span><span class="comment">;</span></span><br><span class="line">	out.flush<span class="list">()</span><span class="comment">;</span></span><br><span class="line">	zout.closeEntry<span class="list">()</span><span class="comment">;</span></span><br><span class="line">	</span><br><span class="line">	out.close<span class="list">()</span><span class="comment">;</span></span><br><span class="line">	zout.close<span class="list">()</span><span class="comment">;</span></span><br><span class="line">&#125;</span><br><span class="line">catch<span class="list">(<span class="keyword">Exception</span> e)</span>&#123;</span><br><span class="line">	System.out.println<span class="list">(<span class="keyword">e</span>.getMessage<span class="list">()</span>)</span><span class="comment">;</span></span><br><span class="line">&#125;</span></span><br></pre></td></tr></table></figure>
+<h3 id="JarInputStream_u4E0EJarOutputStream"><a href="#JarInputStream_u4E0EJarOutputStream" class="headerlink" title="JarInputStream与JarOutputStream"></a>JarInputStream与JarOutputStream</h3><p>同ZipInputStream与ZipOutputStream</p>
+
+      
+    </div>
+    
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/java/" rel="tag">#java</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2014/01/30/java/java中的文件/" rel="prev" title="java中的文件">
+                java中的文件 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2014/01/30/java/java中的流/"
+           data-title="java中的流" data-url="http://jinpingwang.github.io/2014/01/30/java/java中的流/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/headImage.jpg"
+               alt="等风来" />
+          <p class="site-author-name" itemprop="name">等风来</p>
+          <p class="site-description motion-element" itemprop="description">Waiting for wind</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">150</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">31</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/jinpingwang" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/@349268138Jin" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/1848729614" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.zhihu.com/people/wang-jin-ping-1-68" target="_blank" title="Zhihu">
+                  
+                    <i class="fa fa-globe"></i>
+                  
+                  Zhihu
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#InputStream_u4E0EOutputStream_u62BD_u8C61_u7C7B"><span class="nav-number">1.</span> <span class="nav-text">InputStream与OutputStream抽象类</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#u8F93_u5165_u6D41_u4E0E_u8F93_u51FA_u6D41_u7684_u5C42_u6B21_u7ED3_u6784"><span class="nav-number">1.1.</span> <span class="nav-text">输入流与输出流的层次结构</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#FilterInputStream"><span class="nav-number">1.2.</span> <span class="nav-text">FilterInputStream</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#FileInputStream_u4E0EFileOutputStream"><span class="nav-number">1.3.</span> <span class="nav-text">FileInputStream与FileOutputStream</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ByteArrayInputStream_u4E0EByteArrayOutputStream"><span class="nav-number">1.4.</span> <span class="nav-text">ByteArrayInputStream与ByteArrayOutputStream</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ObjectInputStream_u4E0EObjectOutputStream"><span class="nav-number">1.5.</span> <span class="nav-text">ObjectInputStream与ObjectOutputStream</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#u89E3_u6790"><span class="nav-number">1.5.1.</span> <span class="nav-text">解析</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#u6E90_u7801"><span class="nav-number">1.5.2.</span> <span class="nav-text">源码</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#PipedInputStream_u4E0EPipedOutputStream"><span class="nav-number">1.6.</span> <span class="nav-text">PipedInputStream与PipedOutputStream</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#u89E3_u6790-1"><span class="nav-number">1.6.1.</span> <span class="nav-text">解析</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#u6E90_u7801-1"><span class="nav-number">1.6.2.</span> <span class="nav-text">源码</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#BufferedInputStream_u4E0EBufferedOutputStream"><span class="nav-number">1.7.</span> <span class="nav-text">BufferedInputStream与BufferedOutputStream</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Reader_u4E0EWriter_u62BD_u8C61_u7C7B"><span class="nav-number">2.</span> <span class="nav-text">Reader与Writer抽象类</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Reader_u4E0EWriter_u7684_u5C42_u6B21_u7ED3_u6784"><span class="nav-number">2.1.</span> <span class="nav-text">Reader与Writer的层次结构</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#InputStreamReader_u4E0EOutputStreamReader"><span class="nav-number">2.2.</span> <span class="nav-text">InputStreamReader与OutputStreamReader</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#InputStreamReader"><span class="nav-number">2.2.1.</span> <span class="nav-text">InputStreamReader</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#OutputStreamReader"><span class="nav-number">2.2.2.</span> <span class="nav-text">OutputStreamReader</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#BufferedReader"><span class="nav-number">2.3.</span> <span class="nav-text">BufferedReader</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#PrintWriter"><span class="nav-number">2.4.</span> <span class="nav-text">PrintWriter</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#FileReader_u4E0EFileWriter"><span class="nav-number">2.5.</span> <span class="nav-text">FileReader与FileWriter</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DataInput_u4E0EDataOutput"><span class="nav-number">3.</span> <span class="nav-text">DataInput与DataOutput</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#DataInput"><span class="nav-number">3.1.</span> <span class="nav-text">DataInput</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#DataOutput"><span class="nav-number">3.2.</span> <span class="nav-text">DataOutput</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ZipInputStream_u4E0EZipOutputStream"><span class="nav-number">4.</span> <span class="nav-text">ZipInputStream与ZipOutputStream</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#ZipInputStream"><span class="nav-number">4.1.</span> <span class="nav-text">ZipInputStream</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ZipOutputStream"><span class="nav-number">4.2.</span> <span class="nav-text">ZipOutputStream</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JarInputStream_u4E0EJarOutputStream"><span class="nav-number">5.</span> <span class="nav-text">JarInputStream与JarOutputStream</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2014 - 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">等风来</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"wangjinping"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+  
+
+
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>
