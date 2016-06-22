@@ -94,7 +94,7 @@
 客户端浏览器缓存
 优点1：降低网络传输2：加速网站访问3：减少服务器的负担
 浏览器访问流程一般流程1：根据url，浏览器查看本地是否存有缓存2：不存在缓存，浏览器向服务器请求资源3：服务器向浏览器返回资源。返回响应头中包含了123Last-Modified       Thu, 26 Nov 2009 13:50:19 GMTEtag">
-<meta property="og:updated_time" content="2016-06-03T08:54:29.011Z">
+<meta property="og:updated_time" content="2016-06-22T09:10:00.398Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="HTTP之缓存">
 <meta name="twitter:description" content="分类服务器代理服务器缓存，反向代理服务器缓存，CDN
@@ -397,11 +397,11 @@
 <tr>
 <td style="text-align:center">F5</td>
 <td style="text-align:center">无效</td>
-<td style="text-align:center">有效</td>
+<td style="text-align:center">有效(chrome无效request会发送If-None-Match)</td>
 </tr>
 <tr>
 <td style="text-align:center">新开窗口（非原有窗口条中新开）</td>
-<td style="text-align:center">无效</td>
+<td style="text-align:center">无效(chrome非隐身是有效)</td>
 <td style="text-align:center">无效</td>
 </tr>
 <tr>
@@ -580,11 +580,11 @@
               </span>
             
               <span class="links-of-author-item">
-                <a href="http://weibo.com/1848729614" target="_blank" title="Weibo">
+                <a href="http://photo.wangjinping.top" target="_blank" title="Photo">
                   
-                    <i class="fa fa-weibo"></i>
+                    <i class="fa fa-globe"></i>
                   
-                  Weibo
+                  Photo
                 </a>
               </span>
             
