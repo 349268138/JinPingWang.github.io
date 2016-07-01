@@ -1989,8 +1989,8 @@
             
               
                 
-                <a class="post-title-link" href="/2015/06/15/javaSourceCode/javax.servlet/Servlet源码之监听接口与事件类/" itemprop="url">
-                  Servlet源码之监听接口与事件类
+                <a class="post-title-link" href="/2015/07/31/web/过滤器与包装器/" itemprop="url">
+                  过滤器与包装器
                 </a>
               
             
@@ -2003,8 +2003,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-06-15T09:55:12+08:00" content="2015-06-15">
-              2015-06-15
+            <time itemprop="dateCreated" datetime="2015-07-31T12:52:34+08:00" content="2015-07-31">
+              2015-07-31
             </time>
           </span>
 
@@ -2017,8 +2017,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Servlet/" itemprop="url" rel="index">
-                    <span itemprop="name">Servlet</span>
+                  <a href="/categories/web/" itemprop="url" rel="index">
+                    <span itemprop="name">web</span>
                   </a>
                 </span>
 
@@ -2033,8 +2033,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2015/06/15/javaSourceCode/javax.servlet/Servlet源码之监听接口与事件类/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/06/15/javaSourceCode/javax.servlet/Servlet源码之监听接口与事件类/" itemprop="commentsCount"></span>
+                <a href="/2015/07/31/web/过滤器与包装器/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/07/31/web/过滤器与包装器/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -2058,9 +2058,11 @@
 
       
         
-          <p>介绍了Servlet-api中的八个监听接口分别为：ServletContextListener，ServletContextAttributeListener，ServletRequestListener，ServletRequestAttributeListener，HttpSessionListener，HttpSessionAttributeListener，HttpSessionBindingListener，HtpSessionActivationListener。以及事件类为：ServletContextEvent，ServletContextAttributeEvent，ServletRequestEvent，ServletRequestAttributeEvent，HttpSessionEvent，HttpSessionBindingEvent。实现这些接口的监听类（除了HttpSessionBindingListener），都需要在web.xml进行配置后才会起作用，对于不同的事件，相应的监听类便能进行相应的处理。<br>
+          <h3 id="u8FC7_u6EE4_u5668_u4F5C_u7528"><a href="#u8FC7_u6EE4_u5668_u4F5C_u7528" class="headerlink" title="过滤器作用"></a>过滤器作用</h3><h4 id="u8BF7_u6C42_u8FC7_u6EE4_u5668"><a href="#u8BF7_u6C42_u8FC7_u6EE4_u5668" class="headerlink" title="请求过滤器"></a>请求过滤器</h4><p>1：完成安全检查<br>2：建立请求审计或日志</p>
+<h4 id="u54CD_u5E94_u8FC7_u6EE4_u5668"><a href="#u54CD_u5E94_u8FC7_u6EE4_u5668" class="headerlink" title="响应过滤器"></a>响应过滤器</h4><p>1：压缩响应流<br>2：追加或修改响应流</p>
+<h3 id="u5305_u88C5_u5668"><a href="#u5305_u88C5_u5668" class="headerlink" title="包装器"></a>包装器</h3><p>包装器包装了实际的请求或响应对象，而且把调用委托给实际的对象，还允许你对定制请求或响应做所需的额外处理。过滤器可以用于创建请求包装器或创建响应包装器。Sun创建了4个”便利”包装器类：<br>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2015/06/15/javaSourceCode/javax.servlet/Servlet源码之监听接口与事件类/#more" rel="contents">
+            <a class="btn" href="/2015/07/31/web/过滤器与包装器/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -2094,7 +2096,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -2135,7 +2137,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">150</span>
+              <span class="site-state-item-count">155</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -2200,11 +2202,11 @@
               </span>
             
               <span class="links-of-author-item">
-                <a href="http://www.zhihu.com/people/wang-jin-ping-1-68" target="_blank" title="Zhihu">
+                <a href="http://weibo.com/1848729614" target="_blank" title="Weibo">
                   
-                    <i class="fa fa-globe"></i>
+                    <i class="fa fa-weibo"></i>
                   
-                  Zhihu
+                  Weibo
                 </a>
               </span>
             

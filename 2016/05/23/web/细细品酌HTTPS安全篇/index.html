@@ -88,9 +88,9 @@
 <meta property="og:url" content="http://jinpingwang.github.io/2016/05/23/web/细细品酌HTTPS安全篇/index.html">
 <meta property="og:site_name" content="Quick notes">
 <meta property="og:description" content="HTTP通信中存在很多隐患，比如：认证，授权，机密性，数据完整性等。如果没有使用安全措施，通信的信息就很容易被劫获并被修改等。由此，HTTPS（HTTP＋SSL/TLS）应孕而生。本文先使用HTTP协议通信，通过wireshark抓取通信内容来佐证通信的安全隐患；然后引入一些密码学基础概念；接着介绍SSL/TLS协议；最后通过HTTPS协议通信，使用wireshark抓取通信内容来佐证通信的安全性">
-<meta property="og:image" content="http://7xrn7f.com1.z0.glb.clouddn.com/16-5-24/80035348.jpg">
+<meta property="og:image" content="http://jinpingwang.github.io/myImages/细细品酌HTTPS安全篇.jpg">
 <meta property="og:image" content="http://i2.piimg.com/93eb5bffdcfcb5a1.jpg">
-<meta property="og:updated_time" content="2016-06-14T03:10:56.516Z">
+<meta property="og:updated_time" content="2016-07-01T01:55:01.827Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="细细品酌HTTPS安全篇">
 <meta name="twitter:description" content="HTTP通信中存在很多隐患，比如：认证，授权，机密性，数据完整性等。如果没有使用安全措施，通信的信息就很容易被劫获并被修改等。由此，HTTPS（HTTP＋SSL/TLS）应孕而生。本文先使用HTTP协议通信，通过wireshark抓取通信内容来佐证通信的安全隐患；然后引入一些密码学基础概念；接着介绍SSL/TLS协议；最后通过HTTPS协议通信，使用wireshark抓取通信内容来佐证通信的安全性">
@@ -347,7 +347,7 @@
       
 
       
-        <p><div align="center"><img src="http://7xrn7f.com1.z0.glb.clouddn.com/16-5-24/80035348.jpg"></div><br>HTTP通信中存在很多隐患，比如：认证，授权，机密性，数据完整性等。如果没有使用安全措施，通信的信息就很容易被劫获并被修改等。由此，HTTPS（HTTP＋SSL/TLS）应孕而生。本文先使用HTTP协议通信，通过wireshark抓取通信内容来佐证通信的安全隐患；然后引入一些密码学基础概念；接着介绍SSL/TLS协议；最后通过HTTPS协议通信，使用wireshark抓取通信内容来佐证通信的安全性。<br><a id="more"></a></p>
+        <p><div align="center"><img src="/myImages/细细品酌HTTPS安全篇.jpg"></div><br>HTTP通信中存在很多隐患，比如：认证，授权，机密性，数据完整性等。如果没有使用安全措施，通信的信息就很容易被劫获并被修改等。由此，HTTPS（HTTP＋SSL/TLS）应孕而生。本文先使用HTTP协议通信，通过wireshark抓取通信内容来佐证通信的安全隐患；然后引入一些密码学基础概念；接着介绍SSL/TLS协议；最后通过HTTPS协议通信，使用wireshark抓取通信内容来佐证通信的安全性。<br><a id="more"></a></p>
 <h3 id="HTTP_u901A_u4FE1_u9690_u60A3"><a href="#HTTP_u901A_u4FE1_u9690_u60A3" class="headerlink" title="HTTP通信隐患"></a>HTTP通信隐患</h3><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">HTML <span class="keyword">Form</span> URL <span class="keyword">Encode</span>: application/x-www-<span class="keyword">form</span>-urlencoded</span><br><span class="line">    <span class="keyword">Form</span> item: <span class="string">"username"</span> = <span class="string">"kitty"</span></span><br><span class="line">        Key: username</span><br><span class="line">        Value: kitty</span><br><span class="line">    <span class="keyword">Form</span> item: <span class="string">"password"</span> = <span class="string">"867954"</span></span><br><span class="line">        Key: password</span><br><span class="line">        Value: 867954</span><br></pre></td></tr></table></figure>
 <p>从wireshark捕获到的HTTP报文，可以看到username与password的信息完全暴露了。</p>
 <h3 id="u5BC6_u7801_u5B66_u57FA_u7840"><a href="#u5BC6_u7801_u5B66_u57FA_u7840" class="headerlink" title="密码学基础"></a>密码学基础</h3><h4 id="u5BF9_u79F0_u52A0_u5BC6"><a href="#u5BF9_u79F0_u52A0_u5BC6" class="headerlink" title="对称加密"></a>对称加密</h4><h5 id="u5B9A_u4E49"><a href="#u5B9A_u4E49" class="headerlink" title="定义"></a>定义</h5><p>对称加密指加密和解密使用相同密钥的加密算法，即加密和解密的密钥是相同的。</p>
@@ -487,7 +487,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">150</span>
+              <span class="site-state-item-count">155</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -552,11 +552,11 @@
               </span>
             
               <span class="links-of-author-item">
-                <a href="http://www.zhihu.com/people/wang-jin-ping-1-68" target="_blank" title="Zhihu">
+                <a href="http://weibo.com/1848729614" target="_blank" title="Weibo">
                   
-                    <i class="fa fa-globe"></i>
+                    <i class="fa fa-weibo"></i>
                   
-                  Zhihu
+                  Weibo
                 </a>
               </span>
             
