@@ -166,7 +166,7 @@ Score
 
 
 语义规定1：一个系有若干学生，但一个学生只属于一个系2：一个系只有一名系主任，但一个系主任可以同">
-<meta property="og:updated_time" content="2016-05-11T07:49:14.010Z">
+<meta property="og:updated_time" content="2016-07-04T01:32:18.955Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="关系型数据库范式">
 <meta name="twitter:description" content="情景关系模式SCD12//(SNo, CNo)为主键SCD(SNo, SN, Age, Dept, MN, CNo, Score)
@@ -521,7 +521,7 @@ Score
 <h5 id="u5B9A_u4E49-1"><a href="#u5B9A_u4E49-1" class="headerlink" title="定义"></a>定义</h5><p>首先是满足1NF，且每个非主属性都完全函数依赖于R的主关系键。</p>
 <h5 id="u5B58_u5728_u9690_u60A3-2"><a href="#u5B58_u5728_u9690_u60A3-2" class="headerlink" title="存在隐患"></a>存在隐患</h5><p>数据冗余，插入异常，删除异常，更新异常</p>
 <h4 id="3NF"><a href="#3NF" class="headerlink" title="3NF"></a>3NF</h4><h5 id="u60C5_u666F-3"><a href="#u60C5_u666F-3" class="headerlink" title="情景"></a>情景</h5><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">SD</span><span class="params">(SNo, SN, Age, Dept, MN)</span></span></span><br><span class="line"><span class="function"><span class="title">SC</span><span class="params">(SNo, CNo, Score)</span></span></span><br><span class="line">由<span class="number">2</span>NF转换为<span class="number">3</span>NF</span><br><span class="line"><span class="function"><span class="title">S</span><span class="params">(SNo, SN, Age, Dept)</span></span></span><br><span class="line"><span class="function"><span class="title">D</span><span class="params">(Dept, MN)</span></span></span><br><span class="line"><span class="function"><span class="title">SC</span><span class="params">(SNo, CNo, Score)</span></span></span><br></pre></td></tr></table></figure>
-<h5 id="u5B9A_u4E49-2"><a href="#u5B9A_u4E49-2" class="headerlink" title="定义"></a>定义</h5><p>首先是满足2NF，且第个非主属性都不传递函数依赖于R的主关系键。</p>
+<h5 id="u5B9A_u4E49-2"><a href="#u5B9A_u4E49-2" class="headerlink" title="定义"></a>定义</h5><p>首先是满足2NF，且每个非主属性都不传递函数依赖于R的主关系键。</p>
 <h5 id="u5B58_u5728_u9690_u60A3-3"><a href="#u5B58_u5728_u9690_u60A3-3" class="headerlink" title="存在隐患"></a>存在隐患</h5><p>数据冗余降低，不存在插入异常，不存在删除异常，不存在更新异常。</p>
 <h4 id="BCNF"><a href="#BCNF" class="headerlink" title="BCNF"></a>BCNF</h4><h5 id="u60C5_u666F-4"><a href="#u60C5_u666F-4" class="headerlink" title="情景"></a>情景</h5><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line"> * 假设名字没有重复，即SNo&lt;-&gt;SN</span><br><span class="line"> * 若(SNo, CNo)为主键，则SN部分函数依赖于SNo</span><br><span class="line"> * 若(SN, CNo)为主键，则SNo部分函数依赖于SN</span><br><span class="line"> */</span></span><br><span class="line"><span class="function"><span class="title">SNC</span><span class="params">(SNo, SN, CNo, Score)</span></span></span><br><span class="line">转换为BCNF</span><br><span class="line"><span class="function"><span class="title">S1</span><span class="params">(SNo, SN)</span></span></span><br><span class="line"><span class="function"><span class="title">S2</span><span class="params">(SNo, CNo, Score)</span></span></span><br></pre></td></tr></table></figure>
 <h5 id="u5B9A_u4E49-3"><a href="#u5B9A_u4E49-3" class="headerlink" title="定义"></a>定义</h5><p>消除主属性对键的依赖关系。</p>
@@ -638,7 +638,7 @@ Score
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">155</span>
+              <span class="site-state-item-count">161</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -646,7 +646,7 @@ Score
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-count">17</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
