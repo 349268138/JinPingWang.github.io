@@ -1212,7 +1212,7 @@
         
           <p>介绍了linux下mysql-server的安装与卸载；登陆；编码配置；启动与关闭；root用户无法登陆解决。</p>
 <h3 id="u5B89_u88C5_u4E0E_u5378_u8F7D"><a href="#u5B89_u88C5_u4E0E_u5378_u8F7D" class="headerlink" title="安装与卸载"></a>安装与卸载</h3><h4 id="u5B89_u88C5"><a href="#u5B89_u88C5" class="headerlink" title="安装"></a>安装</h4><p>mysql-server, mysql-client, libmysqlclient-dev。一般安装mysql-server就可以了。<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt-get <span class="operator"><span class="keyword">install</span> mysql-<span class="keyword">server</span></span></span><br></pre></td></tr></table></figure></p>
-<p>将/etc/mysql/my.cnf中的这一行<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bind-address           = <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span></span><br></pre></td></tr></table></figure></p>
+<p>将/etc/mysql/my.cnf中这一行<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bind-address           = <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span></span><br></pre></td></tr></table></figure></p>
           <div class="post-more-link text-center">
             <a class="btn" href="/2016/04/11/database/mysql之安装配置/#more" rel="contents">
               阅读全文 &raquo;
