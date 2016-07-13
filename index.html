@@ -281,6 +281,129 @@
             
               
                 
+                <a class="post-title-link" href="/2016/05/27/designPattern/策略模式/" itemprop="url">
+                  策略模式
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-05-27T10:13:28+08:00" content="2016-05-27">
+              2016-05-27
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/设计模式/" itemprop="url" rel="index">
+                    <span itemprop="name">设计模式</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/05/27/designPattern/策略模式/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/27/designPattern/策略模式/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h3 id="what"><a href="#what" class="headerlink" title="what"></a>what</h3><p>定义了算法族，分别封装起来，让它们之间可以互相替换，此模式让算法的变化独立于算法的客户。</p>
+<h3 id="why"><a href="#why" class="headerlink" title="why"></a>why</h3><p>如果不把变化的部分抽取出来，程序的健壮性不高。<br>在抽象类中实现代码，子类与这个方法不同是需要进行覆盖，而如果这样的子类很多的话，则需要覆盖很多次；利用组合的做法扩展对象的行为，可以在运行行为动态地进行扩展。<br><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">abstract</span> <span class="title">Duck</span>&#123;</span></span><br><span class="line">    public void fly()&#123;</span><br><span class="line">        <span class="type">System</span>.out.println(<span class="string">"i can fly"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//剩余其它方法</span></span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">RubberDuck</span> <span class="keyword"><span class="keyword">extends</span></span> <span class="title">Duck</span>&#123;</span></span><br><span class="line">    <span class="comment">//橡皮鸭不会飞，所以它要覆盖父类的fly方法，而如果类似这样的类多的话则每一个方法都要覆盖</span></span><br><span class="line">    public void fly()&#123;</span><br><span class="line">        <span class="type">System</span>.out.println(<span class="string">"i can't fly"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/05/27/designPattern/策略模式/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+    
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/05/23/web/HTTPS安全篇/" itemprop="url">
                   HTTPS安全篇
                 </a>
@@ -719,130 +842,6 @@
           <p>本篇文章介绍了java中多线程的概念。先简介多线程中的一些基本概念。然后介绍在java中如何编写多线程。从基本的实现Runnable接口，Callable接口，线程各个状态方法调用。然后介绍多线程编程中如何保证同步，引入了锁的概念，从锁接口(Lock)及其方法（lock，unLock，newCondition），条件接口(Condition)及其方法（await，singal，singalAll），锁类(ReentrantLock)，对象或类的内部锁(synchronized块)及内部条件(wait，notify，notifyAll三个方法)。还介绍了线程安全的一些集合，以及常用的线程池。最后介绍了有关Fork-Join框架。<br>
           <div class="post-more-link text-center">
             <a class="btn" href="/2016/05/16/java/java中的多线程编程/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-    
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/05/09/designPattern/单件模式/" itemprop="url">
-                  单件模式
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-05-09T07:38:23+08:00" content="2016-05-09">
-              2016-05-09
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/设计模式/" itemprop="url" rel="index">
-                    <span itemprop="name">设计模式</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/05/09/designPattern/单件模式/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/09/designPattern/单件模式/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h3 id="what"><a href="#what" class="headerlink" title="what"></a>what</h3><p>确保一个类只有一个实例，并提供全局访问点。</p>
-<h3 id="why"><a href="#why" class="headerlink" title="why"></a>why</h3><p>数据库连接池，日志对象，延迟实例化</p>
-<h3 id="how"><a href="#how" class="headerlink" title="how"></a>how</h3><figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Singleton</span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Singleton uniqueInstance = <span class="keyword">new</span> Singleton();</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Singleton</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title">getInstance</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> uniqueInstance;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/05/09/designPattern/单件模式/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1871,8 +1870,8 @@
             
               
                 
-                <a class="post-title-link" href="/2016/04/21/designPattern/外观模式/" itemprop="url">
-                  外观模式
+                <a class="post-title-link" href="/2016/04/18/database/mysql之用户表与授权/" itemprop="url">
+                  mysql之用户表与授权
                 </a>
               
             
@@ -1885,8 +1884,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-04-21T06:59:42+08:00" content="2016-04-21">
-              2016-04-21
+            <time itemprop="dateCreated" datetime="2016-04-18T15:24:17+08:00" content="2016-04-18">
+              2016-04-18
             </time>
           </span>
 
@@ -1899,8 +1898,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/设计模式/" itemprop="url" rel="index">
-                    <span itemprop="name">设计模式</span>
+                  <a href="/categories/数据库/" itemprop="url" rel="index">
+                    <span itemprop="name">数据库</span>
                   </a>
                 </span>
 
@@ -1915,8 +1914,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/04/21/designPattern/外观模式/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/21/designPattern/外观模式/" itemprop="commentsCount"></span>
+                <a href="/2016/04/18/database/mysql之用户表与授权/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/18/database/mysql之用户表与授权/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -1940,11 +1939,11 @@
 
       
         
-          <h3 id="what"><a href="#what" class="headerlink" title="what"></a>what</h3><p>提供了一个统一的接口，用来访问子系统中的一群接口。外观定义了一个高层接口，让子系统更容易使用。</p>
-<h3 id="why"><a href="#why" class="headerlink" title="why"></a>why</h3><p>让接口更简单</p>
-<h3 id="how"><a href="#how" class="headerlink" title="how"></a>how</h3>
+          <p>介绍了mysql数据库下系统自带user表；mysql授权与撤销授权；ip远程登陆设置。</p>
+<h3 id="user_u8868"><a href="#user_u8868" class="headerlink" title="user表"></a>user表</h3><p>使用mysql数据库<br><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> mysql</span><br></pre></td></tr></table></figure></p>
+<p>查询当前所有用户相关信息（可以通过该表来删除某个用户）。<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">select</span> host ,<span class="keyword">user</span> ,<span class="keyword">password</span> <span class="keyword">from</span> <span class="keyword">user</span>;</span></span><br></pre></td></tr></table></figure></p>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2016/04/21/designPattern/外观模式/#more" rel="contents">
+            <a class="btn" href="/2016/04/18/database/mysql之用户表与授权/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1995,8 +1994,8 @@
             
               
                 
-                <a class="post-title-link" href="/2016/04/19/designPattern/缺省适配模式/" itemprop="url">
-                  缺省适配模式
+                <a class="post-title-link" href="/2016/04/18/java/利用反射机制来修改String对象的值/" itemprop="url">
+                  利用反射机制来修改String对象的值
                 </a>
               
             
@@ -2009,8 +2008,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-04-19T20:18:39+08:00" content="2016-04-19">
-              2016-04-19
+            <time itemprop="dateCreated" datetime="2016-04-18T07:06:05+08:00" content="2016-04-18">
+              2016-04-18
             </time>
           </span>
 
@@ -2023,8 +2022,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/设计模式/" itemprop="url" rel="index">
-                    <span itemprop="name">设计模式</span>
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
                   </a>
                 </span>
 
@@ -2039,8 +2038,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/04/19/designPattern/缺省适配模式/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/19/designPattern/缺省适配模式/" itemprop="commentsCount"></span>
+                <a href="/2016/04/18/java/利用反射机制来修改String对象的值/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/18/java/利用反射机制来修改String对象的值/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -2064,11 +2063,9 @@
 
       
         
-          <h3 id="what"><a href="#what" class="headerlink" title="what"></a>what</h3><p>缺省适配模式为一个接口提供缺省实现。由缺省适配器类直接实现接口，并为所有方法提供缺省的空实现。用户类就只需要继承适配器类，只实现感兴趣的方法就行了。</p>
-<h3 id="why"><a href="#why" class="headerlink" title="why"></a>why</h3><p>这样的类型可以从这个缺省实现，而不必从原有的接口进行扩展。当源接口中定义的方法太多，而其中大部分又不被需要时，这种模式非常实用。</p>
-<h3 id="how"><a href="#how" class="headerlink" title="how"></a>how</h3>
+          <p>String对象的值是没办法改变的，若要修改，则只能通过重新创建一个新的String对象。本文通过利用反射机制来达到修改String对象的值，而不用创建新的String对象。<br>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2016/04/19/designPattern/缺省适配模式/#more" rel="contents">
+            <a class="btn" href="/2016/04/18/java/利用反射机制来修改String对象的值/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
