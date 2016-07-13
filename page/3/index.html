@@ -281,8 +281,8 @@
             
               
                 
-                <a class="post-title-link" href="/2016/04/11/database/mysql之安装配置/" itemprop="url">
-                  mysql之安装配置
+                <a class="post-title-link" href="/2016/03/27/designPattern/策略模式/" itemprop="url">
+                  策略模式
                 </a>
               
             
@@ -295,8 +295,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-04-11T21:47:34+08:00" content="2016-04-11">
-              2016-04-11
+            <time itemprop="dateCreated" datetime="2016-03-27T10:13:28+08:00" content="2016-03-27">
+              2016-03-27
             </time>
           </span>
 
@@ -309,8 +309,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/数据库/" itemprop="url" rel="index">
-                    <span itemprop="name">数据库</span>
+                  <a href="/categories/设计模式/" itemprop="url" rel="index">
+                    <span itemprop="name">设计模式</span>
                   </a>
                 </span>
 
@@ -325,8 +325,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/04/11/database/mysql之安装配置/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/11/database/mysql之安装配置/" itemprop="commentsCount"></span>
+                <a href="/2016/03/27/designPattern/策略模式/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/03/27/designPattern/策略模式/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -350,11 +350,10 @@
 
       
         
-          <p>介绍了linux下mysql-server的安装与卸载；登陆；编码配置；启动与关闭；root用户无法登陆解决。</p>
-<h3 id="u5B89_u88C5_u4E0E_u5378_u8F7D"><a href="#u5B89_u88C5_u4E0E_u5378_u8F7D" class="headerlink" title="安装与卸载"></a>安装与卸载</h3><h4 id="u5B89_u88C5"><a href="#u5B89_u88C5" class="headerlink" title="安装"></a>安装</h4><p>mysql-server, mysql-client, libmysqlclient-dev。一般安装mysql-server就可以了。<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt-get <span class="operator"><span class="keyword">install</span> mysql-<span class="keyword">server</span></span></span><br></pre></td></tr></table></figure></p>
-<p>将/etc/mysql/my.cnf中这一行<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bind-address           = <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span></span><br></pre></td></tr></table></figure></p>
+          <h3 id="what"><a href="#what" class="headerlink" title="what"></a>what</h3><p>定义了算法族，分别封装起来，让它们之间可以互相替换，此模式让算法的变化独立于算法的客户。</p>
+<h3 id="why"><a href="#why" class="headerlink" title="why"></a>why</h3><p>如果不把变化的部分抽取出来，程序的健壮性不高。<br>在抽象类中实现代码，子类与这个方法不同是需要进行覆盖，而如果这样的子类很多的话，则需要覆盖很多次；利用组合的做法扩展对象的行为，可以在运行行为动态地进行扩展。<br><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">abstract</span> <span class="title">Duck</span>&#123;</span></span><br><span class="line">    public void fly()&#123;</span><br><span class="line">        <span class="type">System</span>.out.println(<span class="string">"i can fly"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//剩余其它方法</span></span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">RubberDuck</span> <span class="keyword"><span class="keyword">extends</span></span> <span class="title">Duck</span>&#123;</span></span><br><span class="line">    <span class="comment">//橡皮鸭不会飞，所以它要覆盖父类的fly方法，而如果类似这样的类多的话则每一个方法都要覆盖</span></span><br><span class="line">    public void fly()&#123;</span><br><span class="line">        <span class="type">System</span>.out.println(<span class="string">"i can't fly"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2016/04/11/database/mysql之安装配置/#more" rel="contents">
+            <a class="btn" href="/2016/03/27/designPattern/策略模式/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -405,8 +404,8 @@
             
               
                 
-                <a class="post-title-link" href="/2016/04/07/bootstrap/11:bootstrap源码之Images/" itemprop="url">
-                  bootstrap源码之Images
+                <a class="post-title-link" href="/2016/03/21/designPattern/观察者模式/" itemprop="url">
+                  观察者模式
                 </a>
               
             
@@ -419,8 +418,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-04-07T09:08:54+08:00" content="2016-04-07">
-              2016-04-07
+            <time itemprop="dateCreated" datetime="2016-03-21T15:38:54+08:00" content="2016-03-21">
+              2016-03-21
             </time>
           </span>
 
@@ -433,8 +432,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/bootstrap/" itemprop="url" rel="index">
-                    <span itemprop="name">bootstrap</span>
+                  <a href="/categories/设计模式/" itemprop="url" rel="index">
+                    <span itemprop="name">设计模式</span>
                   </a>
                 </span>
 
@@ -449,8 +448,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/04/07/bootstrap/11:bootstrap源码之Images/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/07/bootstrap/11:bootstrap源码之Images/" itemprop="commentsCount"></span>
+                <a href="/2016/03/21/designPattern/观察者模式/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/03/21/designPattern/观察者模式/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -474,9 +473,11 @@
 
       
         
-          <p>介绍了bootstrap中Images。简单介绍有关Responsive images，Image shapes。<br>
+          <h3 id="what"><a href="#what" class="headerlink" title="what"></a>what</h3><p>在对象之间定义一对多的依赖，这样一来，当一个对象改变状态，依赖它的对象都会收到通知，并自动更新。</p>
+<h3 id="why"><a href="#why" class="headerlink" title="why"></a>why</h3><p>以松耦合方式在一系列对象之间沟通状态。让主题(Subject)与观察者(Observer)之间松耦合。主题和观察者定义了一对多的关系，观察者依赖于此主题，只要主题状态一有变化，观察者就会被通知。</p>
+<h3 id="how"><a href="#how" class="headerlink" title="how"></a>how</h3><figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">Subject</span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">regisiterObserver</span>(<span class="params">Observer o</span>)</span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">removeObserver</span>(<span class="params">Observer o</span>)</span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">notifyObservers</span>(<span class="params"></span>)</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">Observer</span>&#123;</span><br><span class="line">    <span class="function">pblic <span class="keyword">void</span> <span class="title">update</span>(<span class="params"><span class="keyword">float</span> temp, <span class="keyword">float</span> humidity, <span class="keyword">float</span> presure</span>)</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">DisplayElement</span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">display</span>(<span class="params"></span>)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2016/04/07/bootstrap/11:bootstrap源码之Images/#more" rel="contents">
+            <a class="btn" href="/2016/03/21/designPattern/观察者模式/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -527,8 +528,8 @@
             
               
                 
-                <a class="post-title-link" href="/2016/04/02/web/URL访问路径在服务器上的匹配详解/" itemprop="url">
-                  URL访问路径在服务器上的匹配详解
+                <a class="post-title-link" href="/2016/03/14/designPattern/装饰者模式/" itemprop="url">
+                  装饰者模式
                 </a>
               
             
@@ -541,8 +542,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-04-02T15:45:24+08:00" content="2016-04-02">
-              2016-04-02
+            <time itemprop="dateCreated" datetime="2016-03-14T19:27:36+08:00" content="2016-03-14">
+              2016-03-14
             </time>
           </span>
 
@@ -555,8 +556,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/web/" itemprop="url" rel="index">
-                    <span itemprop="name">web</span>
+                  <a href="/categories/设计模式/" itemprop="url" rel="index">
+                    <span itemprop="name">设计模式</span>
                   </a>
                 </span>
 
@@ -571,8 +572,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/04/02/web/URL访问路径在服务器上的匹配详解/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/02/web/URL访问路径在服务器上的匹配详解/" itemprop="commentsCount"></span>
+                <a href="/2016/03/14/designPattern/装饰者模式/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/03/14/designPattern/装饰者模式/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -596,9 +597,12 @@
 
       
         
-          <p>讲述了服务器是如何根据客户端访问的URL来返回相应的资源：servlet，目录下的欢迎文件还是真实存在的资源。<br>
+          <h3 id="what"><a href="#what" class="headerlink" title="what"></a>what</h3><p>动态地将责任附加到对象上。想要扩展功能，装饰者提供有别于继承的另一种选择。</p>
+<h3 id="why"><a href="#why" class="headerlink" title="why"></a>why</h3><p>运行时扩展，使用对象组合的方式，做到运行时装饰类，能够在不修改任何底层代码的情况下给你的（或别人的）对象赋予新的职责。</p>
+<h3 id="how"><a href="#how" class="headerlink" title="how"></a>how</h3><figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title">Beverage</span>&#123;</span><br><span class="line">    String description = <span class="string">"Unknown Beverage"</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getDescription</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> description;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">double</span> <span class="title">cost</span>(<span class="params"></span>)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">Espresso</span> <span class="keyword"><span class="keyword">extends</span></span> <span class="title">Beverage</span>&#123;</span></span><br><span class="line">    public <span class="type">Espresso</span>()&#123;</span><br><span class="line">        description = <span class="string">"Esprosso"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    public double cost()&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1.99</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2016/04/02/web/URL访问路径在服务器上的匹配详解/#more" rel="contents">
+            <a class="btn" href="/2016/03/14/designPattern/装饰者模式/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -649,8 +653,8 @@
             
               
                 
-                <a class="post-title-link" href="/2016/04/02/web/深入浅出部署描述文件web.xml/" itemprop="url">
-                  深入浅出部署描述文件web.xml
+                <a class="post-title-link" href="/2016/03/11/designPattern/工厂模式/" itemprop="url">
+                  工厂模式
                 </a>
               
             
@@ -663,8 +667,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-04-02T13:10:47+08:00" content="2016-04-02">
-              2016-04-02
+            <time itemprop="dateCreated" datetime="2016-03-11T08:14:37+08:00" content="2016-03-11">
+              2016-03-11
             </time>
           </span>
 
@@ -677,8 +681,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/web/" itemprop="url" rel="index">
-                    <span itemprop="name">web</span>
+                  <a href="/categories/设计模式/" itemprop="url" rel="index">
+                    <span itemprop="name">设计模式</span>
                   </a>
                 </span>
 
@@ -693,8 +697,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/04/02/web/深入浅出部署描述文件web.xml/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/02/web/深入浅出部署描述文件web.xml/" itemprop="commentsCount"></span>
+                <a href="/2016/03/11/designPattern/工厂模式/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/03/11/designPattern/工厂模式/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -718,9 +722,13 @@
 
       
         
-          <p>详解了web.xml中servlet映射配置，ServletContext的初始化参数配置，监听类配置，会话超时设置，过滤器设置，错误页面配置，欢迎文件配置。<br>
+          <h3 id="what"><a href="#what" class="headerlink" title="what"></a>what</h3><h4 id="u7B80_u5355_u5DE5_u5382"><a href="#u7B80_u5355_u5DE5_u5382" class="headerlink" title="简单工厂"></a>简单工厂</h4><p>不算是一总模式，而是一种编程习惯。</p>
+<h4 id="u5DE5_u5382_u65B9_u6CD5_u6A21_u5F0F"><a href="#u5DE5_u5382_u65B9_u6CD5_u6A21_u5F0F" class="headerlink" title="工厂方法模式"></a>工厂方法模式</h4><p>定义了一个创建对象的接口，但由子类决定要实例化的类是哪一个。工厂方法让类把实例化推迟到子类。</p>
+<h4 id="u62BD_u8C61_u5DE5_u5382_u6A21_u5F0F"><a href="#u62BD_u8C61_u5DE5_u5382_u6A21_u5F0F" class="headerlink" title="抽象工厂模式"></a>抽象工厂模式</h4><p>提供一个接口，用于创建相关或依赖对象的家族，而不需要明确指定具体类。</p>
+<h3 id="why"><a href="#why" class="headerlink" title="why"></a>why</h3><p>依赖抽象，不要依赖具体类</p>
+<h3 id="how"><a href="#how" class="headerlink" title="how"></a>how</h3><h4 id="u7B80_u5355_u5DE5_u5382-1"><a href="#u7B80_u5355_u5DE5_u5382-1" class="headerlink" title="简单工厂"></a>简单工厂</h4>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2016/04/02/web/深入浅出部署描述文件web.xml/#more" rel="contents">
+            <a class="btn" href="/2016/03/11/designPattern/工厂模式/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -771,8 +779,8 @@
             
               
                 
-                <a class="post-title-link" href="/2016/04/02/javaSourceCode/javax.servlet/RequestDispatcher/" itemprop="url">
-                  Servlet源码之RequestDispatcher
+                <a class="post-title-link" href="/2016/03/08/designPattern/适配器模式/" itemprop="url">
+                  适配器模式
                 </a>
               
             
@@ -785,8 +793,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-04-02T12:01:54+08:00" content="2016-04-02">
-              2016-04-02
+            <time itemprop="dateCreated" datetime="2016-03-08T23:14:51+08:00" content="2016-03-08">
+              2016-03-08
             </time>
           </span>
 
@@ -799,8 +807,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Servlet/" itemprop="url" rel="index">
-                    <span itemprop="name">Servlet</span>
+                  <a href="/categories/设计模式/" itemprop="url" rel="index">
+                    <span itemprop="name">设计模式</span>
                   </a>
                 </span>
 
@@ -815,8 +823,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/04/02/javaSourceCode/javax.servlet/RequestDispatcher/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/02/javaSourceCode/javax.servlet/RequestDispatcher/" itemprop="commentsCount"></span>
+                <a href="/2016/03/08/designPattern/适配器模式/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/03/08/designPattern/适配器模式/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -840,10 +848,12 @@
 
       
         
-          <p>介绍了Servlet-api中的RequestDispatcher接口，对接口作用以及里面的方法描述和需要注意的地方。</p>
-<h3 id="u6E90_u7801"><a href="#u6E90_u7801" class="headerlink" title="源码"></a>源码</h3><p>ServletDispatcher接口用于从客户那里接收到的请求，然后发送给服务器上的servlet，HTML文件，或者是JSP文件。<br>
+          <h3 id="what"><a href="#what" class="headerlink" title="what"></a>what</h3><p>将一个类的接口，转换成客户期望的另一个接口。</p>
+<h3 id="why"><a href="#why" class="headerlink" title="why"></a>why</h3><p>适配器让原本接口不兼容的类可以合作无间。</p>
+<h3 id="how"><a href="#how" class="headerlink" title="how"></a>how</h3><p>Client：客户<br>Target：客户想要的接口<br>Adapter：适配器<br>Adaptee：聚合（组合）或继承这一个来完成客户想要的接口</p>
+<h4 id="u5BF9_u8C61_u9002_u914D_u5668"><a href="#u5BF9_u8C61_u9002_u914D_u5668" class="headerlink" title="对象适配器"></a>对象适配器</h4><p>Adapter实现Target，聚合Adaptee。而Adaptee可以为接口，这样就可以使实现Adaptee接口的类做为被适配都，灵活性更高。<br><figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//枚举与迭代器，将枚举适配到迭代器</span></span><br></pre></td></tr></table></figure></p>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2016/04/02/javaSourceCode/javax.servlet/RequestDispatcher/#more" rel="contents">
+            <a class="btn" href="/2016/03/08/designPattern/适配器模式/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
