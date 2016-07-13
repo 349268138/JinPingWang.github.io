@@ -84,15 +84,15 @@
 
 <meta name="description" content="HTTP通信中存在很多隐患，比如：认证，授权，机密性，数据完整性等。如果没有使用安全措施，通信的信息就很容易被劫获并被修改等。由此，HTTPS（HTTP＋SSL/TLS）应孕而生。本文先使用HTTP协议通信，通过wireshark抓取通信内容来佐证通信的安全隐患；然后引入一些密码学基础概念；接着介绍SSL/TLS协议；最后通过HTTPS协议通信，使用wireshark抓取通信内容来佐证通信的安全性">
 <meta property="og:type" content="article">
-<meta property="og:title" content="细细品酌HTTPS安全篇">
-<meta property="og:url" content="http://jinpingwang.github.io/2016/05/23/web/细细品酌HTTPS安全篇/index.html">
+<meta property="og:title" content="HTTPS安全篇">
+<meta property="og:url" content="http://jinpingwang.github.io/2016/05/23/web/HTTPS安全篇/index.html">
 <meta property="og:site_name" content="Quick notes">
 <meta property="og:description" content="HTTP通信中存在很多隐患，比如：认证，授权，机密性，数据完整性等。如果没有使用安全措施，通信的信息就很容易被劫获并被修改等。由此，HTTPS（HTTP＋SSL/TLS）应孕而生。本文先使用HTTP协议通信，通过wireshark抓取通信内容来佐证通信的安全隐患；然后引入一些密码学基础概念；接着介绍SSL/TLS协议；最后通过HTTPS协议通信，使用wireshark抓取通信内容来佐证通信的安全性">
 <meta property="og:image" content="http://jinpingwang.github.io/myImages/细细品酌HTTPS安全篇.jpg">
 <meta property="og:image" content="http://i2.piimg.com/93eb5bffdcfcb5a1.jpg">
-<meta property="og:updated_time" content="2016-07-01T01:55:01.827Z">
+<meta property="og:updated_time" content="2016-07-13T12:12:10.447Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="细细品酌HTTPS安全篇">
+<meta name="twitter:title" content="HTTPS安全篇">
 <meta name="twitter:description" content="HTTP通信中存在很多隐患，比如：认证，授权，机密性，数据完整性等。如果没有使用安全措施，通信的信息就很容易被劫获并被修改等。由此，HTTPS（HTTP＋SSL/TLS）应孕而生。本文先使用HTTP协议通信，通过wireshark抓取通信内容来佐证通信的安全隐患；然后引入一些密码学基础概念；接着介绍SSL/TLS协议；最后通过HTTPS协议通信，使用wireshark抓取通信内容来佐证通信的安全性">
 
 
@@ -111,7 +111,7 @@
   };
 </script>
 
-  <title> 细细品酌HTTPS安全篇 | Quick notes </title>
+  <title> HTTPS安全篇 | Quick notes </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -281,7 +281,7 @@
             
             
               
-                细细品酌HTTPS安全篇
+                HTTPS安全篇
               
             
           </h1>
@@ -323,8 +323,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/05/23/web/细细品酌HTTPS安全篇/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/23/web/细细品酌HTTPS安全篇/" itemprop="commentsCount"></span>
+                <a href="/2016/05/23/web/HTTPS安全篇/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/23/web/HTTPS安全篇/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -409,13 +409,17 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/05/21/web/基于TCP协议的RPC/" rel="next" title="基于TCP协议的RPC">
-                <i class="fa fa-chevron-left"></i> 基于TCP协议的RPC
+              <a href="/2016/05/21/designPattern/观察者模式/" rel="next" title="观察者模式">
+                <i class="fa fa-chevron-left"></i> 观察者模式
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/05/27/designPattern/策略模式/" rel="prev" title="策略模式">
+                策略模式 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -441,8 +445,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/05/23/web/细细品酌HTTPS安全篇/"
-           data-title="细细品酌HTTPS安全篇" data-url="http://jinpingwang.github.io/2016/05/23/web/细细品酌HTTPS安全篇/">
+      <div class="ds-thread" data-thread-key="2016/05/23/web/HTTPS安全篇/"
+           data-title="HTTPS安全篇" data-url="http://jinpingwang.github.io/2016/05/23/web/HTTPS安全篇/">
       </div>
     
   </div>
@@ -487,7 +491,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">162</span>
+              <span class="site-state-item-count">171</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -495,7 +499,7 @@
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-count">18</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -504,7 +508,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">31</span>
+                <span class="site-state-item-count">32</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
